@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.Core", "src\TC.Core\TC.Core.csproj", "{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.WinForms", "src\TC.WinForms\TC.WinForms.csproj", "{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs10.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = src\\TC.Core\\TC.Core.csproj
+		SccProjectName1 = src/TC.Core
+		SccLocalPath1 = src\\TC.Core
+		SccProjectUniqueName2 = src\\TC.WinForms\\TC.WinForms.csproj
+		SccProjectName2 = src/TC.WinForms
+		SccLocalPath2 = src\\TC.WinForms
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

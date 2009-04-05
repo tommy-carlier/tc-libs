@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>Field + Property</Title>
+    <Author>Tommy Carlier</Author>
+    <Shortcut>fprop</Shortcut>
+    <Description>Add a field with a property.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>name</ID>
+        <Default>Name</Default>
+      </Literal>
+      <Literal>
+        <ID>type</ID>
+        <Default>string</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="CSharp">
+      <![CDATA[private $type$ f$name$;
+
+    /// <summary>Gets or sets the $name$.</summary>
+    /// <value>The $name$.</value>
+    public $type$ $name$ { get { return f$name$; } set { f$name$ = value; }
+$end$]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>
