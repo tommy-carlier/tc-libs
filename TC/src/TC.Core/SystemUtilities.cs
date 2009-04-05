@@ -12,7 +12,7 @@ using System.Threading;
 namespace TC
 {
 	/// <summary>Provides system utilities.</summary>
-	public static class SystemUtils
+	public static class SystemUtilities
 	{
 		/// <summary>Determines whether the specified exception is a critical exception.</summary>
 		/// <param name="exception">The exception to check.</param>

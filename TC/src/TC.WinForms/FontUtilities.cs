@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -14,9 +15,13 @@ using Microsoft.Win32;
 namespace TC.WinForms
 {
 	/// <summary>Provides utilities that deal with fonts.</summary>
-	public static class FontUtils
+	public static class FontUtilities
 	{
-		static FontUtils()
+		[SuppressMessage(
+			"Microsoft.Performance",
+			"CA1810:InitializeReferenceTypeStaticFieldsInline",
+			Justification = "There is additional logic beyond simple static field initialization.")]
+		static FontUtilities()
 		{
 			InitializeFontFamiliesByFontName();
 			InitializeSystemFonts();
@@ -96,7 +101,7 @@ namespace TC.WinForms
 			{
 				try
 				{
-					return SystemUtils.IsWindowsXPOrLater
+					return SystemUtilities.IsWindowsXPOrLater
 						&& SystemInformation.FontSmoothingType == 2;
 				}
 				catch (NotSupportedException) { return false; }

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Reflection;
 using System.Text;
@@ -29,6 +30,10 @@ namespace TC.WinForms
 		/// <summary>Runs the current application.</summary>
 		/// <typeparam name="TApp">The type of the application.</typeparam>
 		/// <typeparam name="TMainForm">The type of the main form.</typeparam>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The types TApp and TMainForm are important parameters and knowledge of generics is essential for using this function.")]
 		public static void Run<TApp, TMainForm>()
 			where TApp : TApplication, new()
 			where TMainForm : TForm, new()
@@ -47,6 +52,10 @@ namespace TC.WinForms
 
 		/// <summary>Runs the current application.</summary>
 		/// <typeparam name="TMainForm">The type of the main form.</typeparam>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type TMainForm is an important parameter and knowledge of generics is essential for using this function.")]
 		public static void Run<TMainForm>() where TMainForm : TForm, new()
 		{
 			Run<TApplication, TMainForm>();
@@ -114,7 +123,7 @@ namespace TC.WinForms
 			get
 			{
 				var lAttribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
-				return lAttribute != null ? lAttribute.DisplayString : String.Empty;
+				return lAttribute != null ? lAttribute.Title : String.Empty;
 			}
 		}
 

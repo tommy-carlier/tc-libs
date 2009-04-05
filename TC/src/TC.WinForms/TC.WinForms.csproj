@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>C:\Develop\Projects\TC\bin\Debug\TC.WinForms.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\TC.WinForms.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>C:\Develop\Projects\TC\bin\Release\TC.WinForms.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\TC.WinForms.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -110,14 +110,15 @@
     <Compile Include="Dialogs\TMessageDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DrawingUtils.cs" />
+    <Compile Include="DrawingUtilities.cs" />
     <Compile Include="Forms\TDocumentForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IDocumentContainer.cs" />
     <Compile Include="IHasSystemFont.cs" />
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="ScreenUtils.cs" />
+    <Compile Include="ScreenUtilities.cs" />
     <Compile Include="Settings\BaseFormSettings.cs" />
     <Compile Include="Settings\DocumentFormSettings.cs" />
     <Compile Include="Settings\SplitContainerSettings.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="Controls\TToolStripCommandMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ControlUtils.cs" />
+    <Compile Include="ControlUtilities.cs" />
     <Compile Include="SystemIcon.cs" />
     <Compile Include="SystemIconBox.cs">
       <SubType>Component</SubType>
@@ -142,7 +143,7 @@
     <Compile Include="Dialogs\DialogValidationException.cs" />
     <Compile Include="Dispatcher.cs" />
     <Compile Include="Dialogs\DialogResultButton.cs" />
-    <Compile Include="FontUtils.cs" />
+    <Compile Include="FontUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dialogs\TDialog.cs">
       <SubType>Form</SubType>

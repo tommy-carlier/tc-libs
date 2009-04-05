@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +13,11 @@ using System.Windows.Forms;
 namespace TC.WinForms
 {
 	/// <summary>Handles the painting of toolstrips.</summary>
+	[SuppressMessage(
+		"Microsoft.Naming",
+		"CA1704:IdentifiersShouldBeSpelledCorrectly",
+		MessageId = "Renderer",
+		Justification = "Renderer is a term that describes an object that handles visual rendering.")]
 	public class TToolStripRenderer : ToolStripProfessionalRenderer
 	{
 		/// <summary>Initializes a new instance of the <see cref="TToolStripRenderer"/> class.</summary>

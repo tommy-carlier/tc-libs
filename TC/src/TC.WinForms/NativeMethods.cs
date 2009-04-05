@@ -15,7 +15,7 @@ namespace TC.WinForms
 		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
 		internal static extern IntPtr SendMessage(IntPtr handle, uint message, IntPtr wParam, IntPtr lParam);
 
-		[DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+		[DllImport("uxtheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
 		internal static extern int SetWindowTheme(IntPtr handle, string applicationName, string idList);
 
 		internal const int

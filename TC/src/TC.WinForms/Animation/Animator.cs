@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 
@@ -20,6 +21,11 @@ namespace TC.WinForms.Animation
 
 		/// <summary>Initializes the <see cref="T:Animator"/> class.</summary>
 		/// <remarks>This method should be called on the UI-thread.</remarks>
+		[SuppressMessage(
+			"Microsoft.Performance",
+			"CA1804:RemoveUnusedLocals",
+			MessageId = "lHandle",
+			Justification = "The handle of fInvokeControl has to be created, so the getter of the Handle property has to be called.")]
 		internal static void Initialize()
 		{
 			if (fInvokeControl == null)

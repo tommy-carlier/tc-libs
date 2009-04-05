@@ -20,18 +20,7 @@ namespace TC.WinForms.Settings
 		/// <summary>Initializes a new instance of the <see cref="T:SplitContainerSettings"/> class.</summary>
 		/// <param name="xmlElementName">Name of the XML-element.</param>
 		public SplitContainerSettings(string xmlElementName)
-		{
-			if (xmlElementName == null) throw new ArgumentNullException("xmlElementName");
-			if (xmlElementName.Length == 0) throw new ArgumentException("xmlElementName cannot be an empty string.", "xmlElementName");
-			
-			fXmlElementName = xmlElementName;
-		}
-
-		private readonly string fXmlElementName;
-
-		/// <summary>Gets the name of the XML-element that represents the settings.</summary>
-		/// <value>The name of the XML-element that represents the settings.</value>
-		public override string XmlElementName { get { return fXmlElementName; } }
+			: base(xmlElementName) { }
 
 		/// <summary>Loads the settings from the specified <see cref="T:XPathNavigator"/>.</summary>
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>

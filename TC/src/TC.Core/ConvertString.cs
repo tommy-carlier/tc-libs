@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Text;
@@ -14,18 +15,7 @@ namespace TC
 	/// <summary>Provides functions to convert values of the basic data types from and to string in a culture-independent way.</summary>
 	public static class ConvertString
 	{
-		private static readonly CultureInfo fCulture = CultureInfo.InvariantCulture;
-		private static readonly StringComparer fStringComparer = StringComparer.InvariantCultureIgnoreCase;
-		private static readonly Dictionary<string, bool> fStringToBoolean = new Dictionary<string, bool>(4, fStringComparer);
-
-		/// <summary>Initializes the <see cref="ConvertString"/> class.</summary>
-		static ConvertString()
-		{
-			fStringToBoolean["false"] = false;
-			fStringToBoolean["true"] = true;
-			fStringToBoolean["0"] = false;
-			fStringToBoolean["1"] = true;
-		}
+		private static readonly CultureInfo fInvariantCulture = CultureInfo.InvariantCulture;
 
 		#region convert from and to Boolean
 
@@ -75,10 +65,26 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToBoolean(string value, out bool result)
 		{
-			return
-				string.IsNullOrEmpty(value)
-					? (result = false)
-					: fStringToBoolean.TryGetValue(value.Trim(), out result);
+			// if value is null or the trimmed value is empty: conversion fails
+			if (value == null || (value = value.Trim()).Length == 0)
+				return result = false;
+
+			// if value is "true" or "1", the result is "true"
+			if (BooleanEquals(value, "true", "1"))
+				return result = true;
+
+			// if value is "false" or "0", the result is "false"
+			if (BooleanEquals(value, "false", "0"))
+				return !(result = false);
+
+			// any other string: conversion fails
+			return result = false;
+		}
+
+		private static bool BooleanEquals(string value, string booleanValue, string numericValue)
+		{
+			return StringComparer.InvariantCultureIgnoreCase.Compare(value, booleanValue) == 0
+				|| StringComparer.Ordinal.Compare(value, numericValue) == 0;
 		}
 
 		#endregion
@@ -88,7 +94,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromByte(byte value) { return value.ToString(fCulture); }
+		public static string FromByte(byte value) { return value.ToString(fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -129,7 +135,7 @@ namespace TC
 		public static bool TryToByte(string value, out byte result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return byte.TryParse(value, NumberStyles.Integer, fCulture, out result);
+				return byte.TryParse(value, NumberStyles.Integer, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -144,7 +150,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromInt16(short value) { return value.ToString(fCulture); }
+		public static string FromInt16(short value) { return value.ToString(fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -185,7 +191,7 @@ namespace TC
 		public static bool TryToInt16(string value, out short result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return short.TryParse(value, NumberStyles.Integer, fCulture, out result);
+				return short.TryParse(value, NumberStyles.Integer, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -200,7 +206,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromInt32(int value) { return value.ToString(fCulture); }
+		public static string FromInt32(int value) { return value.ToString(fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -241,7 +247,7 @@ namespace TC
 		public static bool TryToInt32(string value, out int result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return int.TryParse(value, NumberStyles.Integer, fCulture, out result);
+				return int.TryParse(value, NumberStyles.Integer, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -256,7 +262,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromInt64(long value) { return value.ToString(fCulture); }
+		public static string FromInt64(long value) { return value.ToString(fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -297,7 +303,7 @@ namespace TC
 		public static bool TryToInt64(string value, out long result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return long.TryParse(value, NumberStyles.Integer, fCulture, out result);
+				return long.TryParse(value, NumberStyles.Integer, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -312,7 +318,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromSingle(float value) { return value.ToString("R", fCulture); }
+		public static string FromSingle(float value) { return value.ToString("R", fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -353,7 +359,7 @@ namespace TC
 		public static bool TryToSingle(string value, out float result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return float.TryParse(value, NumberStyles.Float, fCulture, out result);
+				return float.TryParse(value, NumberStyles.Float, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -368,7 +374,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromDouble(double value) { return value.ToString("R", fCulture); }
+		public static string FromDouble(double value) { return value.ToString("R", fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -409,7 +415,7 @@ namespace TC
 		public static bool TryToDouble(string value, out double result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return double.TryParse(value, NumberStyles.Float, fCulture, out result);
+				return double.TryParse(value, NumberStyles.Float, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -424,7 +430,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromDecimal(decimal value) { return value.ToString(fCulture); }
+		public static string FromDecimal(decimal value) { return value.ToString(fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -465,7 +471,7 @@ namespace TC
 		public static bool TryToDecimal(string value, out decimal result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return decimal.TryParse(value, NumberStyles.Number, fCulture, out result);
+				return decimal.TryParse(value, NumberStyles.Number, fInvariantCulture, out result);
 			else
 			{
 				result = 0;
@@ -530,7 +536,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromDateTime(DateTime value) { return value.ToString("O", fCulture); }
+		public static string FromDateTime(DateTime value) { return value.ToString("O", fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -571,7 +577,7 @@ namespace TC
 		public static bool TryToDateTime(string value, out DateTime result)
 		{
 			if (!string.IsNullOrEmpty(value))
-				return DateTime.TryParse(value, fCulture, DateTimeStyles.None, out result);
+				return DateTime.TryParse(value, fInvariantCulture, DateTimeStyles.None, out result);
 			else
 			{
 				result = DateTime.MinValue;
@@ -586,7 +592,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromDate(DateTime value) { return value.ToString("d", fCulture); }
+		public static string FromDate(DateTime value) { return value.ToString("d", fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -628,7 +634,7 @@ namespace TC
 		{
 			if (!string.IsNullOrEmpty(value))
 			{
-				if (DateTime.TryParse(value, fCulture, DateTimeStyles.None, out result))
+				if (DateTime.TryParse(value, fInvariantCulture, DateTimeStyles.None, out result))
 				{
 					result = result.Date;
 					return true;
@@ -752,7 +758,7 @@ namespace TC
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a string.</returns>
-		public static string FromGuid(Guid value) { return value.ToString("D", fCulture); }
+		public static string FromGuid(Guid value) { return value.ToString("D", fInvariantCulture); }
 
 		/// <summary>Converts the specified value to a string.</summary>
 		/// <param name="value">The value to convert.</param>
@@ -940,6 +946,10 @@ namespace TC
 		/// <typeparam name="TEnum">The type of the Enum.</typeparam>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>, or the default value of <typeparamref name="TEnum"/> if the value could not be converted.</returns>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type TEnum is an important parameter and knowledge of generics is essential for using this function.")]
 		public static TEnum ToEnum<TEnum>(string value) where TEnum : struct
 		{
 			return ToEnum(value, default(TEnum));
@@ -960,6 +970,10 @@ namespace TC
 		/// <typeparam name="TEnum">The type of the Enum.</typeparam>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>, or null if the value could not be converted.</returns>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type TEnum is an important parameter and knowledge of generics is essential for using this function.")]
 		public static TEnum? ToEnumOrNull<TEnum>(string value) where TEnum : struct
 		{
 			TEnum lResult;
@@ -1007,6 +1021,10 @@ namespace TC
 		private static readonly Dictionary<Type, Converter<object, string>>
 			fObjectToStringConverters = CreateObjectToStringConverters();
 
+		[SuppressMessage(
+			"Microsoft.Maintainability",
+			"CA1502:AvoidExcessiveComplexity",
+			Justification = "Although the cyclomatic complexity is high, this is not a complex function and it's only called once.")]
 		private static Dictionary<Type, Converter<object, string>> CreateObjectToStringConverters()
 		{
 			var lConverters = new Dictionary<Type, Converter<object, string>>();

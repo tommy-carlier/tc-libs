@@ -58,7 +58,7 @@ namespace TC.WinForms.Dialogs
 			Text = fContentControl.Text;
 
 			// move the dialog off-screen before displaying it and setting the final location and size
-			Rectangle lBounds = ScreenUtils.CalculateTotalScreenBounds();
+			Rectangle lBounds = ScreenUtilities.CalculateTotalScreenBounds();
 			Location = new Point(lBounds.X - 10000, lBounds.Y - 10000);
 
 			// ResumeLayout

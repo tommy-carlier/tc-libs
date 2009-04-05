@@ -5,13 +5,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 
 namespace TC.WinForms
 {
 	/// <summary>Provides utilities that deal with controls.</summary>
-	public static class ControlUtils
+	public static class ControlUtilities
 	{
 		#region EnumerateDescendants<T>
 
@@ -20,6 +22,10 @@ namespace TC.WinForms
 		/// <param name="control">The control to enumerate descendants of.</param>
 		/// <param name="includeControl">Indicates whether to include the specified control itself.</param>
 		/// <returns>A collection of all the descendants of the specified control that are of type <typeparamref name="T"/>.</returns>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type T is an important parameter and knowledge of generics is essential for using this function.")]
 		public static IEnumerable<T> EnumerateDescendants<T>(this Control control, bool includeControl) 
 			where T : class
 		{
@@ -113,8 +119,12 @@ namespace TC.WinForms
 
 		private static void SetWindowThemeImpl(Control control, string applicationName, string idList)
 		{
-			if (SystemUtils.IsWindowsXPOrLater)
-				NativeMethods.SetWindowTheme(control.Handle, applicationName, idList);
+			// only possible in Windows XP or later
+			if (SystemUtilities.IsWindowsXPOrLater)
+			{
+				if (NativeMethods.SetWindowTheme(control.Handle, applicationName, idList) != 0)
+					throw new Win32Exception();
+			}
 		}
 
 		#endregion

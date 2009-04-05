@@ -18,6 +18,7 @@ namespace TC.Settings
 		/// <summary>Initializes a new instance of the <see cref="BaseApplicationSettings"/> class.</summary>
 		/// <param name="settingsFileName">The full path of the settings file.</param>
 		protected BaseApplicationSettings(string settingsFileName)
+			: base("settings")
 		{
 			if (settingsFileName == null) throw new ArgumentNullException("settingsFileName");
 			if (settingsFileName.Length == 0)
@@ -36,17 +37,15 @@ namespace TC.Settings
 
 		/// <summary>Registers settings of the specified type.</summary>
 		/// <typeparam name="TSettings">The type of the settings to register.</typeparam>
+		/// <param name="settings">The settings to register.</param>
 		/// <returns>The registered settings.</returns>
-		protected TSettings RegisterSettings<TSettings>() where TSettings : BaseSettings, new()
+		protected TSettings RegisterSettings<TSettings>(TSettings settings) where TSettings : BaseSettings
 		{
-			TSettings lSettings = new TSettings();
-			fChildSettings.Add(lSettings);
-			return lSettings;
-		}
+			if (settings == null) throw new ArgumentNullException("settings");
 
-		/// <summary>Gets the name of the XML-element that represents the settings.</summary>
-		/// <value>The name of the XML-element that represents the settings.</value>
-		public override string XmlElementName { get { return "settings"; } }
+			fChildSettings.Add(settings);
+			return settings;
+		}
 
 		// the loading and saving is locked so only 1 thread can load or save the settings at a time
 		private readonly object fLockLoadSave = new object();

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 namespace TC.WinForms.Controls
 {
 	/// <summary>Represents a node of a <see cref="T:TTreeView"/>.</summary>
+	[Serializable]
 	public abstract class TTreeNode : TreeNode
 	{
 		/// <summary>Initializes a new instance of the <see cref="TTreeNode"/> class.</summary>

@@ -15,11 +15,20 @@ namespace TC.Settings
 	/// <summary>The abstract base class for any kind of settings.</summary>
 	public abstract class BaseSettings
 	{
-		#region abstract members that have to be implemented by derived classes
+		/// <summary>Initializes a new instance of the <see cref="BaseSettings"/> class.</summary>
+		/// <param name="xmlElementName">The name of the XML-element that represents this instance.</param>
+		protected BaseSettings(string xmlElementName)
+		{
+			if (xmlElementName == null) throw new ArgumentNullException("xmlElementName");
+			if (xmlElementName.Length == 0)
+				throw new ArgumentException("xmlElementName cannot be an empty string", "xmlElementName");
 
-		/// <summary>Gets the name of the XML-element that represents the settings.</summary>
-		/// <value>The name of the XML-element that represents the settings.</value>
-		public abstract string XmlElementName { get; }
+			fXmlElementName = xmlElementName;
+		}
+
+		private readonly string fXmlElementName;
+
+		#region abstract members that have to be implemented by derived classes
 
 		/// <summary>Loads the settings from the specified <see cref="T:XPathNavigator"/>.</summary>
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>
@@ -38,7 +47,7 @@ namespace TC.Settings
 		public void Load(XPathNavigator xml)
 		{
 			if (xml == null) throw new ArgumentNullException("xml");
-			xml = xml.SelectSingleNode(XmlElementName);
+			xml = xml.SelectSingleNode(fXmlElementName);
 			if (xml != null) LoadCore(xml);
 		}
 
@@ -47,7 +56,7 @@ namespace TC.Settings
 		public void Save(XmlWriter writer)
 		{
 			if (writer == null) throw new ArgumentNullException("writer");
-			writer.WriteStartElement(XmlElementName);
+			writer.WriteStartElement(fXmlElementName);
 			SaveCore(writer);
 			writer.WriteEndElement();
 		}

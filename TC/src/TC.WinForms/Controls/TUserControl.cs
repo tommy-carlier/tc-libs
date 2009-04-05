@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 
@@ -33,6 +34,10 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Gets the command to display information about the current application.</summary>
 		/// <value>The command to display information about the current application.</value>
+		[SuppressMessage(
+			"Microsoft.Performance",
+			"CA1822:MarkMembersAsStatic",
+			Justification = "This property is only used to make the TApplication.Current.AboutCommand available in the visual designer.")]
 		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ICommand ApplicationAboutCommand { get { return TApplication.Current.AboutCommand; } }

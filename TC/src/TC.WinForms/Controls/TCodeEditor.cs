@@ -413,7 +413,9 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Gets the <see cref="T:SystemFont"/> of the control.</summary>
 		/// <value>The <see cref="T:SystemFont"/> of the control.</value>
-		SystemFont IHasSystemFont.SystemFont { get { return SystemFont.Monospace; } }
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public virtual SystemFont SystemFont { get { return SystemFont.Monospace; } }
 
 		/// <summary>Gets or sets the font of the text displayed by the control.</summary>
 		/// <returns>The <see cref="T:Font"/> to apply to the text displayed by the control.</returns>

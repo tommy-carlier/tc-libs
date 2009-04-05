@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -16,6 +17,10 @@ using System.Windows.Forms;
 
 namespace TC.WinForms.Dialogs
 {
+	[SuppressMessage(
+		"Microsoft.Performance", 
+		"CA1812:AvoidUninstantiatedInternalClasses",
+		Justification = "This class is instantiated by TApplication.ShowAboutDialog")]
 	internal partial class TAboutDialogContentControl : TDialogContentControl
 	{
 		/// <summary>Initializes a new instance of the <see cref="TAboutDialogContentControl"/> class.</summary>

@@ -14,7 +14,7 @@ namespace TC.Settings
 	/// <summary>Represents settings that contain a list of strings.</summary>
 	public class StringListSettings : BaseSettings
 	{
-		private readonly string fListElementName, fListItemElementName;
+		private readonly string fListItemElementName;
 		private readonly bool fSorted;
 
 		/// <summary>Initializes a new instance of the <see cref="StringListSettings"/> class.</summary>
@@ -22,15 +22,12 @@ namespace TC.Settings
 		/// <param name="listItemElementName">Name of the list-item elements.</param>
 		/// <param name="sorted">Determines whether the items should be sorted.</param>
 		public StringListSettings(string listElementName, string listItemElementName, bool sorted)
+			: base(listElementName)
 		{
-			if (listElementName == null) throw new ArgumentNullException("listElementName");
 			if (listItemElementName == null) throw new ArgumentNullException("listItemElementName");
-			if (listElementName.Length == 0)
-				throw new ArgumentException("listElementName cannot be an empty string", "listElementName");
 			if (listItemElementName.Length == 0)
 				throw new ArgumentException("listItemElementName cannot be an empty string", "listItemElementName");
 
-			fListElementName = listElementName;
 			fListItemElementName = listItemElementName;
 			fSorted = sorted;
 		}
@@ -40,10 +37,6 @@ namespace TC.Settings
 		/// <summary>Gets the list of strings.</summary>
 		/// <value>The list of strings.</value>
 		public IList<string> Items { get { return fItems; } }
-
-		/// <summary>Gets the name of the XML-element that represents the settings.</summary>
-		/// <value>The name of the XML-element that represents the settings.</value>
-		public override string XmlElementName { get { return fListElementName; } }
 
 		/// <summary>Loads the settings from the specified <see cref="T:XPathNavigator"/>.</summary>
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>
@@ -74,7 +67,7 @@ namespace TC.Settings
 		{
 			if (item == null) throw new ArgumentNullException("item");
 
-			StringComparison lComparison 
+			StringComparison lComparison
 				= ignoreCase
 					? StringComparison.OrdinalIgnoreCase
 					: StringComparison.Ordinal;

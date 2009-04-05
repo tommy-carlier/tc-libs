@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace TC.WinForms.Commands
@@ -16,8 +17,16 @@ namespace TC.WinForms.Commands
 		private EmptyProxyCommandsImplementation() { }
 
 		/// <summary>Gets the instance of the <see cref="T:EmptyProxyCommandsImplementation{TCommandIdentifier}"/>.</summary>
-		public static readonly EmptyProxyCommandsImplementation<TCommandIdentifier> Instance
-			= new EmptyProxyCommandsImplementation<TCommandIdentifier>();
+		[SuppressMessage(
+			"Microsoft.Security",
+			"CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
+			Justification = "This class is an immutable singleton.")]
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1000:DoNotDeclareStaticMembersOnGenericTypes",
+			Justification = "I can't really see an obvious alternative design for this.")]
+		public static readonly EmptyProxyCommandsImplementation<TCommandIdentifier>
+			Instance = new EmptyProxyCommandsImplementation<TCommandIdentifier>();
 
 		#region IProxyCommandsImplementation<TCommandIdentifier> Members
 

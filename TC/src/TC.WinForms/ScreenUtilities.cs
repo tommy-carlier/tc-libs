@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace TC.WinForms
 {
 	/// <summary>Provides utilities that deal with screens.</summary>
-	public static class ScreenUtils
+	public static class ScreenUtilities
 	{
 		/// <summary>Calculates the total working area of all screens combined.</summary>
 		/// <returns>A union of the working areas of all the screens.</returns>

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace TC.WinForms
@@ -24,7 +25,13 @@ namespace TC.WinForms
 		/// <summary>The font for headers.</summary>
 		Header,
 
-		/// <summary>The monospace font.</summary>
+		/// <summary>The fixed-width or non-proportional font.</summary>
+		/// <remarks>See http://en.wikipedia.org/wiki/Monospaced_font </remarks>
+		[SuppressMessage(
+			"Microsoft.Naming",
+			"CA1704:IdentifiersShouldBeSpelledCorrectly",
+			MessageId = "Monospace",
+			Justification = "Monospace is a term that is used for fixed-width or non-proportional fonts.")]
 		Monospace
 	}
 }

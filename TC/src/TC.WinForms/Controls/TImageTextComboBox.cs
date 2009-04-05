@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -142,6 +143,10 @@ namespace TC.WinForms.Controls
 		/// <param name="item">The item to get the image and text of.</param>
 		/// <param name="image">When this method returns, contains the image associated with the specified item.</param>
 		/// <param name="text">When this method returns, contains the text associated with the specified item.</param>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1021:AvoidOutParameters",
+			Justification = "This is an easy way to return 2 values from a method that is only used by developers that create a derived class.")]
 		protected abstract void GetImageAndText(TItem item, out Image image, out string text);
 
 		/// <summary>Gets or sets currently selected item in the <see cref="T:ComboBox"/>.</summary>

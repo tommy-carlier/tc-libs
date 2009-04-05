@@ -81,7 +81,7 @@ namespace TC.WinForms.Controls
 
 			// if Windows Vista or later: autoscroll horizontally, autohide the expandos and turn on double buffering:
 			// http://www.danielmoth.com/Blog/2007/01/treeviewvista.html
-			if (SystemUtils.IsWindowsVistaOrLater)
+			if (SystemUtilities.IsWindowsVistaOrLater)
 			{
 				IntPtr lHandle = Handle;
 				int lStyle
@@ -109,12 +109,13 @@ namespace TC.WinForms.Controls
 		/// <returns>A <see cref="T:CreateParams"/> that contains the required creation parameters when the handle to the control is created.</returns>
 		protected override CreateParams CreateParams
 		{
+			[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
 			get
 			{
 				// if Windows Vista or later: lose the horizontal scrollbar:
 				// http://www.danielmoth.com/Blog/2007/01/treeviewvista.html
 				CreateParams lCreateParams = base.CreateParams;
-				if (SystemUtils.IsWindowsVistaOrLater)
+				if (SystemUtilities.IsWindowsVistaOrLater)
 					lCreateParams.Style |= NativeMethods.TVS_NOHSCROLL;
 				return lCreateParams;
 			}
@@ -275,7 +276,7 @@ namespace TC.WinForms.Controls
 			{
 				Text = "Loading...";
 				NodeFont = SystemFont.Italic.ToFont();
-				ForeColor = DrawingUtils.GetAverageColor(ForeColor, BackColor);
+				ForeColor = DrawingUtilities.GetAverageColor(ForeColor, BackColor);
 				ImageKey = "_LoadingTreeNode";
 				SelectedImageKey = "_LoadingTreeNode";
 			}

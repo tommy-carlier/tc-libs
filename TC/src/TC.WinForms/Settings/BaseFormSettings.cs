@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
@@ -16,7 +17,9 @@ namespace TC.WinForms.Settings
 	public abstract class BaseFormSettings : BaseSettings
 	{
 		/// <summary>Initializes a new instance of the <see cref="BaseFormSettings"/> class.</summary>
-		protected BaseFormSettings()
+		/// <param name="xmlElementName">The name of the XML-element that represents this instance.</param>
+		protected BaseFormSettings(string xmlElementName)
+			: base(xmlElementName)
 		{
 			X = -1;
 			Y = -1;
@@ -48,10 +51,20 @@ namespace TC.WinForms.Settings
 
 		/// <summary>Gets or sets the X-coordinate of the location of the form.</summary>
 		/// <value>The X-coordinate of the location of the form.</value>
+		[SuppressMessage(
+			"Microsoft.Naming",
+			"CA1704:IdentifiersShouldBeSpelledCorrectly",
+			MessageId = "X",
+			Justification = "X is a meaningful name: it represents the X-coordinate.")]
 		public int X { get; set; }
 
 		/// <summary>Gets or sets the Y-coordinate of the location of the form.</summary>
 		/// <value>The Y-coordinate of the location of the form.</value>
+		[SuppressMessage(
+			"Microsoft.Naming",
+			"CA1704:IdentifiersShouldBeSpelledCorrectly",
+			MessageId = "Y",
+			Justification = "Y is a meaningful name: it represents the Y-coordinate.")]
 		public int Y { get; set; }
 
 		/// <summary>Gets or sets the width of the form.</summary>

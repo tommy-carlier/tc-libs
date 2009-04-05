@@ -13,7 +13,7 @@ using System.Text;
 namespace TC.WinForms
 {
 	/// <summary>Provides drawing functionality.</summary>
-	public static class DrawingUtils
+	public static class DrawingUtilities
 	{
 		/// <summary>Draws a shiny vertical gradient.</summary>
 		/// <param name="graphics">The drawing surface to draw on.</param>

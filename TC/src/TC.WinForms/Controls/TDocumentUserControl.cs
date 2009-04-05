@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace TC.WinForms.Controls
@@ -75,12 +76,21 @@ namespace TC.WinForms.Controls
 
 		#region IDocumentContainer Members
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		string IDocumentContainer.FilePath
 		{
 			get { return fDocumentContainer != null ? fDocumentContainer.FilePath : null; }
 		}
 
 		private static readonly object fEventFilePathChanged = new object();
+
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.FilePathChanged
 		{
 			add { Events.AddHandler(fEventFilePathChanged, value); }
@@ -94,12 +104,21 @@ namespace TC.WinForms.Controls
 				lEventHandler(this, e);
 		}
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		string IDocumentContainer.FileName
 		{
 			get { return fDocumentContainer != null ? fDocumentContainer.FileName : null; }
 		}
 
 		private static readonly object fEventFileNameChanged = new object();
+
+		[SuppressMessage(
+		"Microsoft.Design",
+		"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+		Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.FileNameChanged
 		{
 			add { Events.AddHandler(fEventFileNameChanged, value); }
@@ -113,12 +132,21 @@ namespace TC.WinForms.Controls
 				lEventHandler(this, e);
 		}
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		bool IDocumentContainer.IsModified
 		{
 			get { return fDocumentContainer != null && fDocumentContainer.IsModified; }
 		}
 
 		private static readonly object fEventIsModifiedChanged = new object();
+
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.IsModifiedChanged
 		{
 			add { Events.AddHandler(fEventIsModifiedChanged, value); }
@@ -132,20 +160,42 @@ namespace TC.WinForms.Controls
 				lEventHandler(this, e);
 		}
 
-		string IDocumentContainer.FileDialogFilter { get { return fDocumentContainer != null ? fDocumentContainer.FileDialogFilter : null; } }
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
+		string IDocumentContainer.FileDialogFilter
+		{
+			get
+			{
+				return fDocumentContainer != null ? fDocumentContainer.FileDialogFilter : null;
+			}
+		}
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.ClearDocument(string fileName)
 		{
 			if (fDocumentContainer != null)
 				fDocumentContainer.ClearDocument(fileName);
 		}
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.LoadDocument(string filePath, int filterIndex)
 		{
 			if (fDocumentContainer != null)
 				fDocumentContainer.LoadDocument(filePath, filterIndex);
 		}
 
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.SaveDocument(string filePath, int filterIndex)
 		{
 			if (fDocumentContainer != null)

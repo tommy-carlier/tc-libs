@@ -15,9 +15,9 @@ namespace TC.WinForms.Settings
 	public abstract class DocumentFormSettings : BaseFormSettings
 	{
 		/// <summary>Initializes a new instance of the <see cref="DocumentFormSettings"/> class.</summary>
-		protected DocumentFormSettings()
-		{
-		}
+		/// <param name="xmlElementName">The name of the XML-element that represents this instance.</param>
+		protected DocumentFormSettings(string xmlElementName)
+			: base(xmlElementName) { }
 
 		/// <summary>Loads the settings from the specified <see cref="T:XPathNavigator"/>.</summary>
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>

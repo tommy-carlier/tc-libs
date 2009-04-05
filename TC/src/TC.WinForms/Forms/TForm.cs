@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -47,6 +48,10 @@ namespace TC.WinForms.Forms
 
 		/// <summary>Gets the command to display information about the current application.</summary>
 		/// <value>The command to display information about the current application.</value>
+		[SuppressMessage(
+			"Microsoft.Performance",
+			"CA1822:MarkMembersAsStatic",
+			Justification = "This property is only used to make the TApplication.Current.AboutCommand available in the visual designer.")]
 		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ICommand ApplicationAboutCommand { get { return TApplication.Current.AboutCommand; } }
@@ -216,7 +221,9 @@ namespace TC.WinForms.Forms
 
 		/// <summary>Gets the <see cref="T:SystemFont"/> of the control.</summary>
 		/// <value>The <see cref="T:SystemFont"/> of the control.</value>
-		SystemFont IHasSystemFont.SystemFont { get { return SystemFont.Default; } }
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public virtual SystemFont SystemFont { get { return SystemFont.Default; } }
 
 		/// <summary>Gets or sets the font of the text displayed by the control.</summary>
 		/// <returns>The <see cref="T:Font"/> to apply to the text displayed by the control.</returns>

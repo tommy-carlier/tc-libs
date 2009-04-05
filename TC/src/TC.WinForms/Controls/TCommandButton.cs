@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -15,6 +16,10 @@ using TC.WinForms.Commands;
 namespace TC.WinForms.Controls
 {
 	/// <summary>Represents a <see cref="T:Button"/> control that can execute a <see cref="T:ICommand"/>.</summary>
+	[SuppressMessage(
+		"Microsoft.Design",
+		"CA1063:ImplementIDisposableCorrectly",
+		Justification = "IDisposable is already implemented.")]
 	[DefaultProperty("Command"), ToolboxBitmap(typeof(Button))]
 	public class TCommandButton : Button, ICommandControl
 	{
@@ -69,6 +74,10 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Notifies the control that the bound command is enabled or disabled.</summary>
 		/// <param name="enabled">if set to <c>true</c> the control should be enabled, otherwise disabled.</param>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "This method is called by CommandBinding and should never be called by derived classes.")]
 		void ICommandControl.SetCommandEnabled(bool enabled)
 		{
 			Enabled = enabled;
@@ -76,6 +85,10 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Occurs when the control is activated.</summary>
 		/// <remarks>When this event occurs, the bound command will be executed.</remarks>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
+			Justification = "This event is used by CommandBinding and is a synonym of the Click-event.")]
 		event EventHandler ICommandControl.Activated
 		{
 			add { Click += value; }

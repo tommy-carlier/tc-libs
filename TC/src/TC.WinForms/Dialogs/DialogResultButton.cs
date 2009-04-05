@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 
@@ -66,20 +67,37 @@ namespace TC.WinForms.Dialogs
 			}
 		}
 
-		/// <summary>Gets the <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.OK"/>.</summary>
-		public static readonly DialogResultButton
-			OK = new DialogResultButton(DialogResult.OK, "OK");
+		/// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.OK"/>.</summary>
+		/// <value>The created <see cref="T:DialogResultButton"/>.</value>
+		[SuppressMessage(
+			"Microsoft.Naming",
+			"CA1709:IdentifiersShouldBeCasedCorrectly",
+			MessageId = "OK",
+			Justification = "OK is not an acceptable term and should not be changed to 'Ok'.")]
+		public static DialogResultButton OK
+		{
+			get { return new DialogResultButton(DialogResult.OK, "OK"); }
+		}
 
-		/// <summary>Gets the <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.Cancel"/>.</summary>
-		public static readonly DialogResultButton 
-			Cancel = new DialogResultButton(DialogResult.Cancel, "Cancel");
+		/// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.Cancel"/>.</summary>
+		/// <value>The created <see cref="T:DialogResultButton"/>.</value>
+		public static DialogResultButton Cancel
+		{
+			get { return new DialogResultButton(DialogResult.Cancel, "Cancel"); }
+		}
 
-		/// <summary>Gets the <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.Yes"/>.</summary>
-		public static readonly DialogResultButton
-			Yes = new DialogResultButton(DialogResult.Yes, "Yes");
+		/// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.Yes"/>.</summary>
+		/// <value>The created <see cref="T:DialogResultButton"/>.</value>
+		public static DialogResultButton Yes
+		{
+			get { return new DialogResultButton(DialogResult.Yes, "Yes"); }
+		}
 
-		/// <summary>Gets the <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.No"/>.</summary>
-		public static readonly DialogResultButton
-			No = new DialogResultButton(DialogResult.No, "No");
+		/// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.No"/>.</summary>
+		/// <value>The created <see cref="T:DialogResultButton"/>.</value>
+		public static DialogResultButton No
+		{
+			get { return new DialogResultButton(DialogResult.No, "No"); }
+		}
 	}
 }

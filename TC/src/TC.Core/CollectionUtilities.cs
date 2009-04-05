@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 using SC = System.Collections;
@@ -12,11 +13,15 @@ using SC = System.Collections;
 namespace TC
 {
 	/// <summary>Provides utilities that deal with collections.</summary>
-	public static class CollectionUtils
+	public static class CollectionUtilities
 	{
 		/// <summary>Creates an empty read-only collection.</summary>
 		/// <typeparam name="T">The type of the items in the collection.</typeparam>
 		/// <returns>An empty read-only collection.</returns>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "Because there are no arguments, I cannot see a different possible design.")]
 		public static IList<T> CreateEmptyCollection<T>()
 		{
 			return EmptyCollection<T>.Instance;
@@ -50,6 +55,10 @@ namespace TC
 		/// <typeparam name="T">The type of the items in the collection.</typeparam>
 		/// <param name="collection">The non-generic collection to convert.</param>
 		/// <returns>The converted collection of type <typeparamref name="T"/>.</returns>
+		[SuppressMessage(
+			"Microsoft.Design",
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type T is an important parameter and knowledge of generics is essential for using this function.")]
 		public static IEnumerable<T> ToGeneric<T>(this SC.IEnumerable collection)
 		{
 			if (collection == null) throw new ArgumentNullException("collection");

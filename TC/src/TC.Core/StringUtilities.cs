@@ -6,7 +6,7 @@ using System.Text;
 namespace TC
 {
 	/// <summary>Provides utilities that deal with strings.</summary>
-	public static class StringUtils
+	public static class StringUtilities
 	{
 		#region Join-methods
 
@@ -102,8 +102,8 @@ namespace TC
 			return value.Length > 0
 				? separator.Length > 0
 					? LazySplitInternal(value, separator)
-					: CollectionUtils.CreateOneItemCollection(value)
-				: CollectionUtils.CreateEmptyCollection<string>();
+					: CollectionUtilities.CreateOneItemCollection(value)
+				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
 
 		/// <summary>Splits the specified value into substrings that are delimited by the specified separator.</summary>
@@ -116,7 +116,7 @@ namespace TC
 
 			return value.Length > 0
 				? LazySplitInternal(value, separator)
-				: CollectionUtils.CreateEmptyCollection<string>();
+				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
 
 		/// <summary>Splits the specified value into substrings that are delimited by the specified separators.</summary>
@@ -131,8 +131,8 @@ namespace TC
 			return value.Length > 0
 				? separators.Length > 0
 					? LazySplitInternal(value, separators)
-					: CollectionUtils.CreateOneItemCollection(value)
-				: CollectionUtils.CreateEmptyCollection<string>();
+					: CollectionUtilities.CreateOneItemCollection(value)
+				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
 
 		private static IEnumerable<string> LazySplitInternal(string value, string separator)
