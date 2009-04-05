@@ -1,4 +1,9 @@
-﻿using System;
+﻿// TC Core Library
+// Copyright © 2008 - 2009 Tommy Carlier
+// http://tc.codeplex.com
+// License: Microsoft Public License (Ms-PL): http://tc.codeplex.com/license
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;

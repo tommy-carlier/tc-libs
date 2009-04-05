@@ -1,3 +1,8 @@
+// TC WinForms Library
+// Copyright © 2008 - 2009 Tommy Carlier
+// http://tc.codeplex.com
+// License: Microsoft Public License (Ms-PL): http://tc.codeplex.com/license
+
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project. 
 // Project-level suppressions either have no target or are given 
