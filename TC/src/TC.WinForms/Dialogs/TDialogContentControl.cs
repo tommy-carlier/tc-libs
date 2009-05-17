@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 
@@ -113,8 +114,15 @@ namespace TC.WinForms.Dialogs
 			base.OnPaintBackground(e);
 
 			Size lSize = Size;
-			using (Pen lPen = new Pen(Color.FromArgb(100, ForeColor)))
-				e.Graphics.DrawLine(lPen, 0F, lSize.Height - 1, lSize.Width, lSize.Height - 1);
+			Rectangle lBottomBounds = new Rectangle(0, lSize.Height - 1, lSize.Width, 1);
+
+			if (e.ClipRectangle.IntersectsWith(lBottomBounds))
+				e.Graphics.DrawSigmaBellGradient(
+					lBottomBounds,
+					lBottomBounds,
+					Color.FromArgb(48, ForeColor),
+					Color.FromArgb(96, ForeColor),
+					LinearGradientMode.Horizontal);
 		}
 
 		/// <summary>Raises the <see cref="E:Resize"/> event.</summary>

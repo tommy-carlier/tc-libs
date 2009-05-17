@@ -142,9 +142,13 @@ namespace TC.WinForms.Dialogs
 		/// <param name="e">An <see cref="T:EventArgs"/> that contains the event data.</param>
 		protected override void OnLoad(EventArgs e)
 		{
-			base.OnLoad(e);
 			InitializeDialogResultButtons();
+			Size = GetPreferredSize(Size.Empty);
+
+			base.OnLoad(e);
+			
 			SetBounds();
+			
 			if (string.IsNullOrEmpty(Text))
 			{
 				Form lOwner = Owner ?? Application.MainForm;

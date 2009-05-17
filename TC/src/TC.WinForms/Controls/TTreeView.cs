@@ -39,8 +39,8 @@ namespace TC.WinForms.Controls
 
 		#region icon-related members
 
-		/// <summary>When overriden in a derived class, gets the icon for the 'Loading...'-node.</summary>
-		/// <value>The icon for the 'Loading...'-node.</value>
+		/// <summary>When overriden in a derived class, gets the icon for the 'Loading…'-node.</summary>
+		/// <value>The icon for the 'Loading…'-node.</value>
 		protected abstract Image LoadingTreeNodeIcon { get; }
 
 		/// <summary>When overriden in a derived class, initializes the icons.</summary>
@@ -274,7 +274,7 @@ namespace TC.WinForms.Controls
 		{
 			public LoadingTreeNode()
 			{
-				Text = "Loading...";
+				Text = "Loading…";
 				NodeFont = SystemFont.Italic.ToFont();
 				ForeColor = DrawingUtilities.GetAverageColor(ForeColor, BackColor);
 				ImageKey = "_LoadingTreeNode";

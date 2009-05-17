@@ -11,6 +11,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+using Microsoft.Win32;
+
 using TC.WinForms.Animation;
 using TC.WinForms.Commands;
 using TC.WinForms.Dialogs;
@@ -42,12 +44,21 @@ namespace TC.WinForms
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			Animator.Initialize();
-			ToolStripManager.Renderer = new TToolStripRenderer();
+			SetToolStripRenderer();
+			SystemEvents.UserPreferenceChanged += delegate { SetToolStripRenderer(); };
 
 			fCurrent = new TApp();
 			TMainForm lForm = new TMainForm();
 			lForm.Show();
 			Application.Run(fCurrent);
+		}
+
+		private static void SetToolStripRenderer()
+		{
+			ToolStripManager.Renderer =
+				SystemInformation.HighContrast
+					? new ToolStripSystemRenderer()
+					: new TToolStripRenderer() as ToolStripRenderer;
 		}
 
 		/// <summary>Runs the current application.</summary>

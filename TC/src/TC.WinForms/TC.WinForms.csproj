@@ -73,13 +73,19 @@
     <Compile Include="Commands\SimpleActionCommand.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TListBox.Generic.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TCodeEditor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\THorizontalRule.cs">
+    <Compile Include="Controls\TComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\TImageTextComboBox.cs">
+    <Compile Include="Controls\TComboBox.Generic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\THorizontalRule.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TCommandHyperlink.cs">
@@ -87,6 +93,9 @@
     </Compile>
     <Compile Include="Controls\TDocumentUserControl.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TListBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TSplitContainer.cs">
       <SubType>Component</SubType>
@@ -117,6 +126,9 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IDocumentContainer.cs" />
     <Compile Include="IHasSystemFont.cs" />
+    <Compile Include="ListControlUtilities.cs" />
+    <Compile Include="ListItemRenderer.cs" />
+    <Compile Include="ListItemRenderer.Generic.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="ScreenUtilities.cs" />
     <Compile Include="Settings\BaseFormSettings.cs" />

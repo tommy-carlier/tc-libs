@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 
@@ -22,6 +23,7 @@ namespace TC.WinForms.Controls
 			Size = new Size(100, 1);
 			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			ForeColor = SystemColors.ControlDark;
+			BackColor = SystemColors.Control;
 			
 			SetStyle(
 				ControlStyles.AllPaintingInWmPaint | ControlStyles.FixedHeight 
@@ -49,6 +51,15 @@ namespace TC.WinForms.Controls
 		{
 			get { return base.ForeColor; }
 			set { base.ForeColor = value; }
+		}
+
+		/// <summary>Gets or sets the background color for the control.</summary>
+		/// <returns>A <see cref="T:Color"/> that represents the background color of the control.</returns>
+		[DefaultValue(typeof(Color), "Control")]
+		public override Color BackColor
+		{
+			get { return base.BackColor; }
+			set { base.BackColor = value; }
 		}
 
 		/// <summary>Gets or sets the text associated with this control.</summary>
@@ -79,8 +90,12 @@ namespace TC.WinForms.Controls
 		/// <param name="e">A <see cref="T:PaintEventArgs"/> that contains the event data.</param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			using (Pen lPen = new Pen(ForeColor))
-				e.Graphics.DrawLine(lPen, e.ClipRectangle.Left, 0, e.ClipRectangle.Right, 0);
+			e.Graphics.DrawSigmaBellGradient(
+				new Rectangle(Point.Empty, Size),
+				new Rectangle(e.ClipRectangle.Left, 0, e.ClipRectangle.Width, 1),
+				DrawingUtilities.GetAverageColor(BackColor, ForeColor),
+				ForeColor,
+				LinearGradientMode.Horizontal);
 		}
 	}
 }
