@@ -267,5 +267,25 @@ namespace TC
 			foreach (string lItem in collection)
 				yield return string.IsNullOrEmpty(lItem) ? String.Empty : lItem.Trim();
 		}
+
+		/// <summary>Determines whether the first character of the specified string is the specified character.</summary>
+		/// <param name="s">The string to check.</param>
+		/// <param name="firstChar">The character to check with.</param>
+		/// <returns>If the specified string starts with the specified character, true; otherwise, false.</returns>
+		public static bool StartsWith(this string s, char firstChar)
+		{
+			if (s == null) throw new ArgumentNullException("s");
+			return s.Length > 0 && s[0] == firstChar;
+		}
+
+		/// <summary>Determines whether the last character of the specified string is the specified character.</summary>
+		/// <param name="s">The string to check.</param>
+		/// <param name="lastChar">The character to check with.</param>
+		/// <returns>If the specified string ends with the specified character, true; otherwise, false.</returns>
+		public static bool EndsWith(this string s, char lastChar)
+		{
+			if (s == null) throw new ArgumentNullException("s");
+			return s.Length > 0 && s[s.Length - 1] == lastChar;
+		}
 	}
 }

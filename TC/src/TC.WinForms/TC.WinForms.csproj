@@ -97,7 +97,16 @@
     <Compile Include="Controls\TListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TPlainTextEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TTextControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TTextEditor.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TTreeNode.cs" />

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -18,7 +19,27 @@ namespace TC.WinForms
 		[DllImport("uxtheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
 		internal static extern int SetWindowTheme(IntPtr handle, string applicationName, string idList);
 
+		[DllImport("user32.dll")]
+		internal static extern IntPtr GetWindowDC(IntPtr handle);
+
+		[DllImport("user32.dll")]
+		internal static extern int ReleaseDC(IntPtr handle, IntPtr dc);
+
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		internal static extern bool GetWindowRect(IntPtr handle, out RECT rect);
+
+		[DllImport("gdi32.dll")]
+		internal static extern int ExcludeClipRect(IntPtr dc, int left, int top, int right, int bottom);
+
 		internal const int
+			WM_NCCALCSIZE = 0x83,
+			WM_NCPAINT = 0x85,
+			WM_THEMECHANGED = 0x031A,
+			WS_EX_CLIENTEDGE = 0x0200,
+			WVR_HREDRAW = 0x0100,
+			WVR_VREDRAW = 0x0200,
+			WVR_REDRAW = WVR_HREDRAW | WVR_VREDRAW,
 			TV_FIRST = 0x1100,
 			TVM_SETEXTENDEDSTYLE = TV_FIRST + 44,
 			TVM_GETEXTENDEDSTYLE = TV_FIRST + 45,
@@ -27,5 +48,104 @@ namespace TC.WinForms
 			TVS_EX_DOUBLEBUFFER = 0x0004,
 			TVS_EX_AUTOHSCROLL = 0x0020,
 			TVS_EX_FADEINOUTEXPANDOS = 0x0040;
+
+		[StructLayout(LayoutKind.Sequential)]
+		internal struct RECT
+		{
+			public int Left, Top, Right, Bottom;
+
+			public RECT(int left, int top, int right, int bottom)
+			{
+				Left = left;
+				Top = top;
+				Right = right;
+				Bottom = bottom;
+			}
+
+			public RECT(Rectangle rectangle)
+			{
+				Left = rectangle.Left;
+				Top = rectangle.Top;
+				Right = rectangle.Right;
+				Bottom = rectangle.Bottom;
+			}
+
+			public Rectangle ToRectangle()
+			{
+				return Rectangle.FromLTRB(Left, Top, Right, Bottom);
+			}
+
+			public void Inflate(int width, int height)
+			{
+				Left -= width;
+				Top -= height;
+				Right += width;
+				Bottom += height;
+			}
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		internal struct NCCALCSIZE_PARAMS
+		{
+			public RECT rgrc0, rgrc1, rgrc2;
+			public IntPtr lpPos;
+		}
+
+		internal static T PtrToStruct<T>(IntPtr ptr) where T : struct
+		{
+			return (T)Marshal.PtrToStructure(ptr, typeof(T));
+		}
+
+		internal sealed class DeviceContext : IDisposable, IDeviceContext
+		{
+			private readonly IntPtr fHandle;
+			private IntPtr fDC;
+			private bool fDisposed;
+
+			public DeviceContext(IntPtr handle)
+			{
+				fHandle = handle;
+			}
+
+			~DeviceContext()
+			{
+				DisposeCore();
+			}
+
+			public void Dispose()
+			{
+				DisposeCore();
+				GC.SuppressFinalize(this);
+			}
+
+			private void DisposeCore()
+			{
+				if (!fDisposed)
+				{
+					ReleaseHdc();
+					fDisposed = true;
+				}
+			}
+
+			#region IDeviceContext Members
+
+			public IntPtr GetHdc()
+			{
+				if (fDC == IntPtr.Zero)
+					fDC = GetWindowDC(fHandle);
+				return fDC;
+			}
+
+			public void ReleaseHdc()
+			{
+				if (fDC != IntPtr.Zero)
+				{
+					ReleaseDC(fHandle, fDC);
+					fDC = IntPtr.Zero;
+				}
+			}
+
+			#endregion
+		}
 	}
 }
