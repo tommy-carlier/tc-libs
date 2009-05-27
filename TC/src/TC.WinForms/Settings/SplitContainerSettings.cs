@@ -27,8 +27,8 @@ namespace TC.WinForms.Settings
 		protected override void LoadCore(XPathNavigator xml)
 		{
 			CollapsedPanel = ToFixedPanel(xml.GetAttribute("collapsed-panel", String.Empty));
-			int lSplitterDistance = ConvertString.ToInt32(xml.GetAttribute("splitter-distance", String.Empty));
-			if (lSplitterDistance > 0) SplitterDistance = lSplitterDistance;
+			int splitterDistance = ConvertString.ToInt32(xml.GetAttribute("splitter-distance", String.Empty));
+			if (splitterDistance > 0) SplitterDistance = splitterDistance;
 		}
 
 		/// <summary>Saves the settings to the specified <see cref="T:XmlWriter"/>.</summary>

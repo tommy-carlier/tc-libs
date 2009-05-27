@@ -24,14 +24,14 @@ namespace TC.WinForms.Controls
 		/// <summary>Initializes a new instance of the <see cref="T:TTreeView"/> class.</summary>
 		protected TTreeView()
 		{
-			fReloadSelectedNodeCommand = new SimpleActionCommand(ReloadSelectedNode);
+			_reloadSelectedNodeCommand = new SimpleActionCommand(ReloadSelectedNode);
 
-			ImageList lIcons = new ImageList();
-			lIcons.ImageSize = new Size(16, 16);
-			lIcons.ColorDepth = ColorDepth.Depth32Bit;
-			lIcons.Images.Add("_LoadingTreeNode", LoadingTreeNodeIcon);
-			InitializeIcons(lIcons);
-			ImageList = lIcons;
+			ImageList icons = new ImageList();
+			icons.ImageSize = new Size(16, 16);
+			icons.ColorDepth = ColorDepth.Depth32Bit;
+			icons.Images.Add("_LoadingTreeNode", LoadingTreeNodeIcon);
+			InitializeIcons(icons);
+			ImageList = icons;
 
 			ShowLines = false;
 			ShowNodeToolTips = true;
@@ -83,10 +83,10 @@ namespace TC.WinForms.Controls
 			// http://www.danielmoth.com/Blog/2007/01/treeviewvista.html
 			if (SystemUtilities.IsWindowsVistaOrLater)
 			{
-				IntPtr lHandle = Handle;
-				int lStyle
+				IntPtr handle = Handle;
+				int style
 					= NativeMethods.SendMessage(
-						lHandle,
+						handle,
 						NativeMethods.TVM_GETEXTENDEDSTYLE,
 						IntPtr.Zero,
 						IntPtr.Zero).ToInt32()
@@ -95,10 +95,10 @@ namespace TC.WinForms.Controls
 					| NativeMethods.TVS_EX_DOUBLEBUFFER;
 
 				NativeMethods.SendMessage(
-					lHandle,
+					handle,
 					NativeMethods.TVM_SETEXTENDEDSTYLE,
 					IntPtr.Zero,
-					new IntPtr(lStyle));
+					new IntPtr(style));
 			}
 
 			// use the Explorer visual style
@@ -114,10 +114,10 @@ namespace TC.WinForms.Controls
 			{
 				// if Windows Vista or later: lose the horizontal scrollbar:
 				// http://www.danielmoth.com/Blog/2007/01/treeviewvista.html
-				CreateParams lCreateParams = base.CreateParams;
+				CreateParams createParams = base.CreateParams;
 				if (SystemUtilities.IsWindowsVistaOrLater)
-					lCreateParams.Style |= NativeMethods.TVS_NOHSCROLL;
-				return lCreateParams;
+					createParams.Style |= NativeMethods.TVS_NOHSCROLL;
+				return createParams;
 			}
 		}
 
@@ -138,15 +138,15 @@ namespace TC.WinForms.Controls
 			{
 				try
 				{
-					TTreeNode[] lTopLevelNodes = LoadTopLevelNodes();
+					TTreeNode[] topLevelNodes = LoadTopLevelNodes();
 					if (IsHandleCreated)
-						this.InvokeAsync(nodes => LoadNodes(Nodes, nodes), lTopLevelNodes);
+						this.InvokeAsync(nodes => LoadNodes(Nodes, nodes), topLevelNodes);
 				}
-				catch (Exception lException)
+				catch (Exception exception)
 				{
-					if (lException.IsCritical()) throw;
+					if (exception.IsCritical()) throw;
 					else if (IsHandleCreated)
-						this.InvokeAsync(TMessageDialog.ShowError, this, lException);
+						this.InvokeAsync(TMessageDialog.ShowError, this, exception);
 				}
 			});
 		}
@@ -166,26 +166,26 @@ namespace TC.WinForms.Controls
 			finally { EndUpdate(); }
 		}
 
-		private readonly ICommand fReloadSelectedNodeCommand;
+		private readonly ICommand _reloadSelectedNodeCommand;
 
 		/// <summary>Gets the command to reload the child nodes of the selected node.</summary>
 		/// <value>The command to reload the child nodes of the selected node.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand ReloadSelectedNodeCommand { get { return fReloadSelectedNodeCommand; } }
+		public ICommand ReloadSelectedNodeCommand { get { return _reloadSelectedNodeCommand; } }
 
 		/// <summary>Reloads the child nodes of the selected node.</summary>
 		public void ReloadSelectedNode()
 		{
-			TTreeNode lNode = SelectedNode as TTreeNode;
-			if (lNode != null && lNode.HasChildNodes)
+			TTreeNode node = SelectedNode as TTreeNode;
+			if (node != null && node.HasChildNodes)
 			{
-				bool lExpand = lNode.IsExpanded;
+				bool expand = node.IsExpanded;
 				BeginUpdate();
-				lNode.Nodes.Clear();
-				lNode.Nodes.Add(new LoadingTreeNode());
-				lNode.Collapse();
+				node.Nodes.Clear();
+				node.Nodes.Add(new LoadingTreeNode());
+				node.Collapse();
 				EndUpdate();
-				if (lExpand) lNode.Expand();
+				if (expand) node.Expand();
 			}
 		}
 
@@ -198,23 +198,23 @@ namespace TC.WinForms.Controls
 		protected override void OnAfterExpand(TreeViewEventArgs e)
 		{
 			base.OnAfterExpand(e);
-			TTreeNode lNode = e.Node as TTreeNode;
-			if (lNode != null && lNode.Nodes.Count == 1 && lNode.Nodes[0] is LoadingTreeNode)
+			TTreeNode node = e.Node as TTreeNode;
+			if (node != null && node.Nodes.Count == 1 && node.Nodes[0] is LoadingTreeNode)
 				ThreadPool.QueueUserWorkItem(delegate
 				{
 					try
 					{
-						TTreeNode[] lChildNodes = lNode.LoadChildNodesInternal();
+						TTreeNode[] childNodes = node.LoadChildNodesInternal();
 						if (IsHandleCreated)
-							this.InvokeAsync(nodes => LoadNodes(lNode.Nodes, nodes), lChildNodes);
+							this.InvokeAsync(nodes => LoadNodes(node.Nodes, nodes), childNodes);
 					}
-					catch (Exception lException)
+					catch (Exception exception)
 					{
-						if (lException.IsCritical()) throw;
+						if (exception.IsCritical()) throw;
 						else if (IsHandleCreated)
 						{
-							this.InvokeAsync(lNode.Collapse);
-							this.InvokeAsync(TMessageDialog.ShowError, this, lException);
+							this.InvokeAsync(node.Collapse);
+							this.InvokeAsync(TMessageDialog.ShowError, this, exception);
 						}
 					}
 				});
@@ -225,11 +225,11 @@ namespace TC.WinForms.Controls
 		protected override void OnItemDrag(ItemDragEventArgs e)
 		{
 			base.OnItemDrag(e);
-			TTreeNode lNode = e.Item as TTreeNode;
-			if (lNode != null)
+			TTreeNode node = e.Item as TTreeNode;
+			if (node != null)
 			{
-				SelectedNode = lNode;
-				lNode.RaiseDrag(e);
+				SelectedNode = node;
+				node.RaiseDrag(e);
 			}
 		}
 
@@ -238,9 +238,9 @@ namespace TC.WinForms.Controls
 		protected override void OnNodeMouseDoubleClick(TreeNodeMouseClickEventArgs e)
 		{
 			base.OnNodeMouseDoubleClick(e);
-			TTreeNode lNode = e.Node as TTreeNode;
-			if (lNode != null && e.Button == MouseButtons.Left)
-				lNode.RaiseDoubleClick(e);
+			TTreeNode node = e.Node as TTreeNode;
+			if (node != null && e.Button == MouseButtons.Left)
+				node.RaiseDoubleClick(e);
 		}
 
 		/// <summary>Raises the <see cref="E:NodeMouseClick"/> event.</summary>
@@ -250,18 +250,18 @@ namespace TC.WinForms.Controls
 			base.OnNodeMouseClick(e);
 			if (e.Button == MouseButtons.Right)
 			{
-				TTreeNode lNode = e.Node as TTreeNode;
-				if (lNode != null)
+				TTreeNode node = e.Node as TTreeNode;
+				if (node != null)
 				{
-					SelectedNode = lNode;
-					ContextMenuStrip lContextMenu = new ContextMenuStrip();
-					lNode.InitializeContextMenuInternal(lContextMenu);
-					if (lContextMenu.Items.Count > 0)
+					SelectedNode = node;
+					ContextMenuStrip contextMenu = new ContextMenuStrip();
+					node.InitializeContextMenuInternal(contextMenu);
+					if (contextMenu.Items.Count > 0)
 					{
-						lContextMenu.Closed += delegate { this.InvokeAsync(lContextMenu.Dispose); };
-						lContextMenu.Show(this, e.Location);
+						contextMenu.Closed += delegate { this.InvokeAsync(contextMenu.Dispose); };
+						contextMenu.Show(this, e.Location);
 					}
-					else lContextMenu.Dispose();
+					else contextMenu.Dispose();
 				}
 			}
 		}

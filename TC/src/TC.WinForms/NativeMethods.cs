@@ -98,13 +98,13 @@ namespace TC.WinForms
 
 		internal sealed class DeviceContext : IDisposable, IDeviceContext
 		{
-			private readonly IntPtr fHandle;
-			private IntPtr fDC;
-			private bool fDisposed;
+			private readonly IntPtr _handle;
+			private IntPtr _dc;
+			private bool _disposed;
 
 			public DeviceContext(IntPtr handle)
 			{
-				fHandle = handle;
+				_handle = handle;
 			}
 
 			~DeviceContext()
@@ -120,10 +120,10 @@ namespace TC.WinForms
 
 			private void DisposeCore()
 			{
-				if (!fDisposed)
+				if (!_disposed)
 				{
 					ReleaseHdc();
-					fDisposed = true;
+					_disposed = true;
 				}
 			}
 
@@ -131,17 +131,17 @@ namespace TC.WinForms
 
 			public IntPtr GetHdc()
 			{
-				if (fDC == IntPtr.Zero)
-					fDC = GetWindowDC(fHandle);
-				return fDC;
+				if (_dc == IntPtr.Zero)
+					_dc = GetWindowDC(_handle);
+				return _dc;
 			}
 
 			public void ReleaseHdc()
 			{
-				if (fDC != IntPtr.Zero)
+				if (_dc != IntPtr.Zero)
 				{
-					ReleaseDC(fHandle, fDC);
-					fDC = IntPtr.Zero;
+					ReleaseDC(_handle, _dc);
+					_dc = IntPtr.Zero;
 				}
 			}
 

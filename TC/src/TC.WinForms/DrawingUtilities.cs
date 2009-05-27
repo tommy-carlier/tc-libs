@@ -33,8 +33,8 @@ namespace TC.WinForms
 		{
 			if (graphics == null) throw new ArgumentNullException("graphics");
 
-			using (Brush lBrush = CreateShinyVerticalGradientBrush(totalBounds, lightColor, darkColor))
-				graphics.FillRectangle(lBrush, clippingBounds);
+			using (Brush brush = CreateShinyVerticalGradientBrush(totalBounds, lightColor, darkColor))
+				graphics.FillRectangle(brush, clippingBounds);
 		}
 
 		/// <summary>Creates a <see cref="T:Brush"/> that can be used to draw a shiny vertical gradient.</summary>
@@ -50,19 +50,19 @@ namespace TC.WinForms
 			return new LinearGradientBrush(bounds, lightColor, darkColor, LinearGradientMode.Vertical)
 			{
 				WrapMode = WrapMode.TileFlipXY,
-				Blend = fShinyVerticalGradientBrushBlend
+				Blend = _shinyVerticalGradientBrushBlend
 			};
 		}
 
 		private static readonly Blend
-			fShinyVerticalGradientBrushBlend = CreateShinyVerticalGradientBrushBlend();
+			_shinyVerticalGradientBrushBlend = CreateShinyVerticalGradientBrushBlend();
 
 		private static Blend CreateShinyVerticalGradientBrushBlend()
 		{
-			Blend lBlend = new Blend();
-			lBlend.Factors = new float[] { 0, 0.4F, 0.8F, 1 };
-			lBlend.Positions = new float[] { 0, 0.4F, 0.5F, 1 };
-			return lBlend;
+			Blend blend = new Blend();
+			blend.Factors = new float[] { 0, 0.4F, 0.8F, 1 };
+			blend.Positions = new float[] { 0, 0.4F, 0.5F, 1 };
+			return blend;
 		}
 
 		#endregion
@@ -86,8 +86,8 @@ namespace TC.WinForms
 		{
 			if (graphics == null) throw new ArgumentNullException("graphics");
 
-			using (Brush lBrush = CreateSigmaBellGradientBrush(totalBounds, edgeColor, centerColor, mode))
-				graphics.FillRectangle(lBrush, clippingBounds);
+			using (Brush brush = CreateSigmaBellGradientBrush(totalBounds, edgeColor, centerColor, mode))
+				graphics.FillRectangle(brush, clippingBounds);
 		}
 
 		/// <summary>Creates a <see cref="T:Brush"/> that can be used to draw a sigma bell gradient.</summary>
@@ -102,10 +102,10 @@ namespace TC.WinForms
 			Color centerColor,
 			LinearGradientMode mode)
 		{
-			LinearGradientBrush lBrush = new LinearGradientBrush(bounds, edgeColor, centerColor, mode);
-			lBrush.WrapMode = WrapMode.TileFlipXY;
-			lBrush.SetSigmaBellShape(0.5F, 1F);
-			return lBrush;
+			LinearGradientBrush brush = new LinearGradientBrush(bounds, edgeColor, centerColor, mode);
+			brush.WrapMode = WrapMode.TileFlipXY;
+			brush.SetSigmaBellShape(0.5F, 1F);
+			return brush;
 		}
 
 		#endregion
@@ -149,41 +149,41 @@ namespace TC.WinForms
 			if (width < 0) throw new ArgumentOutOfRangeException("width", "width cannot be negative");
 			if (height < 0) throw new ArgumentOutOfRangeException("height", "height cannot be negative");
 
-			GraphicsPath lPath = new GraphicsPath();
-			lPath.StartFigure();
+			GraphicsPath path = new GraphicsPath();
+			path.StartFigure();
 
-			int lCornerSize = 2 * radius;
+			int cornerSize = 2 * radius;
 
 			// top left corner
 			if (radius > 0)
-				lPath.AddArc(x, y, lCornerSize, lCornerSize, 180, 90);
+				path.AddArc(x, y, cornerSize, cornerSize, 180, 90);
 
 			// top edge
-			lPath.AddLine(x + radius, y, x + width - radius, y);
+			path.AddLine(x + radius, y, x + width - radius, y);
 
 			// top right corner
 			if (radius > 0)
-				lPath.AddArc(x + width - lCornerSize, y, lCornerSize, lCornerSize, 290, 90);
+				path.AddArc(x + width - cornerSize, y, cornerSize, cornerSize, 290, 90);
 
 			// right edge
-			lPath.AddLine(x + width, y + radius, x + width, y + height - radius);
+			path.AddLine(x + width, y + radius, x + width, y + height - radius);
 
 			// bottom right corner
 			if (radius > 0)
-				lPath.AddArc(x + width - lCornerSize, y + height - lCornerSize, lCornerSize, lCornerSize, 0, 90);
+				path.AddArc(x + width - cornerSize, y + height - cornerSize, cornerSize, cornerSize, 0, 90);
 
 			// bottom edge
-			lPath.AddLine(x + width - radius, y + height, x + radius, y + height);
+			path.AddLine(x + width - radius, y + height, x + radius, y + height);
 
 			// bottom left corner
 			if (radius > 0)
-				lPath.AddArc(x, y + height - lCornerSize, lCornerSize, lCornerSize, 90, 90);
+				path.AddArc(x, y + height - cornerSize, cornerSize, cornerSize, 90, 90);
 
 			// left edge
-			lPath.AddLine(x, y + height - radius, x, y + radius);
+			path.AddLine(x, y + height - radius, x, y + radius);
 
-			lPath.CloseFigure();
-			return lPath;
+			path.CloseFigure();
+			return path;
 		}
 
 		#endregion
@@ -208,8 +208,9 @@ namespace TC.WinForms
 			if (lighting < -1F || lighting > 1F)
 				throw new ArgumentOutOfRangeException("lighting", "lighting has to be between -1 and 1.");
 
-			ImageAttributes lAttributes = new ImageAttributes();
-			ColorMatrix lColorMatrix = new ColorMatrix(new float[][]
+			ImageAttributes attributes = new ImageAttributes();
+			ColorMatrix colorMatrix = new ColorMatrix(
+				new float[][]
 				{
 					new float[] { 1, 0, 0, 0, 0 },
 					new float[] { 0, 1, 0, 0, 0 },
@@ -217,18 +218,18 @@ namespace TC.WinForms
 					new float[] { 0, 0, 0, translucency, 0 },
 					new float[] { lighting, lighting, lighting, 0, 1 }
 				});
-			lAttributes.SetColorMatrix(lColorMatrix);
-			Size lSize = image.Size;
+			attributes.SetColorMatrix(colorMatrix);
+			Size size = image.Size;
 
 			graphics.DrawImage(
 				image,
 				destination,
 				0,
 				0,
-				lSize.Width,
-				lSize.Height,
+				size.Width,
+				size.Height,
 				GraphicsUnit.Pixel,
-				lAttributes);
+				attributes);
 		}
 
 		/// <summary>Gets the average of 2 colors.</summary>
@@ -254,13 +255,13 @@ namespace TC.WinForms
 			if (color1Percentage <= 0.0) return color2;
 			if (color1Percentage >= 1.0) return color1;
 
-			double lColor2Percentage = 1.0 - color1Percentage;
+			double color2Percentage = 1.0 - color1Percentage;
 
 			return Color.FromArgb(
-				RoundColorComponent((color1.A * color1Percentage) + (color2.A * lColor2Percentage)),
-				RoundColorComponent((color1.R * color1Percentage) + (color2.R * lColor2Percentage)),
-				RoundColorComponent((color1.G * color1Percentage) + (color2.G * lColor2Percentage)),
-				RoundColorComponent((color1.B * color1Percentage) + (color2.B * lColor2Percentage)));
+				RoundColorComponent((color1.A * color1Percentage) + (color2.A * color2Percentage)),
+				RoundColorComponent((color1.R * color1Percentage) + (color2.R * color2Percentage)),
+				RoundColorComponent((color1.G * color1Percentage) + (color2.G * color2Percentage)),
+				RoundColorComponent((color1.B * color1Percentage) + (color2.B * color2Percentage)));
 		}
 
 		private static int RoundColorComponent(double value)

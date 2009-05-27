@@ -43,21 +43,21 @@ namespace TC.WinForms
 			set { base.SizeMode = value; }
 		}
 
-		private static readonly Padding fDefaultPadding = new Padding(5);
+		private static readonly Padding _defaultPadding = new Padding(5);
 
 		/// <summary>Gets the internal spacing, in pixels, of the contents of a control.</summary>
 		/// <returns>A <see cref="T:Padding"/> that represents the internal spacing of the contents of a control.</returns>
-		protected override Padding DefaultPadding { get { return fDefaultPadding; } }
+		protected override Padding DefaultPadding { get { return _defaultPadding; } }
 
-		private static readonly Size fDefaultMinimumSize = new Size(32, 32) + fDefaultPadding.Size;
+		private static readonly Size _defaultMinimumSize = new Size(32, 32) + _defaultPadding.Size;
 
 		/// <summary>Gets the length and height, in pixels, that is specified as the default minimum size of a control.</summary>
 		/// <returns>A <see cref="T:Size"/> representing the size of the control.</returns>
-		protected override Size DefaultMinimumSize { get { return fDefaultMinimumSize; } }
+		protected override Size DefaultMinimumSize { get { return _defaultMinimumSize; } }
 
 		#endregion
 
-		private SystemIcon fSystemIcon;
+		private SystemIcon _systemIcon;
 
 		/// <summary>Gets or sets the <see cref="T:SystemIcon"/> that should be displayed.</summary>
 		/// <value>The <see cref="T:SystemIcon"/> that should be displayed.</value>
@@ -65,20 +65,20 @@ namespace TC.WinForms
 		[Category("Appearance"), Description("The system icon that is displayed.")]
 		public SystemIcon SystemIcon
 		{
-			get { return fSystemIcon; }
+			get { return _systemIcon; }
 			set
 			{
-				if (fSystemIcon != value)
+				if (_systemIcon != value)
 				{
-					fSystemIcon = value;
+					_systemIcon = value;
 					if (value != SystemIcon.Custom)
-						fCustomImage = null;
+						_customImage = null;
 					Image = CreateImage();
 				}
 			}
 		}
 
-		private Image fCustomImage;
+		private Image _customImage;
 
 		/// <summary>Gets or sets the custom image that should be displayed.</summary>
 		/// <value>The custom image that should be displayed.</value>
@@ -86,16 +86,16 @@ namespace TC.WinForms
 		[Description("The custom image that is displayed.")]
 		public Image CustomImage
 		{
-			get { return fCustomImage; }
+			get { return _customImage; }
 			set
 			{
-				if (fCustomImage != value)
+				if (_customImage != value)
 				{
-					fCustomImage = value;
+					_customImage = value;
 					if (value != null)
-						fSystemIcon = SystemIcon.Custom;
-					else if (fSystemIcon == SystemIcon.Custom)
-						fSystemIcon = SystemIcon.None;
+						_systemIcon = SystemIcon.Custom;
+					else if (_systemIcon == SystemIcon.Custom)
+						_systemIcon = SystemIcon.None;
 					Image = CreateImage();
 				}
 			}
@@ -104,8 +104,8 @@ namespace TC.WinForms
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		private bool ShouldSerializeCustomImage()
 		{
-			return (fSystemIcon == SystemIcon.Custom)
-				== (fCustomImage == null);
+			return (_systemIcon == SystemIcon.Custom)
+				== (_customImage == null);
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -118,9 +118,9 @@ namespace TC.WinForms
 
 		private Image CreateImage()
 		{
-			switch (fSystemIcon)
+			switch (_systemIcon)
 			{
-				case SystemIcon.Custom: return fCustomImage;
+				case SystemIcon.Custom: return _customImage;
 				case SystemIcon.FormIcon: return CreateFormIconBitmap();
 				case SystemIcon.Information: return SystemIcons.Information.ToBitmap();
 				case SystemIcon.Question: return SystemIcons.Question.ToBitmap();
@@ -132,8 +132,8 @@ namespace TC.WinForms
 
 		private Image CreateFormIconBitmap()
 		{
-			Form lForm = FindForm();
-			return lForm != null ? lForm.Icon.ToBitmap() : null;
+			Form form = FindForm();
+			return form != null ? form.Icon.ToBitmap() : null;
 		}
 	}
 }

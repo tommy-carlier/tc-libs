@@ -16,26 +16,26 @@ namespace TC.WinForms.Controls
 	{
 		#region DocumentContainer members
 
-		private IDocumentContainer fDocumentContainer;
+		private IDocumentContainer _documentContainer;
 
 		/// <summary>Gets or sets the component that contains the actual document.</summary>
 		/// <value>The component that contains the actual document.</value>
 		[Category("Behavior"), Description("The component that contains the document."), DefaultValue(null)]
 		public IDocumentContainer DocumentContainer
 		{
-			get { return fDocumentContainer; }
+			get { return _documentContainer; }
 			set
 			{
-				if (fDocumentContainer != value)
+				if (_documentContainer != value)
 				{
 					if (value == this)
 						throw new InvalidOperationException("You cannot assign an instance to its own DocumentContainer property.");
 
-					if (fDocumentContainer != null)
+					if (_documentContainer != null)
 					{
-						fDocumentContainer.FilePathChanged -= HandlerDocumentContainerFilePathChanged;
-						fDocumentContainer.FileNameChanged -= HandlerDocumentContainerFileNameChanged;
-						fDocumentContainer.IsModifiedChanged -= HandlerDocumentContainerIsModifiedChanged;
+						_documentContainer.FilePathChanged -= HandlerDocumentContainerFilePathChanged;
+						_documentContainer.FileNameChanged -= HandlerDocumentContainerFileNameChanged;
+						_documentContainer.IsModifiedChanged -= HandlerDocumentContainerIsModifiedChanged;
 					}
 
 					if (value != null)
@@ -45,31 +45,31 @@ namespace TC.WinForms.Controls
 						value.IsModifiedChanged += HandlerDocumentContainerIsModifiedChanged;
 					}
 
-					fDocumentContainer = value;
+					_documentContainer = value;
 					OnDocumentContainerChanged(EventArgs.Empty);
-					HandlerDocumentContainerFilePathChanged(fDocumentContainer, EventArgs.Empty);
-					HandlerDocumentContainerFileNameChanged(fDocumentContainer, EventArgs.Empty);
-					HandlerDocumentContainerIsModifiedChanged(fDocumentContainer, EventArgs.Empty);
+					HandlerDocumentContainerFilePathChanged(_documentContainer, EventArgs.Empty);
+					HandlerDocumentContainerFileNameChanged(_documentContainer, EventArgs.Empty);
+					HandlerDocumentContainerIsModifiedChanged(_documentContainer, EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventDocumentContainerChanged = new object();
+		private static readonly object _documentContainerChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:DocumentContainer"/> property has changed.</summary>
 		public event EventHandler DocumentContainerChanged
 		{
-			add { Events.AddHandler(fEventDocumentContainerChanged, value); }
-			remove { Events.RemoveHandler(fEventDocumentContainerChanged, value); }
+			add { Events.AddHandler(_documentContainerChanged, value); }
+			remove { Events.RemoveHandler(_documentContainerChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:DocumentContainerChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnDocumentContainerChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventDocumentContainerChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_documentContainerChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
@@ -82,10 +82,10 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		string IDocumentContainer.FilePath
 		{
-			get { return fDocumentContainer != null ? fDocumentContainer.FilePath : null; }
+			get { return _documentContainer != null ? _documentContainer.FilePath : null; }
 		}
 
-		private static readonly object fEventFilePathChanged = new object();
+		private static readonly object _filePathChanged = new object();
 
 		[SuppressMessage(
 			"Microsoft.Design",
@@ -93,15 +93,15 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.FilePathChanged
 		{
-			add { Events.AddHandler(fEventFilePathChanged, value); }
-			remove { Events.RemoveHandler(fEventFilePathChanged, value); }
+			add { Events.AddHandler(_filePathChanged, value); }
+			remove { Events.RemoveHandler(_filePathChanged, value); }
 		}
 
 		private void HandlerDocumentContainerFilePathChanged(object sender, EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventFilePathChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_filePathChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		[SuppressMessage(
@@ -110,10 +110,10 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		string IDocumentContainer.FileName
 		{
-			get { return fDocumentContainer != null ? fDocumentContainer.FileName : null; }
+			get { return _documentContainer != null ? _documentContainer.FileName : null; }
 		}
 
-		private static readonly object fEventFileNameChanged = new object();
+		private static readonly object _fileNameChanged = new object();
 
 		[SuppressMessage(
 		"Microsoft.Design",
@@ -121,15 +121,15 @@ namespace TC.WinForms.Controls
 		Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.FileNameChanged
 		{
-			add { Events.AddHandler(fEventFileNameChanged, value); }
-			remove { Events.RemoveHandler(fEventFileNameChanged, value); }
+			add { Events.AddHandler(_fileNameChanged, value); }
+			remove { Events.RemoveHandler(_fileNameChanged, value); }
 		}
 
 		private void HandlerDocumentContainerFileNameChanged(object sender, EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventFileNameChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_fileNameChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		[SuppressMessage(
@@ -138,10 +138,10 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		bool IDocumentContainer.IsModified
 		{
-			get { return fDocumentContainer != null && fDocumentContainer.IsModified; }
+			get { return _documentContainer != null && _documentContainer.IsModified; }
 		}
 
-		private static readonly object fEventIsModifiedChanged = new object();
+		private static readonly object _isModifiedChanged = new object();
 
 		[SuppressMessage(
 			"Microsoft.Design",
@@ -149,15 +149,15 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		event EventHandler IDocumentContainer.IsModifiedChanged
 		{
-			add { Events.AddHandler(fEventIsModifiedChanged, value); }
-			remove { Events.RemoveHandler(fEventIsModifiedChanged, value); }
+			add { Events.AddHandler(_isModifiedChanged, value); }
+			remove { Events.RemoveHandler(_isModifiedChanged, value); }
 		}
 
 		private void HandlerDocumentContainerIsModifiedChanged(object sender, EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventIsModifiedChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_isModifiedChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		[SuppressMessage(
@@ -168,7 +168,7 @@ namespace TC.WinForms.Controls
 		{
 			get
 			{
-				return fDocumentContainer != null ? fDocumentContainer.FileDialogFilter : null;
+				return _documentContainer != null ? _documentContainer.FileDialogFilter : null;
 			}
 		}
 
@@ -178,8 +178,8 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.ClearDocument(string fileName)
 		{
-			if (fDocumentContainer != null)
-				fDocumentContainer.ClearDocument(fileName);
+			if (_documentContainer != null)
+				_documentContainer.ClearDocument(fileName);
 		}
 
 		[SuppressMessage(
@@ -188,8 +188,8 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.LoadDocument(string filePath, int filterIndex)
 		{
-			if (fDocumentContainer != null)
-				fDocumentContainer.LoadDocument(filePath, filterIndex);
+			if (_documentContainer != null)
+				_documentContainer.LoadDocument(filePath, filterIndex);
 		}
 
 		[SuppressMessage(
@@ -198,8 +198,8 @@ namespace TC.WinForms.Controls
 			Justification = "TDocumentUserControl forwards all of its calls to IDocumentContainer-members to fDocumentContainer.")]
 		void IDocumentContainer.SaveDocument(string filePath, int filterIndex)
 		{
-			if (fDocumentContainer != null)
-				fDocumentContainer.SaveDocument(filePath, filterIndex);
+			if (_documentContainer != null)
+				_documentContainer.SaveDocument(filePath, filterIndex);
 		}
 
 		#endregion

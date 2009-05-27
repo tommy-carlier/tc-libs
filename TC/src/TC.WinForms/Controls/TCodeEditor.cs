@@ -43,19 +43,19 @@ namespace TC.WinForms.Controls
 
 		#region FilePath members
 
-		private string fFilePath;
+		private string _filePath;
 
 		/// <summary>Gets the full path of the document file.</summary>
 		/// <value>The full path of the document file, or null if it hasn't been saved yet.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public string FilePath
 		{
-			get { return fFilePath; }
+			get { return _filePath; }
 			private set
 			{
-				if (fFilePath != value)
+				if (_filePath != value)
 				{
-					fFilePath = value;
+					_filePath = value;
 					OnFilePathChanged(EventArgs.Empty);
 					if (!string.IsNullOrEmpty(value))
 						FileName = Path.GetFileName(value);
@@ -63,102 +63,102 @@ namespace TC.WinForms.Controls
 			}
 		}
 
-		private static readonly object fEventFilePathChanged = new object();
+		private static readonly object _filePathChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:FilePath"/> property has changed.</summary>
 		public event EventHandler FilePathChanged
 		{
-			add { Events.AddHandler(fEventFilePathChanged, value); }
-			remove { Events.RemoveHandler(fEventFilePathChanged, value); }
+			add { Events.AddHandler(_filePathChanged, value); }
+			remove { Events.RemoveHandler(_filePathChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:FilePathChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFilePathChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventFilePathChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_filePathChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
 
 		#region FileName members
 
-		private string fFileName;
+		private string _fileName;
 
 		/// <summary>Gets or sets the file name of the document file.</summary>
 		/// <value>The file name of the document file.</value>
 		[Category("Behavior"), Description("The file name of the document file."), DefaultValue(null)]
 		public string FileName
 		{
-			get { return fFileName; }
+			get { return _fileName; }
 			set
 			{
-				if (fFileName != value)
+				if (_fileName != value)
 				{
-					fFileName = value;
+					_fileName = value;
 					OnFileNameChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventFileNameChanged = new object();
+		private static readonly object _fileNameChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:FileName"/> property has changed.</summary>
 		public event EventHandler FileNameChanged
 		{
-			add { Events.AddHandler(fEventFileNameChanged, value); }
-			remove { Events.RemoveHandler(fEventFileNameChanged, value); }
+			add { Events.AddHandler(_fileNameChanged, value); }
+			remove { Events.RemoveHandler(_fileNameChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:FileNameChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFileNameChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventFileNameChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_fileNameChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
 
 		#region IsModified members
 
-		private bool fIsModified;
+		private bool _isModified;
 
 		/// <summary>Gets a value indicating whether the document is modified.</summary>
 		/// <value><c>true</c> if the document is modified; otherwise, <c>false</c>.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsModified
 		{
-			get { return fIsModified; }
+			get { return _isModified; }
 			private set
 			{
-				if (fIsModified != value)
+				if (_isModified != value)
 				{
-					fIsModified = value;
+					_isModified = value;
 					OnIsModifiedChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventIsModifiedChanged = new object();
+		private static readonly object _isModifiedChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:IsModified"/> property has changed.</summary>
 		public event EventHandler IsModifiedChanged
 		{
-			add { Events.AddHandler(fEventIsModifiedChanged, value); }
-			remove { Events.RemoveHandler(fEventIsModifiedChanged, value); }
+			add { Events.AddHandler(_isModifiedChanged, value); }
+			remove { Events.RemoveHandler(_isModifiedChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:IsModifiedChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnIsModifiedChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventIsModifiedChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_isModifiedChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
@@ -169,19 +169,19 @@ namespace TC.WinForms.Controls
 		/// <value>The default value of the <see cref="P:FileDialogFilter"/>.</value>
 		protected virtual string DefaultFileDialogFilter { get { return "All Files (*.*)|*.*"; } }
 
-		private string fFileDialogFilter;
+		private string _fileDialogFilter;
 
 		/// <summary>Gets or sets the filter that is used in the dialog to open or save the document.</summary>
 		/// <value>The filter that is used in the dialog to open or save the document.</value>
 		[Category("Behavior"), Description("The filter that is used in the dialog to open or save the document.")]
 		public string FileDialogFilter
 		{
-			get { return fFileDialogFilter; }
+			get { return _fileDialogFilter; }
 			set
 			{
-				if (fFileDialogFilter != value)
+				if (_fileDialogFilter != value)
 				{
-					fFileDialogFilter = value;
+					_fileDialogFilter = value;
 					OnFileDialogFilterChanged(EventArgs.Empty);
 				}
 			}
@@ -190,31 +190,31 @@ namespace TC.WinForms.Controls
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		private bool ShouldSerializeFileDialogFilter()
 		{
-			return fFileDialogFilter != DefaultFileDialogFilter;
+			return _fileDialogFilter != DefaultFileDialogFilter;
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		private void ResetFileDialogFilter()
 		{
-			fFileDialogFilter = DefaultFileDialogFilter;
+			_fileDialogFilter = DefaultFileDialogFilter;
 		}
 
-		private static readonly object fEventFileDialogFilterChanged = new object();
+		private static readonly object _fileDialogFilterChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:FileDialogFilter"/> property has changed.</summary>
 		public event EventHandler FileDialogFilterChanged
 		{
-			add { Events.AddHandler(fEventFileDialogFilterChanged, value); }
-			remove { Events.RemoveHandler(fEventFileDialogFilterChanged, value); }
+			add { Events.AddHandler(_fileDialogFilterChanged, value); }
+			remove { Events.RemoveHandler(_fileDialogFilterChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:FileDialogFilterChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFileDialogFilterChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventFileDialogFilterChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_fileDialogFilterChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion

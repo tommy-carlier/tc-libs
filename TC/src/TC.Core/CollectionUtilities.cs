@@ -47,8 +47,8 @@ namespace TC
 			if (collection == null) throw new ArgumentNullException("collection");
 			if (converter == null) throw new ArgumentNullException("converter");
 
-			foreach (TInput lItem in collection)
-				yield return converter(lItem);
+			foreach (TInput item in collection)
+				yield return converter(item);
 		}
 
 		/// <summary>Converts the specified non-generic collection to a generic collection of the specified type.</summary>
@@ -63,8 +63,8 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			foreach (object lItem in collection)
-				yield return (T)lItem;
+			foreach (object item in collection)
+				yield return (T)item;
 		}
 
 		#region inner class EmptyCollection
@@ -140,19 +140,19 @@ namespace TC
 
 		private sealed class OneItemCollection<T> : IList<T>
 		{
-			private readonly T fItem;
-			public OneItemCollection(T item) { fItem = item; }
+			private readonly T _item;
+			public OneItemCollection(T item) { _item = item; }
 
 			#region IList<T> Members
 
-			int IList<T>.IndexOf(T item) { return object.Equals(fItem, item) ? 0 : -1; }
+			int IList<T>.IndexOf(T item) { return object.Equals(_item, item) ? 0 : -1; }
 			void IList<T>.Insert(int index, T item) { throw new NotSupportedException(); }
 			void IList<T>.RemoveAt(int index) { throw new NotSupportedException(); }
 			T IList<T>.this[int index]
 			{
 				get
 				{
-					if (index == 0) return fItem;
+					if (index == 0) return _item;
 					else throw new ArgumentOutOfRangeException("index");
 				}
 
@@ -165,8 +165,8 @@ namespace TC
 
 			void ICollection<T>.Add(T item) { throw new NotSupportedException(); }
 			void ICollection<T>.Clear() { throw new NotSupportedException(); }
-			bool ICollection<T>.Contains(T item) { return object.Equals(fItem, item); }
-			void ICollection<T>.CopyTo(T[] array, int arrayIndex) { array[arrayIndex] = fItem; }
+			bool ICollection<T>.Contains(T item) { return object.Equals(_item, item); }
+			void ICollection<T>.CopyTo(T[] array, int arrayIndex) { array[arrayIndex] = _item; }
 			int ICollection<T>.Count { get { return 1; } }
 			bool ICollection<T>.IsReadOnly { get { return true; } }
 			bool ICollection<T>.Remove(T item) { throw new NotSupportedException(); }
@@ -175,13 +175,13 @@ namespace TC
 
 			#region IEnumerable<T> Members
 
-			IEnumerator<T> IEnumerable<T>.GetEnumerator() { return new Enumerator(fItem); }
+			IEnumerator<T> IEnumerable<T>.GetEnumerator() { return new Enumerator(_item); }
 
 			#endregion
 
 			#region IEnumerable Members
 
-			SC.IEnumerator SC.IEnumerable.GetEnumerator() { return new Enumerator(fItem); }
+			SC.IEnumerator SC.IEnumerable.GetEnumerator() { return new Enumerator(_item); }
 
 			#endregion
 
@@ -189,13 +189,13 @@ namespace TC
 
 			private sealed class Enumerator : IEnumerator<T>
 			{
-				private readonly T fItem;
-				private bool fHasMovedNext;
-				public Enumerator(T item) { fItem = item; }
+				private readonly T _item;
+				private bool _hasMovedNext;
+				public Enumerator(T item) { _item = item; }
 
 				#region IEnumerator<T> Members
 
-				T IEnumerator<T>.Current { get { return fItem; } }
+				T IEnumerator<T>.Current { get { return _item; } }
 
 				#endregion
 
@@ -207,14 +207,14 @@ namespace TC
 
 				#region IEnumerator Members
 
-				object SC.IEnumerator.Current { get { return fItem; } }
+				object SC.IEnumerator.Current { get { return _item; } }
 				bool SC.IEnumerator.MoveNext()
 				{
-					try { return !fHasMovedNext; }
-					finally { fHasMovedNext = true; }
+					try { return !_hasMovedNext; }
+					finally { _hasMovedNext = true; }
 				}
 
-				void SC.IEnumerator.Reset() { fHasMovedNext = false; }
+				void SC.IEnumerator.Reset() { _hasMovedNext = false; }
 
 				#endregion
 			}

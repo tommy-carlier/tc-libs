@@ -26,8 +26,8 @@ namespace TC.WinForms.Controls
 
 		private void HandlerSplitterMoved(object sender, SplitterEventArgs e)
 		{
-			TForm lForm = FindForm() as TForm;
-			if (lForm != null) lForm.SaveSettings();
+			TForm form = FindForm() as TForm;
+			if (form != null) form.SaveSettings();
 		}
 
 		/// <summary>Loads the settings of this control.</summary>

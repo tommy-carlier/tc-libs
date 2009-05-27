@@ -22,9 +22,9 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			StringBuilder lBuilder = new StringBuilder();
-			JoinInternal(lBuilder, collection);
-			return lBuilder.ToString();
+			StringBuilder builder = new StringBuilder();
+			JoinInternal(builder, collection);
+			return builder.ToString();
 		}
 
 		/// <summary>Concatenates the specified separator between each element of the specified collection of strings, yielding a single concatenated string.</summary>
@@ -35,13 +35,13 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			StringBuilder lBuilder = new StringBuilder();
+			StringBuilder builder = new StringBuilder();
 
 			if (string.IsNullOrEmpty(separator))
-				JoinInternal(lBuilder, collection);
-			else JoinInternal(lBuilder, collection, separator);
+				JoinInternal(builder, collection);
+			else JoinInternal(builder, collection, separator);
 
-			return lBuilder.ToString();
+			return builder.ToString();
 		}
 
 		/// <summary>Concatenates the specified separator between each element of the specified collection of strings, with an optional prefix and suffix, yielding a single concatenated string.</summary>
@@ -54,33 +54,33 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			StringBuilder lBuilder = new StringBuilder();
+			StringBuilder builder = new StringBuilder();
 
-			AppendIfNotEmpty(lBuilder, prefix);
+			AppendIfNotEmpty(builder, prefix);
 			if (string.IsNullOrEmpty(separator))
-				JoinInternal(lBuilder, collection);
-			else JoinInternal(lBuilder, collection, separator);
-			AppendIfNotEmpty(lBuilder, suffix);
+				JoinInternal(builder, collection);
+			else JoinInternal(builder, collection, separator);
+			AppendIfNotEmpty(builder, suffix);
 
-			return lBuilder.ToString();
+			return builder.ToString();
 		}
 
 		private static void JoinInternal(StringBuilder builder, IEnumerable<string> collection)
 		{
-			foreach (string lItem in collection)
-				AppendIfNotEmpty(builder, lItem);
+			foreach (string item in collection)
+				AppendIfNotEmpty(builder, item);
 		}
 
 		private static void JoinInternal(StringBuilder builder, IEnumerable<string> collection, string separator)
 		{
-			using (var lEnumerator = collection.GetEnumerator())
-				if (lEnumerator.MoveNext())
+			using (var enumerator = collection.GetEnumerator())
+				if (enumerator.MoveNext())
 				{
-					AppendIfNotEmpty(builder, lEnumerator.Current);
-					while (lEnumerator.MoveNext())
+					AppendIfNotEmpty(builder, enumerator.Current);
+					while (enumerator.MoveNext())
 					{
 						builder.Append(separator);
-						AppendIfNotEmpty(builder, lEnumerator.Current);
+						AppendIfNotEmpty(builder, enumerator.Current);
 					}
 				}
 		}
@@ -142,95 +142,95 @@ namespace TC
 
 		private static IEnumerable<string> LazySplitInternal(string value, string separator)
 		{
-			// lOffset = the start index of each found substring
-			int lOffset = 0;
+			// offset = the start index of each found substring
+			int offset = 0;
 
-			// lNextIndex = the index of the next separator
-			int lNextIndex = value.IndexOf(separator);
-			while (lNextIndex >= 0)
+			// nextIndex = the index of the next separator
+			int nextIndex = value.IndexOf(separator);
+			while (nextIndex >= 0)
 			{
-				// lLength = the length of each found substring
-				int lLength = lNextIndex - lOffset;
+				// length = the length of each found substring
+				int length = nextIndex - offset;
 
-				// if lLength is positive, yield the found substring, else yield an empty string
-				yield return lLength > 0 ? value.Substring(lOffset, lLength) : String.Empty;
+				// if length is positive, yield the found substring, else yield an empty string
+				yield return length > 0 ? value.Substring(offset, length) : String.Empty;
 
 				// check if there is still text after the separator
-				lOffset = lNextIndex + 1;
-				if (lOffset >= value.Length)
+				offset = nextIndex + 1;
+				if (offset >= value.Length)
 				{
 					yield return String.Empty;
 					break;
 				}
 
 				// find the next separator (start searching just after the previous one)
-				lNextIndex = value.IndexOf(separator, lOffset);
+				nextIndex = value.IndexOf(separator, offset);
 			}
 
 			// check if there is still text after the last separator
-			if (lOffset < value.Length) yield return value.Substring(lOffset);
+			if (offset < value.Length) yield return value.Substring(offset);
 		}
 
 		private static IEnumerable<string> LazySplitInternal(string value, char separator)
 		{
-			// lOffset = the start index of each found substring
-			int lOffset = 0;
+			// offset = the start index of each found substring
+			int offset = 0;
 
-			// lNextIndex = the index of the next separator
-			int lNextIndex = value.IndexOf(separator);
-			while (lNextIndex >= 0)
+			// nextIndex = the index of the next separator
+			int nextIndex = value.IndexOf(separator);
+			while (nextIndex >= 0)
 			{
-				// lLength = the length of each found substring
-				int lLength = lNextIndex - lOffset;
+				// length = the length of each found substring
+				int length = nextIndex - offset;
 
-				// if lLength is positive, yield the found substring, else yield an empty string
-				yield return lLength > 0 ? value.Substring(lOffset, lLength) : String.Empty;
+				// if length is positive, yield the found substring, else yield an empty string
+				yield return length > 0 ? value.Substring(offset, length) : String.Empty;
 
 				// check if there is still text after the separator
-				lOffset = lNextIndex + 1;
-				if (lOffset >= value.Length)
+				offset = nextIndex + 1;
+				if (offset >= value.Length)
 				{
 					yield return String.Empty;
 					break;
 				}
 
 				// find the next separator (start searching just after the previous one)
-				lNextIndex = value.IndexOf(separator, lOffset);
+				nextIndex = value.IndexOf(separator, offset);
 			}
 
 			// check if there is still text after the last separator
-			if (lOffset < value.Length) yield return value.Substring(lOffset);
+			if (offset < value.Length) yield return value.Substring(offset);
 		}
 
 		private static IEnumerable<string> LazySplitInternal(string value, char[] separators)
 		{
-			// lOffset = the start index of each found substring
-			int lOffset = 0;
+			// offset = the start index of each found substring
+			int offset = 0;
 
-			// lNextIndex = the index of the next separator
-			int lNextIndex = value.IndexOfAny(separators);
-			while (lNextIndex >= 0)
+			// nextIndex = the index of the next separator
+			int nextIndex = value.IndexOfAny(separators);
+			while (nextIndex >= 0)
 			{
-				// lLength = the length of each found substring
-				int lLength = lNextIndex - lOffset;
+				// length = the length of each found substring
+				int length = nextIndex - offset;
 
-				// if lLength is positive, yield the found substring, else yield an empty string
-				yield return lLength > 0 ? value.Substring(lOffset, lLength) : String.Empty;
+				// if length is positive, yield the found substring, else yield an empty string
+				yield return length > 0 ? value.Substring(offset, length) : String.Empty;
 
 				// check if there is still text after the separator
-				lOffset = lNextIndex + 1;
-				if (lOffset >= value.Length)
+				offset = nextIndex + 1;
+				if (offset >= value.Length)
 				{
 					yield return String.Empty;
 					break;
 				}
 
 				// find the next separator (start searching just after the previous one)
-				lNextIndex = value.IndexOfAny(separators, lOffset);
+				nextIndex = value.IndexOfAny(separators, offset);
 			}
 
 			// check if there is still text after the last separator
-			if (lOffset < value.Length) yield return value.Substring(lOffset);
+			if (offset < value.Length) yield return value.Substring(offset);
 		}
 
 		#endregion
@@ -252,9 +252,9 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			foreach (string lItem in collection)
-				if (!string.IsNullOrEmpty(lItem))
-					yield return lItem;
+			foreach (string item in collection)
+				if (!string.IsNullOrEmpty(item))
+					yield return item;
 		}
 
 		/// <summary>Returns all the items of the specified collection, trimming the leading and trailing white-space from each element.</summary>
@@ -264,28 +264,28 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
-			foreach (string lItem in collection)
-				yield return string.IsNullOrEmpty(lItem) ? String.Empty : lItem.Trim();
+			foreach (string item in collection)
+				yield return string.IsNullOrEmpty(item) ? String.Empty : item.Trim();
 		}
 
 		/// <summary>Determines whether the first character of the specified string is the specified character.</summary>
-		/// <param name="s">The string to check.</param>
+		/// <param name="str">The string to check.</param>
 		/// <param name="firstChar">The character to check with.</param>
 		/// <returns>If the specified string starts with the specified character, true; otherwise, false.</returns>
-		public static bool StartsWith(this string s, char firstChar)
+		public static bool StartsWith(this string str, char firstChar)
 		{
-			if (s == null) throw new ArgumentNullException("s");
-			return s.Length > 0 && s[0] == firstChar;
+			if (str == null) throw new ArgumentNullException("str");
+			return str.Length > 0 && str[0] == firstChar;
 		}
 
 		/// <summary>Determines whether the last character of the specified string is the specified character.</summary>
-		/// <param name="s">The string to check.</param>
+		/// <param name="str">The string to check.</param>
 		/// <param name="lastChar">The character to check with.</param>
 		/// <returns>If the specified string ends with the specified character, true; otherwise, false.</returns>
-		public static bool EndsWith(this string s, char lastChar)
+		public static bool EndsWith(this string str, char lastChar)
 		{
-			if (s == null) throw new ArgumentNullException("s");
-			return s.Length > 0 && s[s.Length - 1] == lastChar;
+			if (str == null) throw new ArgumentNullException("str");
+			return str.Length > 0 && str[str.Length - 1] == lastChar;
 		}
 	}
 }

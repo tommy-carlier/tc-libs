@@ -26,7 +26,7 @@ namespace TC.WinForms
 		/// <summary>Initializes a new instance of the <see cref="TApplication"/> class.</summary>
 		public TApplication()
 		{
-			fAboutCommand = new SimpleActionCommand(ShowAboutDialog);
+			_aboutCommand = new SimpleActionCommand(ShowAboutDialog);
 		}
 
 		/// <summary>Runs the current application.</summary>
@@ -47,10 +47,10 @@ namespace TC.WinForms
 			SetToolStripRenderer();
 			SystemEvents.UserPreferenceChanged += delegate { SetToolStripRenderer(); };
 
-			fCurrent = new TApp();
-			TMainForm lForm = new TMainForm();
-			lForm.Show();
-			Application.Run(fCurrent);
+			_current = new TApp();
+			TMainForm form = new TMainForm();
+			form.Show();
+			Application.Run(_current);
 		}
 
 		private static void SetToolStripRenderer()
@@ -72,20 +72,20 @@ namespace TC.WinForms
 			Run<TApplication, TMainForm>();
 		}
 
-		private static TApplication fCurrent = new TApplication();
+		private static TApplication _current = new TApplication();
 
 		/// <summary>Gets the current application.</summary>
 		/// <value>The current application.</value>
-		public static TApplication Current { get { return fCurrent; } }
+		public static TApplication Current { get { return _current; } }
 
 		#region application information
 
 		private static readonly Icon
-			fIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+			_icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
 		/// <summary>Gets the icon of the current application.</summary>
 		/// <value>The icon of the current application.</value>
-		public static Icon Icon { get { return fIcon; } }
+		public static Icon Icon { get { return _icon; } }
 
 		/// <summary>Gets the title of the application.</summary>
 		/// <value>The title of the application.</value>
@@ -93,8 +93,8 @@ namespace TC.WinForms
 		{
 			get
 			{
-				var lAttribute = GetEntryAssemblyFirstAttribute<AssemblyTitleAttribute>(false);
-				return lAttribute != null ? lAttribute.Title : String.Empty;
+				var attribute = GetEntryAssemblyFirstAttribute<AssemblyTitleAttribute>(false);
+				return attribute != null ? attribute.Title : String.Empty;
 			}
 		}
 
@@ -111,8 +111,8 @@ namespace TC.WinForms
 		{
 			get
 			{
-				var lAttribute = GetEntryAssemblyFirstAttribute<AssemblyCopyrightAttribute>(false);
-				return lAttribute != null ? lAttribute.Copyright : String.Empty;
+				var attribute = GetEntryAssemblyFirstAttribute<AssemblyCopyrightAttribute>(false);
+				return attribute != null ? attribute.Copyright : String.Empty;
 			}
 		}
 
@@ -122,8 +122,8 @@ namespace TC.WinForms
 		{
 			get
 			{
-				var lAttribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
-				return lAttribute != null ? lAttribute.Uri : null;
+				var attribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
+				return attribute != null ? attribute.Uri : null;
 			}
 		}
 
@@ -133,8 +133,8 @@ namespace TC.WinForms
 		{
 			get
 			{
-				var lAttribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
-				return lAttribute != null ? lAttribute.Title : String.Empty;
+				var attribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
+				return attribute != null ? attribute.Title : String.Empty;
 			}
 		}
 
@@ -148,16 +148,16 @@ namespace TC.WinForms
 
 		#endregion
 
-		private readonly ICommand fAboutCommand;
+		private readonly ICommand _aboutCommand;
 
 		/// <summary>Gets the command to show information about the current application.</summary>
 		/// <value>The command to show information about the current application.</value>
-		public ICommand AboutCommand { get { return fAboutCommand; } }
+		public ICommand AboutCommand { get { return _aboutCommand; } }
 
 		private void ShowAboutDialog()
 		{
-			using (var lDialog = new TDialog<TAboutDialogContentControl>())
-				lDialog.ShowDialog(Form.ActiveForm);
+			using (var dialog = new TDialog<TAboutDialogContentControl>())
+				dialog.ShowDialog(Form.ActiveForm);
 		}
 	}
 }

@@ -32,9 +32,9 @@ namespace TC.WinForms
 		/// <returns>The image to display for the specified item.</returns>
 		protected override Image GetItemImage(object item)
 		{
-			TItem lItem = item as TItem;
-			return lItem != null
-				? GetItemImage(lItem)
+			TItem typedItem = item as TItem;
+			return typedItem != null
+				? GetItemImage(typedItem)
 				: base.GetItemImage(item);
 		}
 
@@ -51,9 +51,9 @@ namespace TC.WinForms
 		/// <returns>The text to display for the specified item.</returns>
 		protected override string GetItemText(object item)
 		{
-			TItem lItem = item as TItem;
-			return lItem != null
-				? GetItemText(lItem)
+			TItem typedItem = item as TItem;
+			return typedItem != null
+				? GetItemText(typedItem)
 				: base.GetItemText(item);
 		}
 

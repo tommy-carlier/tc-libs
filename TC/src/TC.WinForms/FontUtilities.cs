@@ -37,21 +37,21 @@ namespace TC.WinForms
 			InitializeSystemFonts();
 
 			// reset the font of the open forms and their controls
-			foreach (Form lForm in Application.OpenForms)
-				foreach (IHasSystemFont lControl in lForm.EnumerateDescendants<IHasSystemFont>(true))
-					lControl.Font = lControl.SystemFont.ToFont();
+			foreach (Form form in Application.OpenForms)
+				foreach (IHasSystemFont control in form.EnumerateDescendants<IHasSystemFont>(true))
+					control.Font = control.SystemFont.ToFont();
 		}
 
 		#region GetFontFamily functions
 
 		private static readonly Dictionary<string, FontFamily>
-			fFontFamiliesByFontName = new Dictionary<string, FontFamily>();
+			_fontFamiliesByFontName = new Dictionary<string, FontFamily>();
 
 		private static void InitializeFontFamiliesByFontName()
 		{
-			fFontFamiliesByFontName.Clear();
-			foreach (FontFamily lFontFamily in FontFamily.Families)
-				fFontFamiliesByFontName[lFontFamily.Name] = lFontFamily;
+			_fontFamiliesByFontName.Clear();
+			foreach (FontFamily fontFamily in FontFamily.Families)
+				_fontFamiliesByFontName[fontFamily.Name] = fontFamily;
 		}
 
 		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with the specified name.</summary>
@@ -59,11 +59,11 @@ namespace TC.WinForms
 		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or null if the specified font cannot be found.</returns>
 		public static FontFamily GetFontFamily(string fontName)
 		{
-			FontFamily lFontFamily;
+			FontFamily fontFamily;
 			if (!string.IsNullOrEmpty(fontName)
-				&& fFontFamiliesByFontName.TryGetValue(fontName, out lFontFamily))
+				&& _fontFamiliesByFontName.TryGetValue(fontName, out fontFamily))
 			{
-				return lFontFamily;
+				return fontFamily;
 			}
 			else return null;
 		}
@@ -82,10 +82,10 @@ namespace TC.WinForms
 		/// <returns>The <see cref="T:FontFamily"/> of the first font with one of the specified names, or null if none of the specified fonts can be found.</returns>
 		public static FontFamily GetFontFamily(params string[] fontNames)
 		{
-			FontFamily lFontFamily;
-			foreach (string lFontName in fontNames)
-				if ((lFontFamily = GetFontFamily(lFontName)) != null)
-					return lFontFamily;
+			FontFamily fontFamily;
+			foreach (string fontName in fontNames)
+				if ((fontFamily = GetFontFamily(fontName)) != null)
+					return fontFamily;
 			return null;
 		}
 
@@ -112,41 +112,42 @@ namespace TC.WinForms
 
 		#region system fonts
 
-		private static readonly Dictionary<SystemFont, Font> fSystemFonts = new Dictionary<SystemFont, Font>();
+		private static readonly Dictionary<SystemFont, Font> 
+			_systemFonts = new Dictionary<SystemFont, Font>();
 
 		private static void InitializeSystemFonts()
 		{
-			fSystemFonts.Clear();
+			_systemFonts.Clear();
 
-			Font lDefaultFont = SystemFonts.IconTitleFont;
+			Font defaultFont = SystemFonts.IconTitleFont;
 
-			fSystemFonts[SystemFont.Default] = lDefaultFont;
-			fSystemFonts[SystemFont.Bold] = new Font(lDefaultFont, FontStyle.Bold);
-			fSystemFonts[SystemFont.Italic] = new Font(lDefaultFont, FontStyle.Italic);
-			fSystemFonts[SystemFont.Header] 
+			_systemFonts[SystemFont.Default] = defaultFont;
+			_systemFonts[SystemFont.Bold] = new Font(defaultFont, FontStyle.Bold);
+			_systemFonts[SystemFont.Italic] = new Font(defaultFont, FontStyle.Italic);
+			_systemFonts[SystemFont.Header] 
 				= new Font(
-					lDefaultFont.FontFamily, 
-					lDefaultFont.SizeInPoints * 1.5F, 
+					defaultFont.FontFamily, 
+					defaultFont.SizeInPoints * 1.5F, 
 					FontStyle.Bold);
 
-			fSystemFonts[SystemFont.Monospace]
+			_systemFonts[SystemFont.Monospace]
 				= new Font(
 					(SystemUsesClearTypeRendering // Consolas only looks good when ClearType rendering is used
 						? GetFontFamily("Envy Code R", "Consolas", "Lucida Console", "Courier New")
 						: GetFontFamily("Envy Code R", "Lucida Console", "Courier New"))
 						?? FontFamily.GenericMonospace,
-					lDefaultFont.SizeInPoints * 1.2F,
+					defaultFont.SizeInPoints * 1.2F,
 					FontStyle.Regular);
 		}
 
 		/// <summary>Converts the specified <see cref="T:SystemFont"/> to a <see cref="T:Font"/>.</summary>
-		/// <param name="font">The <see cref="T:SystemFont"/> to convert.</param>
+		/// <param name="systemFont">The <see cref="T:SystemFont"/> to convert.</param>
 		/// <returns>The <see cref="T:Font"/> that represents the specified <see cref="T:SystemFont"/>.</returns>
-		public static Font ToFont(this SystemFont font)
+		public static Font ToFont(this SystemFont systemFont)
 		{
-			Font lFont;
-			if (fSystemFonts.TryGetValue(font, out lFont))
-				return lFont;
+			Font font;
+			if (_systemFonts.TryGetValue(systemFont, out font))
+				return font;
 			else return SystemFonts.DefaultFont;
 		}
 

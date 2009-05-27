@@ -24,19 +24,19 @@ namespace TC.WinForms
 			if (comboBox == null) throw new ArgumentNullException("comboBox");
 			if (itemsToAdd == null) throw new ArgumentNullException("itemsToAdd");
 
-			ComboBox.ObjectCollection lComboBoxItems = comboBox.Items;
+			ComboBox.ObjectCollection comboBoxItems = comboBox.Items;
 			comboBox.BeginUpdate();
 			try
 			{
-				lComboBoxItems.Clear();
-				foreach (T lItem in itemsToAdd)
-					lComboBoxItems.Add(lItem);
+				comboBoxItems.Clear();
+				foreach (T item in itemsToAdd)
+					comboBoxItems.Add(item);
 			}
 			finally
 			{
 				comboBox.EndUpdate();
 
-				if (lComboBoxItems.Count > 0)
+				if (comboBoxItems.Count > 0)
 				{
 					comboBox.Enabled = true;
 					if (comboBox.DropDownStyle == ComboBoxStyle.DropDownList)
@@ -56,19 +56,19 @@ namespace TC.WinForms
 			if (listBox == null) throw new ArgumentNullException("listBox");
 			if (itemsToAdd == null) throw new ArgumentNullException("itemsToAdd");
 
-			ListBox.ObjectCollection lListBoxItems = listBox.Items;
+			ListBox.ObjectCollection listBoxItems = listBox.Items;
 			listBox.BeginUpdate();
 			try
 			{
-				lListBoxItems.Clear();
-				foreach (T lItem in itemsToAdd)
-					lListBoxItems.Add(lItem);
+				listBoxItems.Clear();
+				foreach (T item in itemsToAdd)
+					listBoxItems.Add(item);
 			}
 			finally
 			{
 				listBox.EndUpdate();
 
-				if (lListBoxItems.Count > 0)
+				if (listBoxItems.Count > 0)
 				{
 					listBox.Enabled = true;
 					listBox.SelectedIndex = 0;

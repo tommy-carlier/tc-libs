@@ -18,15 +18,15 @@ namespace TC.WinForms.Commands
 		public SimpleActionCommand(Action action)
 		{
 			if (action == null) throw new ArgumentNullException("action");
-			fAction = action;
+			_action = action;
 		}
 
-		private readonly Action fAction;
+		private readonly Action _action;
 
 		/// <summary>Executes this command.</summary>
 		public override void Execute()
 		{
-			if (CanExecute) fAction();
+			if (CanExecute) _action();
 		}
 	}
 }

@@ -19,40 +19,40 @@ namespace TC.WinForms.Commands
 		/// <summary>Executes this command.</summary>
 		public abstract void Execute();
 
-		private bool fCanExecute = true;
+		private bool _canExecute = true;
 
 		/// <summary>Gets or sets a value indicating whether this command can be executed.</summary>
 		/// <value><c>true</c> if this command can be executed; otherwise, <c>false</c>.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public virtual bool CanExecute
 		{
-			get { return fCanExecute; }
+			get { return _canExecute; }
 			set
 			{
-				if (fCanExecute != value)
+				if (_canExecute != value)
 				{
-					fCanExecute = value;
+					_canExecute = value;
 					OnCanExecuteChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventCanExecuteChanged = new object();
+		private static readonly object _canExecuteChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:CanExecute"/> property has changed.</summary>
 		public event EventHandler CanExecuteChanged
 		{
-			add { Events.AddHandler(fEventCanExecuteChanged, value); }
-			remove { Events.RemoveHandler(fEventCanExecuteChanged, value); }
+			add { Events.AddHandler(_canExecuteChanged, value); }
+			remove { Events.RemoveHandler(_canExecuteChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:CanExecuteChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCanExecuteChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventCanExecuteChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_canExecuteChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion

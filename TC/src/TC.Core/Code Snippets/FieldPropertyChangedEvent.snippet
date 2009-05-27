@@ -18,7 +18,11 @@
     </Imports>
     <Declarations>
       <Literal>
-        <ID>name</ID>
+        <ID>fieldName</ID>
+        <Default>name</Default>
+      </Literal>
+      <Literal>
+        <ID>propName</ID>
         <Default>Name</Default>
       </Literal>
       <Literal>
@@ -39,43 +43,43 @@
       </Literal>
     </Declarations>
     <Code Language="CSharp">
-      <![CDATA[#region $name$ members
+      <![CDATA[#region $propName$ members
 
-    private $type$ f$name$;
+    private $type$ _$fieldName$;
     
-    /// <summary>Gets or sets the $name$.</summary>
-    /// <value>The $name$.</value>
+    /// <summary>Gets or sets the $fieldName$.</summary>
+    /// <value>The $fieldName$.</value>
     [Category("$category$"), DefaultValue($default$)]
     [Description("$description$")]
-    public $type$ $name$
+    public $type$ $propName$
     {
-      get { return f$name$; }
+      get { return _$fieldName$; }
       set
       {
-        if (f$name$ != value)
+        if (_$fieldName$ != value)
         {
-          f$name$ = value;
-          On$name$Changed(EventArgs.Empty);
+          _$fieldName$ = value;
+          On$propName$Changed(EventArgs.Empty);
         }
       }
     }
 
-    private static readonly object fEvent$name$Changed = new object();
+    private static readonly object _$fieldName$Changed = new object();
     
-    /// <summary>Occurs when the value of the <see cref="P:$name$"/> property has changed.</summary>
-    public event EventHandler $name$Changed
+    /// <summary>Occurs when the value of the <see cref="P:$propName$"/> property has changed.</summary>
+    public event EventHandler $propName$Changed
     {
-	    add { Events.AddHandler(fEvent$name$Changed, value); }
-	    remove { Events.RemoveHandler(fEvent$name$Changed, value); }
+	    add { Events.AddHandler(_$fieldName$Changed, value); }
+	    remove { Events.RemoveHandler(_$fieldName$Changed, value); }
     }
 
-    /// <summary>Raises the <see cref="E:$name$Changed"/> event.</summary>
+    /// <summary>Raises the <see cref="E:$propName$Changed"/> event.</summary>
     /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-    protected virtual void On$name$Changed(EventArgs e)
+    protected virtual void On$propName$Changed(EventArgs e)
     {
-      EventHandler lEventHandler = Events[fEvent$name$Changed] as EventHandler;
-      if (lEventHandler != null)
-        lEventHandler(this, e);
+      EventHandler handler = Events[_$fieldName$Changed] as EventHandler;
+      if (handler != null)
+        handler(this, e);
     }
 
     #endregion

@@ -22,14 +22,14 @@ namespace TC.WinForms.Dialogs
 		public DialogValidationException(Control invalidControl, string message)
 			: base(message)
 		{
-			fInvalidControl = invalidControl;
+			_invalidControl = invalidControl;
 		}
 
-		private readonly Control fInvalidControl;
+		private readonly Control _invalidControl;
 
 		/// <summary>Gets the invalid control that caused the error.</summary>
 		/// <value>The invalid control.</value>
-		public Control InvalidControl { get { return fInvalidControl; } }
+		public Control InvalidControl { get { return _invalidControl; } }
 
 		/// <summary>Initializes a new instance of the <see cref="T:DialogValidationException"/> class.</summary>
 		public DialogValidationException() { }

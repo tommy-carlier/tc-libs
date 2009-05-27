@@ -24,16 +24,16 @@ namespace TC.Settings
 			if (settingsFileName.Length == 0)
 				throw new ArgumentException("settingsFileName cannot be an empty string", "settingsFileName");
 
-			fSettingsFileName = settingsFileName;
+			_settingsFileName = settingsFileName;
 		}
 
-		private readonly string fSettingsFileName;
+		private readonly string _settingsFileName;
 
 		/// <summary>Gets the full path of the settings file.</summary>
 		/// <value>The full path of the settings file.</value>
-		public string SettingsFileName { get { return fSettingsFileName; } }
+		public string SettingsFileName { get { return _settingsFileName; } }
 
-		private readonly List<BaseSettings> fChildSettings = new List<BaseSettings>();
+		private readonly List<BaseSettings> _childSettings = new List<BaseSettings>();
 
 		/// <summary>Registers settings of the specified type.</summary>
 		/// <typeparam name="TSettings">The type of the settings to register.</typeparam>
@@ -43,32 +43,32 @@ namespace TC.Settings
 		{
 			if (settings == null) throw new ArgumentNullException("settings");
 
-			fChildSettings.Add(settings);
+			_childSettings.Add(settings);
 			return settings;
 		}
 
 		// the loading and saving is locked so only 1 thread can load or save the settings at a time
-		private readonly object fLockLoadSave = new object();
+		private readonly object _lockLoadSave = new object();
 
 		/// <summary>Loads the application settings.</summary>
 		public void Load()
 		{
-			lock (fLockLoadSave)
-				if (File.Exists(fSettingsFileName))
-					using (XmlReader lReader = XmlReader.Create(fSettingsFileName))
-						Load(new XPathDocument(lReader).CreateNavigator());
+			lock (_lockLoadSave)
+				if (File.Exists(_settingsFileName))
+					using (XmlReader reader = XmlReader.Create(_settingsFileName))
+						Load(new XPathDocument(reader).CreateNavigator());
 		}
 
 		/// <summary>Saves the application settings.</summary>
 		public void Save()
 		{
-			lock (fLockLoadSave)
-				using (XmlWriter lWriter = XmlWriter.Create(
-					fSettingsFileName,
+			lock (_lockLoadSave)
+				using (XmlWriter writer = XmlWriter.Create(
+					_settingsFileName,
 					new XmlWriterSettings { Indent = true }))
 				{
-					lWriter.WriteStartDocument();
-					Save(lWriter);
+					writer.WriteStartDocument();
+					Save(writer);
 				}
 		}
 
@@ -76,16 +76,16 @@ namespace TC.Settings
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>
 		protected override void LoadCore(XPathNavigator xml)
 		{
-			foreach (var lSettings in fChildSettings)
-				lSettings.Load(xml);
+			foreach (var settings in _childSettings)
+				settings.Load(xml);
 		}
 
 		/// <summary>Saves the settings to the specified <see cref="T:XmlWriter"/>.</summary>
 		/// <param name="writer">The <see cref="T:XmlWriter"/> to save the settings to.</param>
 		protected override void SaveCore(XmlWriter writer)
 		{
-			foreach (var lSettings in fChildSettings)
-				lSettings.Save(writer);
+			foreach (var settings in _childSettings)
+				settings.Save(writer);
 		}
 	}
 }

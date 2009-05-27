@@ -16,8 +16,8 @@ namespace TC.WinForms.Animation
 	{
 		#region initialization of the control for performing animation-steps
 
-		private static Control fInvokeControl;
-		private static readonly AnimationThread fAnimationThread = new AnimationThread();
+		private static Control _invokeControl;
+		private static readonly AnimationThread _animationThread = new AnimationThread();
 
 		/// <summary>Initializes the <see cref="T:Animator"/> class.</summary>
 		/// <remarks>This method should be called on the UI-thread.</remarks>
@@ -28,16 +28,16 @@ namespace TC.WinForms.Animation
 			Justification = "The handle of fInvokeControl has to be created, so the getter of the Handle property has to be called.")]
 		internal static void Initialize()
 		{
-			if (fInvokeControl == null)
+			if (_invokeControl == null)
 			{
-				fInvokeControl = new Control();
-				IntPtr lHandle = fInvokeControl.Handle;
+				_invokeControl = new Control();
+				IntPtr handle = _invokeControl.Handle;
 			}
 		}
 
 		internal static void Perform(Action action)
 		{
-			fInvokeControl.BeginInvoke(action, null);
+			_invokeControl.BeginInvoke(action, null);
 		}
 
 		#endregion
@@ -344,28 +344,28 @@ namespace TC.WinForms.Animation
 
 		private static PropertySetter<TTarget, TValue> GetPropertySetter<TTarget, TValue>(string propertyName)
 		{
-			PropertySetter<TTarget, TValue> lPropertySetter =
+			PropertySetter<TTarget, TValue> propertySetter =
 				PropertySetters<TTarget, TValue>.GetPropertySetter(propertyName);
 
-			if (lPropertySetter == null)
+			if (propertySetter == null)
 				throw new ArgumentException(
 					"{0} is not a settable property of the type {1}."
 						.FormatInvariant(propertyName, typeof(TTarget).Name),
 					"propertyName");
 
-			return lPropertySetter;
+			return propertySetter;
 		}
 
 		private static Interpolator<TValue> GetInterpolator<TValue>()
 		{
-			Interpolator<TValue> lInterpolator = Interpolators.GetInterpolator<TValue>();
+			Interpolator<TValue> interpolator = Interpolators.GetInterpolator<TValue>();
 
-			if (lInterpolator == null)
+			if (interpolator == null)
 				throw new NotSupportedException(
 					"Values of type {0} can not be interpolated."
 						.FormatInvariant(typeof(TValue).Name));
 
-			return lInterpolator;
+			return interpolator;
 		}
 
 		#region inner class Animation
@@ -383,21 +383,21 @@ namespace TC.WinForms.Animation
 				int pulsationCount,
 				Action callback)
 			{
-				fPropertySetter = propertySetter;
-				fTarget = target;
-				fInterpolator = interpolator;
-				fStartValue = startValue;
+				_propertySetter = propertySetter;
+				_target = target;
+				_interpolator = interpolator;
+				_startValue = startValue;
 
 				Update(endValue, totalTicks, endTimeTicks, pulsationCount, callback);
 			}
 
-			private PropertySetter<TTarget, TValue> fPropertySetter;
-			private TTarget fTarget;
-			private Interpolator<TValue> fInterpolator;
-			private TValue fStartValue, fEndValue;
-			private long fTotalTicks, fEndTimeTicks;
-			private int fPulsationCount;
-			private Action fCallback;
+			private PropertySetter<TTarget, TValue> _propertySetter;
+			private TTarget _target;
+			private Interpolator<TValue> _interpolator;
+			private TValue _startValue, _endValue;
+			private long _totalTicks, _endTimeTicks;
+			private int _pulsationCount;
+			private Action _callback;
 
 			internal void Update(
 				TValue endValue,
@@ -406,47 +406,47 @@ namespace TC.WinForms.Animation
 				int pulsationCount,
 				Action callback)
 			{
-				fEndValue = endValue;
-				fTotalTicks += totalTicks;
+				_endValue = endValue;
+				_totalTicks += totalTicks;
 
-				if (fEndTimeTicks > 0)
-					fEndTimeTicks += totalTicks;
-				else fEndTimeTicks = endTimeTicks;
+				if (_endTimeTicks > 0)
+					_endTimeTicks += totalTicks;
+				else _endTimeTicks = endTimeTicks;
 
-				fPulsationCount = pulsationCount;
+				_pulsationCount = pulsationCount;
 
 				if (callback != null)
-					fCallback = Delegate.Combine(fCallback, callback) as Action;
+					_callback = Delegate.Combine(_callback, callback) as Action;
 			}
 
 			private void PerformStep()
 			{
-				long lTicksLeft = fEndTimeTicks - DateTime.UtcNow.Ticks;
-				if (lTicksLeft > 0)
+				long ticksLeft = _endTimeTicks - DateTime.UtcNow.Ticks;
+				if (ticksLeft > 0)
 				{
-					TValue lValue = fInterpolator(fStartValue, fEndValue, fTotalTicks - lTicksLeft, fTotalTicks);
-					fPropertySetter(fTarget, lValue);
-					fAnimationThread.Perform(PerformStep);
+					TValue value = _interpolator(_startValue, _endValue, _totalTicks - ticksLeft, _totalTicks);
+					_propertySetter(_target, value);
+					_animationThread.Perform(PerformStep);
 				}
 				else
 				{
-					fPropertySetter(fTarget, fEndValue);
+					_propertySetter(_target, _endValue);
 
-					if ((fPulsationCount -= 1) > 0)
+					if ((_pulsationCount -= 1) > 0)
 					{
-						TValue lSwapValue = fEndValue;
-						fEndValue = fStartValue;
-						fStartValue = lSwapValue;
+						TValue swapValue = _endValue;
+						_endValue = _startValue;
+						_startValue = swapValue;
 
-						fEndTimeTicks = DateTime.UtcNow.Ticks + fTotalTicks;
-						fAnimationThread.Perform(PerformStep);
+						_endTimeTicks = DateTime.UtcNow.Ticks + _totalTicks;
+						_animationThread.Perform(PerformStep);
 					}
 					else
 					{
-						fRunningAnimations.Remove(new RunningAnimationKey(fTarget, fPropertySetter));
+						_runningAnimations.Remove(new RunningAnimationKey(_target, _propertySetter));
 
-						if (fCallback != null)
-							fCallback();
+						if (_callback != null)
+							_callback();
 					}
 				}
 			}
@@ -500,7 +500,7 @@ namespace TC.WinForms.Animation
 			#endregion
 
 			private static readonly Dictionary<RunningAnimationKey, Animation<TTarget, TValue>>
-				fRunningAnimations = new Dictionary<RunningAnimationKey, Animation<TTarget, TValue>>();
+				_runningAnimations = new Dictionary<RunningAnimationKey, Animation<TTarget, TValue>>();
 
 			internal static void Run(
 				PropertySetter<TTarget, TValue> propertySetter,
@@ -512,36 +512,36 @@ namespace TC.WinForms.Animation
 				int pulsationCount,
 				Action callback)
 			{
-				long lTotalTicks = duration.Ticks;
-				long lEndTimeTicks = DateTime.UtcNow.Ticks + lTotalTicks;
+				long totalTicks = duration.Ticks;
+				long endTimeTicks = DateTime.UtcNow.Ticks + totalTicks;
 
-				fAnimationThread.Perform(delegate
+				_animationThread.Perform(delegate
 				{
-					if (lEndTimeTicks <= DateTime.UtcNow.Ticks)
+					if (endTimeTicks <= DateTime.UtcNow.Ticks)
 					{
 						propertySetter(target, endValue);
 						return;
 					}
 
-					RunningAnimationKey lKey = new RunningAnimationKey(target, propertySetter);
-					Animation<TTarget, TValue> lAnimation;
-					if (fRunningAnimations.TryGetValue(lKey, out lAnimation))
-						lAnimation.Update(endValue, lTotalTicks, lEndTimeTicks, pulsationCount, callback);
+					RunningAnimationKey key = new RunningAnimationKey(target, propertySetter);
+					Animation<TTarget, TValue> animation;
+					if (_runningAnimations.TryGetValue(key, out animation))
+						animation.Update(endValue, totalTicks, endTimeTicks, pulsationCount, callback);
 					else
 					{
-						lAnimation
+						animation
 							= new Animation<TTarget, TValue>(
 								propertySetter,
 								target,
 								interpolator,
 								startValue,
 								endValue,
-								lTotalTicks,
-								lEndTimeTicks,
+								totalTicks,
+								endTimeTicks,
 								pulsationCount,
 								callback);
-						fRunningAnimations[lKey] = lAnimation;
-						lAnimation.PerformStep();
+						_runningAnimations[key] = animation;
+						animation.PerformStep();
 					}
 				});
 			}

@@ -45,25 +45,26 @@ namespace TC.WinForms.Dialogs
 			return (Text ?? String.Empty) + " (" + DialogResult.ToString() + ")";
 		}
 
-		private static readonly Padding fDefaultPadding = new Padding(12, 0, 12, 0);
+		private static readonly Padding _defaultPadding = new Padding(12, 0, 12, 0);
+		
 		internal Button CreateButton()
 		{
-			Button lButton = new Button();
-			lButton.Text = Text ?? DialogResult.ToString();
-			lButton.Click += HandlerButtonClick;
-			lButton.Padding = fDefaultPadding;
-			lButton.Tag = this;
-			return lButton;
+			Button button = new Button();
+			button.Text = Text ?? DialogResult.ToString();
+			button.Click += HandlerButtonClick;
+			button.Padding = _defaultPadding;
+			button.Tag = this;
+			return button;
 		}
 
 		private void HandlerButtonClick(object sender, EventArgs e)
 		{
-			Button lButton = sender as Button;
-			Form lForm = lButton.FindForm();
-			if (lForm != null)
+			Button button = sender as Button;
+			Form form = button.FindForm();
+			if (form != null)
 			{
-				lForm.DialogResult = DialogResult;
-				if (!lForm.Modal) lForm.Close();
+				form.DialogResult = DialogResult;
+				if (!form.Modal) form.Close();
 			}
 		}
 

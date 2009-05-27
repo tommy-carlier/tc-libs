@@ -16,25 +16,25 @@ namespace TC.WinForms.Commands
 	{
 		#region Implementation members
 
-		private ICommand fImplementation;
+		private ICommand _implementation;
 
 		/// <summary>Gets or sets the <see cref="T:ICommand"/> that implements the functionality of this <see cref="T:ProxyCommand"/>.</summary>
 		/// <value>The <see cref="T:ICommand"/> that implements the functionality of this <see cref="T:ProxyCommand"/>.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ICommand Implementation
 		{
-			get { return fImplementation; }
+			get { return _implementation; }
 			set
 			{
-				if (fImplementation != value)
+				if (_implementation != value)
 				{
-					if (fImplementation != null)
-						fImplementation.CanExecuteChanged -= HandlerImplementationCanExecuteChanged;
+					if (_implementation != null)
+						_implementation.CanExecuteChanged -= HandlerImplementationCanExecuteChanged;
 
 					if (value != null)
 						value.CanExecuteChanged += HandlerImplementationCanExecuteChanged;
 
-					fImplementation = value;
+					_implementation = value;
 					RaiseCanExecuteChanged();
 				}
 			}
@@ -58,15 +58,15 @@ namespace TC.WinForms.Commands
 		/// <summary>Executes this command.</summary>
 		public void Execute()
 		{
-			if (fImplementation != null && fImplementation.CanExecute)
-				fImplementation.Execute();
+			if (_implementation != null && _implementation.CanExecute)
+				_implementation.Execute();
 		}
 
 		/// <summary>Gets a value indicating whether this command can be executed.</summary>
 		/// <value><c>true</c> if this command can be executed; otherwise, <c>false</c>.</value>
 		public bool CanExecute
 		{
-			get { return fImplementation != null && fImplementation.CanExecute; }
+			get { return _implementation != null && _implementation.CanExecute; }
 		}
 
 		/// <summary>Occurs when the value of the <see cref="P:CanExecute"/> property has changed.</summary>
@@ -78,8 +78,8 @@ namespace TC.WinForms.Commands
 		/// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (fImplementation != null)
-				fImplementation.CanExecuteChanged -= HandlerImplementationCanExecuteChanged;
+			if (_implementation != null)
+				_implementation.CanExecuteChanged -= HandlerImplementationCanExecuteChanged;
 
 			base.Dispose(disposing);
 		}

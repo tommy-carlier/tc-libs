@@ -15,42 +15,42 @@ namespace TC.WinForms.Animation
 	{
 		public AnimationThread()
 		{
-			fQueue = new Queue<Action>();
+			_queue = new Queue<Action>();
 
-			fThread = new Thread(Run);
-			fThread.Name = "Animation Thread";
-			fThread.IsBackground = true;
-			fThread.Start();
+			_thread = new Thread(Run);
+			_thread.Name = "Animation Thread";
+			_thread.IsBackground = true;
+			_thread.Start();
 		}
 
-		private readonly Thread fThread;
-		private readonly Queue<Action> fQueue;
-		private readonly object fLock = new object();
+		private readonly Thread _thread;
+		private readonly Queue<Action> _queue;
+		private readonly object _lock = new object();
 
 		public void Perform(Action action)
 		{
 			if (action != null)
-				lock (fLock)
+				lock (_lock)
 				{
-					fQueue.Enqueue(action);
-					Monitor.Pulse(fLock);
+					_queue.Enqueue(action);
+					Monitor.Pulse(_lock);
 				}
 		}
 
 		private void Run()
 		{
-			Action lAction;
+			Action action;
 			while (true)
 			{
-				lock (fLock)
+				lock (_lock)
 				{
-					if (fQueue.Count == 0)
-						Monitor.Wait(fLock);
-					lAction = fQueue.Dequeue();
+					if (_queue.Count == 0)
+						Monitor.Wait(_lock);
+					action = _queue.Dequeue();
 				}
 
 				Thread.Sleep(5);
-				Animator.Perform(lAction);
+				Animator.Perform(action);
 			}
 		}
 	}

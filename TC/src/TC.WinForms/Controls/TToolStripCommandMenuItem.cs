@@ -26,45 +26,45 @@ namespace TC.WinForms.Controls
 		/// <summary>Initializes a new instance of the <see cref="TToolStripCommandMenuItem"/> class.</summary>
 		public TToolStripCommandMenuItem()
 		{
-			fCommandBinding = new CommandBinding(this);
+			_commandBinding = new CommandBinding(this);
 		}
 
 		#region Command members
 
-		private readonly CommandBinding fCommandBinding;
+		private readonly CommandBinding _commandBinding;
 
 		/// <summary>Gets or sets the <see cref="T:ICommand"/> that is executed when this menu item is clicked.</summary>
 		/// <value>The <see cref="T:ICommand"/> that is executed when this menu item is clicked.</value>
 		[Category("Behavior"), Description("The command that is executed when this menu item is clicked."), DefaultValue(null)]
 		public ICommand Command
 		{
-			get { return fCommandBinding.Command; }
+			get { return _commandBinding.Command; }
 			set
 			{
-				if (fCommandBinding.Command != value)
+				if (_commandBinding.Command != value)
 				{
-					fCommandBinding.Command = value;
+					_commandBinding.Command = value;
 					OnCommandChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventCommandChanged = new object();
+		private static readonly object _commandChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:Command"/> property has changed.</summary>
 		public event EventHandler CommandChanged
 		{
-			add { Events.AddHandler(fEventCommandChanged, value); }
-			remove { Events.RemoveHandler(fEventCommandChanged, value); }
+			add { Events.AddHandler(_commandChanged, value); }
+			remove { Events.RemoveHandler(_commandChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:CommandChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCommandChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventCommandChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_commandChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion

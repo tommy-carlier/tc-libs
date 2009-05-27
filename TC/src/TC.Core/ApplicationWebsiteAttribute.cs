@@ -26,25 +26,25 @@ namespace TC
 		{
 			if (uri == null) throw new ArgumentNullException("uri");
 
-			if (!Uri.TryCreate(uri, UriKind.Absolute, out fUri))
+			if (!Uri.TryCreate(uri, UriKind.Absolute, out _uri))
 				throw new ArgumentException("uri is not a valid absolute URI", "uri");
 
-			fTitle 
+			_title 
 				= string.IsNullOrEmpty(title) 
 					? uri.ToString() 
 					: title;
 		}
 
-		private readonly Uri fUri;
+		private readonly Uri _uri;
 
 		/// <summary>Gets the <see cref="T:Uri"/> of the official website of the running application.</summary>
 		/// <value>The <see cref="T:Uri"/> of the official website of the running application.</value>
-		public Uri Uri { get { return fUri; } }
+		public Uri Uri { get { return _uri; } }
 
-		private readonly string fTitle;
+		private readonly string _title;
 
 		/// <summary>Gets the title or address of the official website of the running application.</summary>
 		/// <value>The title or address of the official website of the running application.</value>
-		public string Title { get { return fTitle; } }
+		public string Title { get { return _title; } }
 	}
 }

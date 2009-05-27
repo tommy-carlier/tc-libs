@@ -18,24 +18,24 @@ namespace TC.WinForms
 		/// <returns>A union of the working areas of all the screens.</returns>
 		public static Rectangle CalculateTotalWorkingArea()
 		{
-			Rectangle lWorkingArea = Rectangle.Empty;
+			Rectangle workingArea = Rectangle.Empty;
 
-			foreach (Screen lScreen in Screen.AllScreens)
-				lWorkingArea = Rectangle.Union(lWorkingArea, lScreen.WorkingArea);
+			foreach (Screen screen in Screen.AllScreens)
+				workingArea = Rectangle.Union(workingArea, screen.WorkingArea);
 
-			return lWorkingArea;
+			return workingArea;
 		}
 
 		/// <summary>Calculates the total bounds of all screens combined.</summary>
 		/// <returns>A union of the bounds of all the screens.</returns>
 		public static Rectangle CalculateTotalScreenBounds()
 		{
-			Rectangle lBounds = Rectangle.Empty;
+			Rectangle bounds = Rectangle.Empty;
 
-			foreach (Screen lScreen in Screen.AllScreens)
-				lBounds = Rectangle.Union(lBounds, lScreen.Bounds);
+			foreach (Screen screen in Screen.AllScreens)
+				bounds = Rectangle.Union(bounds, screen.Bounds);
 
-			return lBounds;
+			return bounds;
 		}
 
 		/// <summary>Adjusts the specified bounds to the working area of all screens.</summary>
@@ -43,47 +43,47 @@ namespace TC.WinForms
 		/// <returns>The adjusted bounds.</returns>
 		public static Rectangle AdjustBoundsToWorkingArea(this Rectangle bounds)
 		{
-			Rectangle lWorkingArea = CalculateTotalWorkingArea();
+			Rectangle workingArea = CalculateTotalWorkingArea();
 
 			// adjust the location to the total working area
-			if (bounds.X < lWorkingArea.X)
-				bounds.X = lWorkingArea.X;
-			else if (bounds.X >= lWorkingArea.Right)
-				bounds.X = lWorkingArea.Right - 10;
+			if (bounds.X < workingArea.X)
+				bounds.X = workingArea.X;
+			else if (bounds.X >= workingArea.Right)
+				bounds.X = workingArea.Right - 10;
 
-			if (bounds.Y < lWorkingArea.Y)
-				bounds.Y = lWorkingArea.Y;
-			else if (bounds.Y >= lWorkingArea.Bottom)
-				bounds.Y = lWorkingArea.Bottom - 10;
+			if (bounds.Y < workingArea.Y)
+				bounds.Y = workingArea.Y;
+			else if (bounds.Y >= workingArea.Bottom)
+				bounds.Y = workingArea.Bottom - 10;
 
 			// find the screen that contains the largest area of the bounds
-			Rectangle lMaxWorkingArea = Rectangle.Empty;
-			int lArea, lMaxArea = 0;
-			foreach (Screen lScreen in Screen.AllScreens)
+			Rectangle maxWorkingArea = Rectangle.Empty;
+			int area, maxArea = 0;
+			foreach (Screen screen in Screen.AllScreens)
 			{
-				Rectangle lIntersection 
-					= Rectangle.Intersect(bounds, lWorkingArea = lScreen.WorkingArea);
+				Rectangle intersection 
+					= Rectangle.Intersect(bounds, workingArea = screen.WorkingArea);
 
-				if ((lArea = lIntersection.Width * lIntersection.Height) > lMaxArea)
+				if ((area = intersection.Width * intersection.Height) > maxArea)
 				{
-					lMaxArea = lArea;
-					lMaxWorkingArea = lWorkingArea;
+					maxArea = area;
+					maxWorkingArea = workingArea;
 				}
 			}
 
 			// adjust the bounds to the working area of the selected screen
-			if (bounds.Width > lMaxWorkingArea.Width) bounds.Width = lMaxWorkingArea.Width;
-			if (bounds.Height > lMaxWorkingArea.Height) bounds.Height = lMaxWorkingArea.Height;
+			if (bounds.Width > maxWorkingArea.Width) bounds.Width = maxWorkingArea.Width;
+			if (bounds.Height > maxWorkingArea.Height) bounds.Height = maxWorkingArea.Height;
 
-			if (bounds.X < lMaxWorkingArea.X) 
-				bounds.X = lMaxWorkingArea.X;
-			else if (bounds.Right >= lMaxWorkingArea.Right)
-				bounds.X = lMaxWorkingArea.Right - bounds.Width - 1;
+			if (bounds.X < maxWorkingArea.X) 
+				bounds.X = maxWorkingArea.X;
+			else if (bounds.Right >= maxWorkingArea.Right)
+				bounds.X = maxWorkingArea.Right - bounds.Width - 1;
 
-			if (bounds.Y < lMaxWorkingArea.Y)
-				bounds.Y = lMaxWorkingArea.Y;
-			else if (bounds.Bottom >= lMaxWorkingArea.Bottom)
-				bounds.Y = lMaxWorkingArea.Bottom - bounds.Height - 1;
+			if (bounds.Y < maxWorkingArea.Y)
+				bounds.Y = maxWorkingArea.Y;
+			else if (bounds.Bottom >= maxWorkingArea.Bottom)
+				bounds.Y = maxWorkingArea.Bottom - bounds.Height - 1;
 
 			return bounds;
 		}

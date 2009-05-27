@@ -36,39 +36,39 @@ namespace TC.WinForms
 		private static IEnumerable<T> EnumerateDescendantsCore<T>(Control control, bool includeControl)
 			where T : class
 		{
-			T lCurrent;
-			if (includeControl && (lCurrent = control as T) != null)
-				yield return lCurrent;
+			T current;
+			if (includeControl && (current = control as T) != null)
+				yield return current;
 
-			foreach (Control lChildControl in control.Controls)
-				foreach (T lDescendant in EnumerateDescendantsCore<T>(lChildControl, true))
-					yield return lDescendant;
+			foreach (Control childControl in control.Controls)
+				foreach (T descendant in EnumerateDescendantsCore<T>(childControl, true))
+					yield return descendant;
 
-			ContextMenuStrip lContextMenu = control.ContextMenuStrip;
-			if (lContextMenu != null)
-				foreach (T lDescendant in EnumerableDescendantsCore<T>(lContextMenu.Items))
-					yield return lDescendant;
+			ContextMenuStrip contextMenu = control.ContextMenuStrip;
+			if (contextMenu != null)
+				foreach (T descendant in EnumerableDescendantsCore<T>(contextMenu.Items))
+					yield return descendant;
 
-			ToolStrip lToolStrip = control as ToolStrip;
-			if (lToolStrip != null)
-				foreach (T lDescendant in EnumerableDescendantsCore<T>(lToolStrip.Items))
-					yield return lDescendant;
+			ToolStrip toolStrip = control as ToolStrip;
+			if (toolStrip != null)
+				foreach (T descendant in EnumerableDescendantsCore<T>(toolStrip.Items))
+					yield return descendant;
 		}
 
 		private static IEnumerable<T> EnumerableDescendantsCore<T>(ToolStripItemCollection items)
 			where T : class
 		{
-			T lCurrent;
+			T current;
 
-			foreach (ToolStripItem lItem in items)
+			foreach (ToolStripItem item in items)
 			{
-				if ((lCurrent = lItem as T) != null)
-					yield return lCurrent;
+				if ((current = item as T) != null)
+					yield return current;
 
-				ToolStripDropDownItem lDropDownItem = lItem as ToolStripDropDownItem;
-				if (lDropDownItem != null)
-					foreach (T lDescendant in EnumerableDescendantsCore<T>(lDropDownItem.DropDown.Items))
-						yield return lDescendant;
+				ToolStripDropDownItem dropDownItem = item as ToolStripDropDownItem;
+				if (dropDownItem != null)
+					foreach (T descendant in EnumerableDescendantsCore<T>(dropDownItem.DropDown.Items))
+						yield return descendant;
 			}
 		}
 

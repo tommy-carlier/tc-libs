@@ -26,60 +26,60 @@ namespace TC.WinForms.Commands
 
 		#region command properties
 
-		private readonly ProxyCommand fUndoCommand = new ProxyCommand();
+		private readonly ProxyCommand _undoCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Undo'-command.</summary>
 		/// <value>The 'Undo'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand UndoCommand { get { return fUndoCommand; } }
+		public ICommand UndoCommand { get { return _undoCommand; } }
 
-		private readonly ProxyCommand fRedoCommand = new ProxyCommand();
+		private readonly ProxyCommand _redoCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Redo'-command.</summary>
 		/// <value>The 'Redo'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand RedoCommand { get { return fRedoCommand; } }
+		public ICommand RedoCommand { get { return _redoCommand; } }
 
-		private readonly ProxyCommand fCutCommand = new ProxyCommand();
+		private readonly ProxyCommand _cutCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Cut'-command.</summary>
 		/// <value>The 'Cut'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand CutCommand { get { return fCutCommand; } }
+		public ICommand CutCommand { get { return _cutCommand; } }
 
-		private readonly ProxyCommand fCopyCommand = new ProxyCommand();
+		private readonly ProxyCommand _copyCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Copy'-command.</summary>
 		/// <value>The 'Copy'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand CopyCommand { get { return fCopyCommand; } }
+		public ICommand CopyCommand { get { return _copyCommand; } }
 
-		private readonly ProxyCommand fPasteCommand = new ProxyCommand();
+		private readonly ProxyCommand _pasteCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Paste'-command.</summary>
 		/// <value>The 'Paste'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand PasteCommand { get { return fPasteCommand; } }
+		public ICommand PasteCommand { get { return _pasteCommand; } }
 
-		private readonly ProxyCommand fDeleteCommand = new ProxyCommand();
+		private readonly ProxyCommand _deleteCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Delete'-command.</summary>
 		/// <value>The 'Delete'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand DeleteCommand { get { return fDeleteCommand; } }
+		public ICommand DeleteCommand { get { return _deleteCommand; } }
 
-		private readonly ProxyCommand fSelectAllCommand = new ProxyCommand();
+		private readonly ProxyCommand _selectAllCommand = new ProxyCommand();
 
 		/// <summary>Gets the 'Select All'-command.</summary>
 		/// <value>The 'Select All'-command.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand SelectAllCommand { get { return fSelectAllCommand; } }
+		public ICommand SelectAllCommand { get { return _selectAllCommand; } }
 
 		#endregion
 
 		#region Implementation members
 
-		private IProxyCommandsImplementation<EditCommand> fImplementation;
+		private IProxyCommandsImplementation<EditCommand> _implementation;
 
 		/// <summary>Gets or sets the implementation of the edit-commands.</summary>
 		/// <value>The implementation of the edit-commands.</value>
@@ -87,12 +87,12 @@ namespace TC.WinForms.Commands
 		[Description("The implementation of the edit-commands.")]
 		public IProxyCommandsImplementation<EditCommand> Implementation
 		{
-			get { return fImplementation; }
+			get { return _implementation; }
 			set
 			{
-				if (fImplementation != value)
+				if (_implementation != value)
 				{
-					fImplementation = value;
+					_implementation = value;
 					SetImplementation(value ?? EmptyProxyCommandsImplementation<EditCommand>.Instance);
 				}
 			}
@@ -100,13 +100,13 @@ namespace TC.WinForms.Commands
 
 		private void SetImplementation(IProxyCommandsImplementation<EditCommand> implementation)
 		{
-			fUndoCommand.Implementation = implementation.GetCommand(EditCommand.Undo);
-			fRedoCommand.Implementation = implementation.GetCommand(EditCommand.Redo);
-			fCutCommand.Implementation = implementation.GetCommand(EditCommand.Cut);
-			fCopyCommand.Implementation = implementation.GetCommand(EditCommand.Copy);
-			fPasteCommand.Implementation = implementation.GetCommand(EditCommand.Paste);
-			fDeleteCommand.Implementation = implementation.GetCommand(EditCommand.Delete);
-			fSelectAllCommand.Implementation = implementation.GetCommand(EditCommand.SelectAll);
+			_undoCommand.Implementation = implementation.GetCommand(EditCommand.Undo);
+			_redoCommand.Implementation = implementation.GetCommand(EditCommand.Redo);
+			_cutCommand.Implementation = implementation.GetCommand(EditCommand.Cut);
+			_copyCommand.Implementation = implementation.GetCommand(EditCommand.Copy);
+			_pasteCommand.Implementation = implementation.GetCommand(EditCommand.Paste);
+			_deleteCommand.Implementation = implementation.GetCommand(EditCommand.Delete);
+			_selectAllCommand.Implementation = implementation.GetCommand(EditCommand.SelectAll);
 		}
 
 		#endregion

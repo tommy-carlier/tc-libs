@@ -18,7 +18,7 @@ namespace TC.WinForms.Controls
 	{
 		#region IHasSystemFont Members
 
-		private SystemFont fSystemFont;
+		private SystemFont _systemFont;
 
 		/// <summary>Gets the <see cref="T:SystemFont"/> of the control.</summary>
 		/// <value>The <see cref="T:SystemFont"/> of the control.</value>
@@ -26,12 +26,12 @@ namespace TC.WinForms.Controls
 		[Description("The font that is used to display the text.")]
 		public SystemFont SystemFont
 		{
-			get { return fSystemFont; }
+			get { return _systemFont; }
 			set
 			{
-				if (fSystemFont != value)
+				if (_systemFont != value)
 				{
-					fSystemFont = value;
+					_systemFont = value;
 					Font = value.ToFont();
 				}
 			}
@@ -56,11 +56,11 @@ namespace TC.WinForms.Controls
 			base.OnClick(e);
 
 			// select the next control when this label is clicked
-			Control lParent = Parent;
-			if (lParent != null)
+			Control parent = Parent;
+			if (parent != null)
 			{
-				if (lParent.SelectNextControl(this, true, true, true, true) && !lParent.ContainsFocus)
-					lParent.Focus();
+				if (parent.SelectNextControl(this, true, true, true, true) && !parent.ContainsFocus)
+					parent.Focus();
 			}
 		}
 	}

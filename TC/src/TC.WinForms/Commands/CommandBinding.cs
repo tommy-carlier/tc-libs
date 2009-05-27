@@ -18,54 +18,54 @@ namespace TC.WinForms.Commands
 		{
 			if (control == null) throw new ArgumentNullException("control");
 
-			fControl = control;
+			_control = control;
 			control.Activated += HandlerControlActivated;
 			control.Disposed += HandlerControlDisposed;
 			control.SetCommandEnabled(false);
 		}
 
-		private readonly ICommandControl fControl;
-		private ICommand fCommand;
+		private readonly ICommandControl _control;
+		private ICommand _command;
 
 		/// <summary>Gets or sets the <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/> of this <see cref="T:CommandBinding"/>.</summary>
 		/// <value>The <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/> of this <see cref="T:CommandBinding"/>.</value>
 		public ICommand Command
 		{
-			get { return fCommand; }
+			get { return _command; }
 			set
 			{
-				if (fCommand != value)
+				if (_command != value)
 				{
-					if (fCommand != null) fCommand.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
+					if (_command != null) _command.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
 					if (value != null) value.CanExecuteChanged += HandlerCommandCanExecuteChanged;
 
-					fCommand = value;
-					fControl.SetCommandEnabled(CanExecute);
+					_command = value;
+					_control.SetCommandEnabled(CanExecute);
 				}
 			}
 		}
 
-		private bool CanExecute { get { return fCommand != null && fCommand.CanExecute; } }
+		private bool CanExecute { get { return _command != null && _command.CanExecute; } }
 
 		private void HandlerCommandCanExecuteChanged(object sender, EventArgs e)
 		{
-			fControl.SetCommandEnabled(CanExecute);
+			_control.SetCommandEnabled(CanExecute);
 		}
 
 		private void HandlerControlActivated(object sender, EventArgs e)
 		{
 			if (CanExecute)
-				fCommand.Execute();
+				_command.Execute();
 		}
 
 		private void HandlerControlDisposed(object sender, EventArgs e)
 		{
-			fControl.Activated -= HandlerControlActivated;
-			fControl.Disposed -= HandlerControlDisposed;
-			if (fCommand != null)
+			_control.Activated -= HandlerControlActivated;
+			_control.Disposed -= HandlerControlDisposed;
+			if (_command != null)
 			{
-				fCommand.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
-				fCommand = null;
+				_command.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
+				_command = null;
 			}
 		}
 	}

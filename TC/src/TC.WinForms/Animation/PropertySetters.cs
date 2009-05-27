@@ -13,35 +13,35 @@ namespace TC.WinForms.Animation
 	internal static class PropertySetters<TTarget, TValue>
 	{
 		private static readonly Dictionary<string, PropertySetter<TTarget, TValue>>
-			fCachedPropertySetters = new Dictionary<string, PropertySetter<TTarget, TValue>>();
+			_cachedPropertySetters = new Dictionary<string, PropertySetter<TTarget, TValue>>();
 
-		private static readonly object fLock = new object();
+		private static readonly object _lock = new object();
 
 		internal static PropertySetter<TTarget, TValue> GetPropertySetter(string propertyName)
 		{
-			PropertySetter<TTarget, TValue> lPropertySetter;
+			PropertySetter<TTarget, TValue> propertySetter;
 
-			lock (fLock)
-				if (!fCachedPropertySetters.TryGetValue(propertyName, out lPropertySetter))
+			lock (_lock)
+				if (!_cachedPropertySetters.TryGetValue(propertyName, out propertySetter))
 				{
-					lPropertySetter = CreatePropertySetter(propertyName);
-					if (lPropertySetter != null)
-						fCachedPropertySetters[propertyName] = lPropertySetter;
+					propertySetter = CreatePropertySetter(propertyName);
+					if (propertySetter != null)
+						_cachedPropertySetters[propertyName] = propertySetter;
 				}
 
-			return lPropertySetter;
+			return propertySetter;
 		}
 
 		private static PropertySetter<TTarget, TValue> CreatePropertySetter(string propertyName)
 		{
-			Type lType = typeof(TTarget);
-			PropertyInfo lProperty = lType.GetProperty(propertyName);
-			MethodInfo lSetMethod = lProperty != null ? lProperty.GetSetMethod(true) : null;
+			Type type = typeof(TTarget);
+			PropertyInfo property = type.GetProperty(propertyName);
+			MethodInfo setMethod = property != null ? property.GetSetMethod(true) : null;
 
-			return lSetMethod != null
+			return setMethod != null
 				? Delegate.CreateDelegate(
 					typeof(PropertySetter<TTarget, TValue>),
-					lSetMethod) as PropertySetter<TTarget, TValue>
+					setMethod) as PropertySetter<TTarget, TValue>
 				: null;
 		}
 	}

@@ -17,30 +17,30 @@ namespace TC.WinForms.Animation
 	{
 		#region initialization
 
-		private static readonly Dictionary<Type, Delegate> fDefaultInterpolators = InitializeInterpolators();
+		private static readonly Dictionary<Type, Delegate> _defaultInterpolators = InitializeInterpolators();
 
 		private static Dictionary<Type, Delegate> InitializeInterpolators()
 		{
-			var lInterpolators = new Dictionary<Type, Delegate>(20);
+			var interpolators = new Dictionary<Type, Delegate>(20);
 
-			AddInterpolator(lInterpolators, new Interpolator<bool>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<byte>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<short>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<int>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<long>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<float>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<double>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<decimal>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<Color>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<Point>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<PointF>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<Size>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<SizeF>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<Rectangle>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<RectangleF>(Interpolate));
-			AddInterpolator(lInterpolators, new Interpolator<Padding>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<bool>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<byte>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<short>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<int>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<long>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<float>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<double>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<decimal>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<Color>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<Point>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<PointF>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<Size>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<SizeF>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<Rectangle>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<RectangleF>(Interpolate));
+			AddInterpolator(interpolators, new Interpolator<Padding>(Interpolate));
 
-			return lInterpolators;
+			return interpolators;
 		}
 
 		private static void AddInterpolator<T>(Dictionary<Type, Delegate> interpolators, Interpolator<T> interpolator)
@@ -59,9 +59,9 @@ namespace TC.WinForms.Animation
 			Justification = "The type T is an important parameter and knowledge of generics is essential for using this function.")]
 		public static Interpolator<T> GetInterpolator<T>()
 		{
-			Delegate lInterpolator;
-			if (fDefaultInterpolators.TryGetValue(typeof(T), out lInterpolator))
-				return lInterpolator as Interpolator<T>;
+			Delegate interpolator;
+			if (_defaultInterpolators.TryGetValue(typeof(T), out interpolator))
+				return interpolator as Interpolator<T>;
 			else return null;
 		}
 

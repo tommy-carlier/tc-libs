@@ -28,114 +28,114 @@ namespace TC.WinForms.Dialogs
 
 		private void InitializeControls()
 		{
-			FlowLayoutPanel lPanelBottom = new FlowLayoutPanel();
+			FlowLayoutPanel panelBottom = new FlowLayoutPanel();
 
 			// SuspendLayout
 			SuspendLayout();
-			fContentControl.SuspendLayout();
-			lPanelBottom.SuspendLayout();
+			_contentControl.SuspendLayout();
+			panelBottom.SuspendLayout();
 
 			// fContentControl
-			fContentControl.Dock = DockStyle.Fill;
-			fContentControl.TabIndex = 0;
-			Controls.Add(fContentControl);
+			_contentControl.Dock = DockStyle.Fill;
+			_contentControl.TabIndex = 0;
+			Controls.Add(_contentControl);
 
 			// lPanelBottom
-			lPanelBottom.FlowDirection = FlowDirection.RightToLeft;
-			lPanelBottom.WrapContents = false;
-			lPanelBottom.AutoSize = true;
-			lPanelBottom.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-			lPanelBottom.Dock = DockStyle.Bottom;
-			lPanelBottom.Padding = new Padding(3, 6, 3, 6);
-			lPanelBottom.TabIndex = 1;
-			Controls.Add(lPanelBottom);
+			panelBottom.FlowDirection = FlowDirection.RightToLeft;
+			panelBottom.WrapContents = false;
+			panelBottom.AutoSize = true;
+			panelBottom.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+			panelBottom.Dock = DockStyle.Bottom;
+			panelBottom.Padding = new Padding(3, 6, 3, 6);
+			panelBottom.TabIndex = 1;
+			Controls.Add(panelBottom);
 
 			// TDialog
 			FormBorderStyle = FormBorderStyle.FixedDialog;
 			MaximizeBox = false;
 			MinimizeBox = false;
 			ControlBox = CancelButton != null;
-			Text = fContentControl.Text;
+			Text = _contentControl.Text;
 
 			// move the dialog off-screen before displaying it and setting the final location and size
-			Rectangle lBounds = ScreenUtilities.CalculateTotalScreenBounds();
-			Location = new Point(lBounds.X - 10000, lBounds.Y - 10000);
+			Rectangle bounds = ScreenUtilities.CalculateTotalScreenBounds();
+			Location = new Point(bounds.X - 10000, bounds.Y - 10000);
 
 			// ResumeLayout
-			lPanelBottom.ResumeLayout();
-			fContentControl.ResumeLayout();
+			panelBottom.ResumeLayout();
+			_contentControl.ResumeLayout();
 			ResumeLayout();
 		}
 
 		private void InitializeDialogResultButtons()
 		{
-			IList<DialogResultButton> lDialogResultButtons = fContentControl.DialogResultButtons;
-			int lCount = lDialogResultButtons.Count;
-			if (lCount > 0)
+			IList<DialogResultButton> buttons = _contentControl.DialogResultButtons;
+			int count = buttons.Count;
+			if (count > 0)
 			{
 				// find the bottom panel that should contain the buttons
-				FlowLayoutPanel lPanel = null;
-				foreach (Control lControl in Controls)
-					if ((lPanel = lControl as FlowLayoutPanel) != null)
+				FlowLayoutPanel panel = null;
+				foreach (Control control in Controls)
+					if ((panel = control as FlowLayoutPanel) != null)
 						break;
 
-				if (lPanel == null) return;
+				if (panel == null) return;
 
-				Size lMaxSize = Size.Empty;
-				for (int i = lCount - 1; i >= 0; i--)
+				Size maxSize = Size.Empty;
+				for (int i = count - 1; i >= 0; i--)
 				{
-					DialogResultButton lButton = lDialogResultButtons[i];
-					Button lButtonControl = lButton.CreateButton();
-					lButtonControl.TabIndex = i;
-					lPanel.Controls.Add(lButtonControl);
+					DialogResultButton button = buttons[i];
+					Button buttonControl = button.CreateButton();
+					buttonControl.TabIndex = i;
+					panel.Controls.Add(buttonControl);
 
-					Size lSize = lButtonControl.GetPreferredSize(Size.Empty);
-					if (lSize.Width > lMaxSize.Width) lMaxSize.Width = lSize.Width;
-					if (lSize.Height > lMaxSize.Height) lMaxSize.Height = lSize.Height;
+					Size size = buttonControl.GetPreferredSize(Size.Empty);
+					if (size.Width > maxSize.Width) maxSize.Width = size.Width;
+					if (size.Height > maxSize.Height) maxSize.Height = size.Height;
 
-					switch (lButton.DialogResult)
+					switch (button.DialogResult)
 					{
 						case DialogResult.OK:
 							if (AcceptButton == null)
-								AcceptButton = lButtonControl;
+								AcceptButton = buttonControl;
 							ControlBox = true;
-							FirstFocusControl = lButtonControl;
+							FirstFocusControl = buttonControl;
 							break;
 						case DialogResult.Cancel:
 							if (CancelButton == null)
-								CancelButton = lButtonControl;
+								CancelButton = buttonControl;
 							ControlBox = true;
 							break;
 					}
 				}
 
-				foreach (Control lControl in lPanel.Controls)
-					lControl.Size = lMaxSize;
+				foreach (Control control in panel.Controls)
+					control.Size = maxSize;
 
 				MinimumSize = new Size(
-					lPanel.Padding.Horizontal + ((lMaxSize.Width + 15) * lCount),
-					lMaxSize.Height + lPanel.Padding.Vertical);
+					panel.Padding.Horizontal + ((maxSize.Width + 15) * count),
+					maxSize.Height + panel.Padding.Vertical);
 			}
 		}
 
 		#endregion
 
-		private readonly TContentControl fContentControl = new TContentControl();
+		private readonly TContentControl _contentControl = new TContentControl();
 
 		/// <summary>Gets the control with the content of this dialog.</summary>
 		/// <value>The control with the content of this dialog.</value>
-		public TContentControl ContentControl { get { return fContentControl; } }
+		public TContentControl ContentControl { get { return _contentControl; } }
 
 		/// <summary>Sets the bounds of this dialog.</summary>
 		public void SetBounds()
 		{
-			Rectangle lBounds = Bounds;
-			Size lPreferredSize = GetPreferredSize(Size.Empty);
+			Rectangle bounds = Bounds;
+			Size preferredSize = GetPreferredSize(Size.Empty);
 			SetBounds(
-				lBounds.X + ((lBounds.Width - lPreferredSize.Width) / 2),
-				lBounds.Y + ((lBounds.Height - lPreferredSize.Height) / 2),
-				lPreferredSize.Width,
-				lPreferredSize.Height);
+				bounds.X + ((bounds.Width - preferredSize.Width) / 2),
+				bounds.Y + ((bounds.Height - preferredSize.Height) / 2),
+				preferredSize.Width,
+				preferredSize.Height);
 		}
 
 		/// <summary>Raises the <see cref="E:Load"/> event.</summary>
@@ -151,9 +151,9 @@ namespace TC.WinForms.Dialogs
 			
 			if (string.IsNullOrEmpty(Text))
 			{
-				Form lOwner = Owner ?? Application.MainForm;
-				string lText = lOwner != null ? lOwner.Text : String.Empty;
-				Text = string.IsNullOrEmpty(lText) ? TApplication.Title : lText;
+				Form owner = Owner ?? Application.MainForm;
+				string text = owner != null ? owner.Text : String.Empty;
+				Text = string.IsNullOrEmpty(text) ? TApplication.Title : text;
 			}
 		}
 
@@ -165,43 +165,43 @@ namespace TC.WinForms.Dialogs
 			if (!Modal) DialogResult = DialogResult.Cancel;
 		}
 
-		private bool fCloseUnconditionally;
+		private bool _closeUnconditionally;
 
 		/// <summary>Raises the <see cref="E:Closing"/> event.</summary>
 		/// <param name="e">A <see cref="T:CancelEventArgs"/> that contains the event data.</param>
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			base.OnClosing(e);
-			if (e.Cancel || fCloseUnconditionally) return;
+			if (e.Cancel || _closeUnconditionally) return;
 
-			DialogResult lResult = DialogResult;
-			if (lResult != DialogResult.Cancel)
+			DialogResult currentResult = DialogResult;
+			if (currentResult != DialogResult.Cancel)
 			{
 				e.Cancel = true;
 
 				// check whether the controls are valid
-				if (fContentControl.AreControlsValid())
+				if (_contentControl.AreControlsValid())
 				{
 					SetUIEnabled(false);
 					this.InvokeAsync(delegate
 					{
 						try
 						{
-							fContentControl.PerformDialogResultAction(
-								lResult,
+							_contentControl.PerformDialogResultAction(
+								currentResult,
 								delegate(DialogResult result)
 								{
 									SetUIEnabled(true);
 									if (result != DialogResult.None)
-										fCloseUnconditionally = true;
+										_closeUnconditionally = true;
 									DialogResult = result;
 									if (!Modal) Close();
 								});
 						}
-						catch (Exception lException)
+						catch (Exception exception)
 						{
 							SetUIEnabled(true);
-							ShowError(lException);
+							ShowError(exception);
 						}
 					});
 				}
@@ -211,8 +211,8 @@ namespace TC.WinForms.Dialogs
 		private void SetUIEnabled(bool enabled)
 		{
 			ControlBox = enabled && CancelButton != null;
-			foreach (Control lControl in Controls)
-				lControl.Enabled = enabled;
+			foreach (Control control in Controls)
+				control.Enabled = enabled;
 			UseWaitCursor = !enabled;
 		}
 
@@ -221,14 +221,14 @@ namespace TC.WinForms.Dialogs
 		/// <returns>The <see cref="T:DialogResult"/> that represents the result of the dialog.</returns>
 		public DialogResult ShowDialog(Control owner)
 		{
-			IWin32Window lRealOwner = GetRealOwner(owner);
-			if (lRealOwner != null)
+			IWin32Window realOwner = GetRealOwner(owner);
+			if (realOwner != null)
 			{
 				ShowInTaskbar = false;
 				ShowIcon = false;
 			}
 
-			return base.ShowDialog(lRealOwner);
+			return base.ShowDialog(realOwner);
 		}
 
 		private static IWin32Window GetRealOwner(Control control)

@@ -59,7 +59,7 @@ namespace TC.WinForms.Controls
 
 		#region ItemRenderer and CreateItemRenderer
 
-		private ListItemRenderer fItemRenderer;
+		private ListItemRenderer _itemRenderer;
 
 		/// <summary>Gets the <see cref="T:ListItemRenderer"/> that renders the items of this control.</summary>
 		/// <value>The <see cref="T:ListItemRenderer"/> that renders the items of this control.</value>
@@ -70,7 +70,7 @@ namespace TC.WinForms.Controls
 			Justification = "Renderer is a term that describes an object that handles visual rendering.")]
 		protected ListItemRenderer ItemRenderer
 		{
-			get { return fItemRenderer ?? (fItemRenderer = CreateItemRenderer()); }
+			get { return _itemRenderer ?? (_itemRenderer = CreateItemRenderer()); }
 		}
 
 		/// <summary>Creates a <see cref="T:ListItemRenderer"/> that will render the items of this control.</summary>

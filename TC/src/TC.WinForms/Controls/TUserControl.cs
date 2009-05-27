@@ -23,14 +23,14 @@ namespace TC.WinForms.Controls
 		#region Commands
 
 		private readonly Collection<ApplicationCommand>
-			fCommands = new Collection<ApplicationCommand>();
+			_commands = new Collection<ApplicationCommand>();
 
 		/// <summary>Gets the commands of this <see cref="T:TUserControl"/>.</summary>
 		/// <value>The commands of this <see cref="T:TUserControl"/>.</value>
 		/// <remarks>This property enables you to add commands in the Visual Forms Designer.</remarks>
 		[Category("Behavior"), Description("The commands of this control.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public Collection<ApplicationCommand> Commands { get { return fCommands; } }
+		public Collection<ApplicationCommand> Commands { get { return _commands; } }
 
 		/// <summary>Gets the command to display information about the current application.</summary>
 		/// <value>The command to display information about the current application.</value>

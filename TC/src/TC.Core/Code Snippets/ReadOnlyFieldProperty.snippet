@@ -12,7 +12,11 @@
   <Snippet>
     <Declarations>
       <Literal>
-        <ID>name</ID>
+        <ID>fieldName</ID>
+        <Default>name</Default>
+      </Literal>
+      <Literal>
+        <ID>propName</ID>
         <Default>Name</Default>
       </Literal>
       <Literal>
@@ -21,11 +25,11 @@
       </Literal>
     </Declarations>
     <Code Language="CSharp">
-      <![CDATA[private readonly $type$ f$name$;
+      <![CDATA[private readonly $type$ _$fieldName$;
 
-    /// <summary>Gets the $name$.</summary>
-    /// <value>The $name$.</value>
-    public $type$ $name$ { get { return f$name$; } }
+    /// <summary>Gets the $fieldName$.</summary>
+    /// <value>The $fieldName$.</value>
+    public $type$ $propName$ { get { return _$fieldName$; } }
 $end$]]>
     </Code>
   </Snippet>

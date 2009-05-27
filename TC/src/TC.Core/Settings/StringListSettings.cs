@@ -14,8 +14,8 @@ namespace TC.Settings
 	/// <summary>Represents settings that contain a list of strings.</summary>
 	public class StringListSettings : BaseSettings
 	{
-		private readonly string fListItemElementName;
-		private readonly bool fSorted;
+		private readonly string _listItemElementName;
+		private readonly bool _sorted;
 
 		/// <summary>Initializes a new instance of the <see cref="StringListSettings"/> class.</summary>
 		/// <param name="listElementName">Name of the list element.</param>
@@ -28,55 +28,55 @@ namespace TC.Settings
 			if (listItemElementName.Length == 0)
 				throw new ArgumentException("listItemElementName cannot be an empty string", "listItemElementName");
 
-			fListItemElementName = listItemElementName;
-			fSorted = sorted;
+			_listItemElementName = listItemElementName;
+			_sorted = sorted;
 		}
 
-		private readonly List<string> fItems = new List<string>();
+		private readonly List<string> _items = new List<string>();
 
 		/// <summary>Gets the list of strings.</summary>
 		/// <value>The list of strings.</value>
-		public IList<string> Items { get { return fItems; } }
+		public IList<string> Items { get { return _items; } }
 
 		/// <summary>Loads the settings from the specified <see cref="T:XPathNavigator"/>.</summary>
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>
 		protected override void LoadCore(XPathNavigator xml)
 		{
-			fItems.Clear();
-			foreach (XPathNavigator lNavigator in xml.Select(fListItemElementName))
-				if (!string.IsNullOrEmpty(lNavigator.Value))
-					fItems.Add(lNavigator.Value);
+			_items.Clear();
+			foreach (XPathNavigator navigator in xml.Select(_listItemElementName))
+				if (!string.IsNullOrEmpty(navigator.Value))
+					_items.Add(navigator.Value);
 
-			if (fSorted) fItems.Sort();
+			if (_sorted) _items.Sort();
 		}
 
 		/// <summary>Saves the settings to the specified <see cref="T:XmlWriter"/>.</summary>
 		/// <param name="writer">The <see cref="T:XmlWriter"/> to save the settings to.</param>
 		protected override void SaveCore(XmlWriter writer)
 		{
-			if (fSorted) fItems.Sort();
+			if (_sorted) _items.Sort();
 
-			foreach (string lItem in fItems.SkipEmpty())
-				writer.WriteElementString(fListItemElementName, lItem);
+			foreach (string item in _items.SkipEmpty())
+				writer.WriteElementString(_listItemElementName, item);
 		}
 
 		/// <summary>Adds a unique item.</summary>
-		/// <param name="item">The item to add.</param>
+		/// <param name="itemToAdd">The item to add.</param>
 		/// <param name="ignoreCase">if set to <c>true</c>, the case of the string is ignored.</param>
-		public void AddUniqueItem(string item, bool ignoreCase)
+		public void AddUniqueItem(string itemToAdd, bool ignoreCase)
 		{
-			if (item == null) throw new ArgumentNullException("item");
+			if (itemToAdd == null) throw new ArgumentNullException("itemToAdd");
 
-			StringComparison lComparison
+			StringComparison comparison
 				= ignoreCase
 					? StringComparison.OrdinalIgnoreCase
 					: StringComparison.Ordinal;
 
-			foreach (string lItem in fItems)
-				if (item.Equals(lItem, lComparison))
+			foreach (string item in _items)
+				if (itemToAdd.Equals(item, comparison))
 					return;
 
-			fItems.Add(item);
+			_items.Add(itemToAdd);
 		}
 	}
 }

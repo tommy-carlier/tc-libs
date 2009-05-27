@@ -27,10 +27,10 @@ namespace TC
 		{
 			if (provider == null) throw new ArgumentNullException("provider");
 
-			object[] lAttributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
+			object[] attributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
 			return
-				(lAttributes != null && lAttributes.Length > 0)
-					? lAttributes[0] as TAttribute
+				(attributes != null && attributes.Length > 0)
+					? attributes[0] as TAttribute
 					: null;
 		}
 
@@ -47,12 +47,12 @@ namespace TC
 		{
 			if (provider == null) throw new ArgumentNullException("provider");
 
-			TAttribute lAttribute;
-			object[] lAttributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
-			if (lAttributes != null)
-				for (int i = 0; i < lAttributes.Length; i++)
-					if ((lAttribute = lAttributes[i] as TAttribute) != null)
-						yield return lAttribute;
+			TAttribute attribute;
+			object[] attributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
+			if (attributes != null)
+				for (int i = 0; i < attributes.Length; i++)
+					if ((attribute = attributes[i] as TAttribute) != null)
+						yield return attribute;
 		}
 	}
 }

@@ -23,10 +23,10 @@ namespace TC.Settings
 			if (xmlElementName.Length == 0)
 				throw new ArgumentException("xmlElementName cannot be an empty string", "xmlElementName");
 
-			fXmlElementName = xmlElementName;
+			_xmlElementName = xmlElementName;
 		}
 
-		private readonly string fXmlElementName;
+		private readonly string _xmlElementName;
 
 		#region abstract members that have to be implemented by derived classes
 
@@ -47,7 +47,7 @@ namespace TC.Settings
 		public void Load(XPathNavigator xml)
 		{
 			if (xml == null) throw new ArgumentNullException("xml");
-			xml = xml.SelectSingleNode(fXmlElementName);
+			xml = xml.SelectSingleNode(_xmlElementName);
 			if (xml != null) LoadCore(xml);
 		}
 
@@ -56,7 +56,7 @@ namespace TC.Settings
 		public void Save(XmlWriter writer)
 		{
 			if (writer == null) throw new ArgumentNullException("writer");
-			writer.WriteStartElement(fXmlElementName);
+			writer.WriteStartElement(_xmlElementName);
 			SaveCore(writer);
 			writer.WriteEndElement();
 		}

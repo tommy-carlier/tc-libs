@@ -27,20 +27,20 @@ namespace TC.WinForms
 		{
 			if (control == null) throw new ArgumentNullException("control");
 
-			fControl = control;
-			fDefaultImage = defaultImage;
+			_control = control;
+			_defaultImage = defaultImage;
 		}
 
-		private readonly ListControl fControl;
-		private readonly Image fDefaultImage;
+		private readonly ListControl _control;
+		private readonly Image _defaultImage;
 
 		internal void MeasureItem(MeasureItemEventArgs context, object item)
 		{
 			if (item != null)
 			{
-				Size lItemSize = MeasureItemCore(context, item);
-				context.ItemWidth = lItemSize.Width;
-				context.ItemHeight = lItemSize.Height;
+				Size itemSize = MeasureItemCore(context, item);
+				context.ItemWidth = itemSize.Width;
+				context.ItemHeight = itemSize.Height;
 			}
 		}
 
@@ -50,36 +50,36 @@ namespace TC.WinForms
 		/// <returns>The size of the specified item.</returns>
 		protected virtual Size MeasureItemCore(MeasureItemEventArgs context, object item)
 		{
-			Size lSize = Size.Empty;
+			Size size = Size.Empty;
 
-			// measure the image of the specified image
-			Image lImage = GetItemImage(item) ?? fDefaultImage;
-			if (lImage != null)
+			// measure the image of the specified item
+			Image image = GetItemImage(item) ?? _defaultImage;
+			if (image != null)
 			{
-				lSize.Width += lImage.Width;
-				if (lSize.Height > lImage.Height)
-					lSize.Height = lImage.Height;
+				size.Width += image.Width;
+				if (size.Height > image.Height)
+					size.Height = image.Height;
 			}
 
-			// measure the text of the specified image
-			string lText = GetItemText(item);
-			if (!string.IsNullOrEmpty(lText))
+			// measure the text of the specified item
+			string text = GetItemText(item);
+			if (!string.IsNullOrEmpty(text))
 			{
-				Size lTextSize = TextRenderer.MeasureText(
+				Size textSize = TextRenderer.MeasureText(
 					context.Graphics,
-					lText,
-					fControl.Font,
+					text,
+					_control.Font,
 					Size.Empty,
 					ItemTextFormatFlags);
 
-				lTextSize.Height += 6;
-				lSize.Width += lTextSize.Width;
-				if (lTextSize.Height > lSize.Height)
-					lSize.Height = lTextSize.Height;
+				textSize.Height += 6;
+				size.Width += textSize.Width;
+				if (textSize.Height > size.Height)
+					size.Height = textSize.Height;
 			}
 
-			lSize.Height += 2;
-			return lSize;
+			size.Height += 2;
+			return size;
 		}
 
 		internal void DrawItem(DrawItemEventArgs context, object item)
@@ -97,41 +97,41 @@ namespace TC.WinForms
 		/// <param name="item">The item to draw.</param>
 		protected virtual void DrawItemCore(DrawItemEventArgs context, object item)
 		{
-			Rectangle lBounds = context.Bounds;
+			Rectangle bounds = context.Bounds;
 
 			// draw the image
-			Image lImage = GetItemImage(item) ?? fDefaultImage;
-			Rectangle lImageBounds = Rectangle.Empty;
-			if (lImage != null)
+			Image image = GetItemImage(item) ?? _defaultImage;
+			Rectangle imageBounds = Rectangle.Empty;
+			if (image != null)
 			{
-				lImageBounds = new Rectangle(
-					lBounds.Left,
-					lBounds.Top + ((lBounds.Height - lImage.Height) / 2),
-					lImage.Width,
-					lImage.Height);
+				imageBounds = new Rectangle(
+					bounds.Left,
+					bounds.Top + ((bounds.Height - image.Height) / 2),
+					image.Width,
+					image.Height);
 
 				context.Graphics.DrawImage(
-					lImage,
-					lImageBounds,
+					image,
+					imageBounds,
 					1F,
 					IsSelected(context) ? 0.15F : 0F);
 			}
 
 			// draw the text
-			string lText = GetItemText(item);
-			if (!string.IsNullOrEmpty(lText))
+			string text = GetItemText(item);
+			if (!string.IsNullOrEmpty(text))
 			{
-				Rectangle lTextBounds = new Rectangle(
-					lImageBounds.Right,
-					lBounds.Top,
-					lBounds.Width - lImageBounds.Width,
-					lBounds.Height);
+				Rectangle textBounds = new Rectangle(
+					imageBounds.Right,
+					bounds.Top,
+					bounds.Width - imageBounds.Width,
+					bounds.Height);
 
 				TextRenderer.DrawText(
 					context.Graphics,
-					lText,
+					text,
 					context.Font,
-					lTextBounds,
+					textBounds,
 					context.ForeColor,
 					ItemTextFormatFlags);
 			}
@@ -167,8 +167,8 @@ namespace TC.WinForms
 
 		private static void DrawSolidItemBackground(DrawItemEventArgs context)
 		{
-			using (SolidBrush lBrush = new SolidBrush(context.BackColor))
-				context.Graphics.FillRectangle(lBrush, context.Bounds);
+			using (SolidBrush brush = new SolidBrush(context.BackColor))
+				context.Graphics.FillRectangle(brush, context.Bounds);
 		}
 
 		/// <summary>Gets the text to display for the specified item.</summary>
@@ -176,7 +176,7 @@ namespace TC.WinForms
 		/// <returns>The text to display for the specified item.</returns>
 		protected virtual string GetItemText(object item)
 		{
-			return fControl.GetItemText(item);
+			return _control.GetItemText(item);
 		}
 
 		/// <summary>Gets the image to display for the specified item.</summary>

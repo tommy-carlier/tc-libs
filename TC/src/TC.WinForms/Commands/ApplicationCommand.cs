@@ -33,23 +33,23 @@ namespace TC.WinForms.Commands
 
 		#region Executed event
 
-		private static readonly object fEventExecuted = new object();
+		private static readonly object _executed = new object();
 
 		/// <summary>Occurs when the command is executed.</summary>
 		[Category("Action"), Description("Occurs when the command is executed.")]
 		public event EventHandler Executed
 		{
-			add { Events.AddHandler(fEventExecuted, value); }
-			remove { Events.RemoveHandler(fEventExecuted, value); }
+			add { Events.AddHandler(_executed, value); }
+			remove { Events.RemoveHandler(_executed, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:Executed"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnExecuted(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventExecuted] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, EventArgs.Empty);
+			EventHandler handler = Events[_executed] as EventHandler;
+			if (handler != null)
+				handler(this, EventArgs.Empty);
 		}
 
 		#endregion

@@ -19,17 +19,17 @@ namespace TC.WinForms.Controls
 		/// <summary>Initializes a new instance of the <see cref="TTextEditor"/> class.</summary>
 		protected TTextEditor()
 		{
-			fUndoCommand = new SimpleActionCommand(Undo);
-			fRedoCommand = new SimpleActionCommand(Redo);
-			fCutCommand = new SimpleActionCommand(Cut);
-			fPasteCommand = new SimpleActionCommand(Paste);
-			fDeleteCommand = new SimpleActionCommand(delegate { SelectedText = String.Empty; });
+			_undoCommand = new SimpleActionCommand(Undo);
+			_redoCommand = new SimpleActionCommand(Redo);
+			_cutCommand = new SimpleActionCommand(Cut);
+			_pasteCommand = new SimpleActionCommand(Paste);
+			_deleteCommand = new SimpleActionCommand(delegate { SelectedText = String.Empty; });
 
-			fUndoCommand.CanExecute = false;
-			fRedoCommand.CanExecute = false;
-			fCutCommand.CanExecute = false;
-			fPasteCommand.CanExecute = true;
-			fDeleteCommand.CanExecute = false;
+			_undoCommand.CanExecute = false;
+			_redoCommand.CanExecute = false;
+			_cutCommand.CanExecute = false;
+			_pasteCommand.CanExecute = true;
+			_deleteCommand.CanExecute = false;
 
 			AllowDrop = true;
 		}
@@ -49,8 +49,8 @@ namespace TC.WinForms.Controls
 		{
 			base.OnTextChanged(e);
 
-			fUndoCommand.CanExecute = CanUndo;
-			fRedoCommand.CanExecute = CanRedo;
+			_undoCommand.CanExecute = CanUndo;
+			_redoCommand.CanExecute = CanRedo;
 		}
 
 		/// <summary>Raises the <see cref="E:SelectionChanged"/> event.</summary>
@@ -59,9 +59,9 @@ namespace TC.WinForms.Controls
 		{
 			base.OnSelectionChanged(e);
 
-			bool lHasSelection = SelectionLength > 0;
-			fCutCommand.CanExecute = lHasSelection;
-			fDeleteCommand.CanExecute = lHasSelection;
+			bool hasSelection = SelectionLength > 0;
+			_cutCommand.CanExecute = hasSelection;
+			_deleteCommand.CanExecute = hasSelection;
 		}
 
 		/// <summary>Raises the <see cref="E:ReadOnlyChanged"/> event.</summary>
@@ -70,7 +70,7 @@ namespace TC.WinForms.Controls
 		{
 			base.OnReadOnlyChanged(e);
 
-			fPasteCommand.CanExecute = !ReadOnly;
+			_pasteCommand.CanExecute = !ReadOnly;
 		}
 
 		/// <summary>Raises the <see cref="E:DragOver"/> event.</summary>
@@ -109,10 +109,10 @@ namespace TC.WinForms.Controls
 		/// <returns>If the data could be inserted successfully, <c>true</c>; otherwise, <c>false</c>.</returns>
 		protected virtual bool Insert(IDataObject data)
 		{
-			string lTextToInsert = data.GetData(DataFormats.UnicodeText, true) as string;
-			if (!string.IsNullOrEmpty(lTextToInsert))
+			string textToInsert = data.GetData(DataFormats.UnicodeText, true) as string;
+			if (!string.IsNullOrEmpty(textToInsert))
 			{
-				ReplaceSelectedText(lTextToInsert, true);
+				ReplaceSelectedText(textToInsert, true);
 				return true;
 			}
 			else return false;
@@ -127,9 +127,9 @@ namespace TC.WinForms.Controls
 
 			if (select)
 			{
-				int lSelectionStart = SelectionStart;
+				int selectionStart = SelectionStart;
 				SelectedText = newSelectedText;
-				Select(lSelectionStart, newSelectedText.Length);
+				Select(selectionStart, newSelectedText.Length);
 			}
 			else SelectedText = newSelectedText;
 		}
@@ -160,29 +160,29 @@ namespace TC.WinForms.Controls
 
 					case Keys.Control | Keys.Z:
 						// Ctrl+Z => undo
-						fUndoCommand.Execute();
+						_undoCommand.Execute();
 						return true;
 
 					case Keys.Control | Keys.Y:
 						// Ctrl+Y => redo
-						fRedoCommand.Execute();
+						_redoCommand.Execute();
 						return true;
 
 					case Keys.Control | Keys.X:
 					case Keys.Shift | Keys.Delete:
 						// Ctrl+X or Shift+Delete => cut selected text
-						fCutCommand.Execute();
+						_cutCommand.Execute();
 						return true;
 
 					case Keys.Control | Keys.V:
 					case Keys.Shift | Keys.Insert:
 						// Ctrl+V or Shift+Insert => paste
-						fPasteCommand.Execute();
+						_pasteCommand.Execute();
 						return true;
 
 					case Keys.Delete:
 						// Delete => delete selected text
-						fDeleteCommand.Execute();
+						_deleteCommand.Execute();
 						return true;
 				}
 
@@ -204,10 +204,10 @@ namespace TC.WinForms.Controls
 
 		private bool TryPaste(string format)
 		{
-			var lDataFormat = DataFormats.GetFormat(format);
-			if (CanPaste(lDataFormat))
+			var dataFormat = DataFormats.GetFormat(format);
+			if (CanPaste(dataFormat))
 			{
-				Paste(lDataFormat);
+				Paste(dataFormat);
 				return true;
 			}
 			else return false;
@@ -215,80 +215,80 @@ namespace TC.WinForms.Controls
 
 		#region OverwriteMode members
 
-		private bool fOverwriteMode;
+		private bool _overwriteMode;
 
 		/// <summary>Gets a value indicating whether the editor is in overwrite-mode.</summary>
 		/// <value>If the editor is in overwrite-mode, true; otherwise, false.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool OverwriteMode
 		{
-			get { return fOverwriteMode; }
+			get { return _overwriteMode; }
 			private set
 			{
-				if (fOverwriteMode != value)
+				if (_overwriteMode != value)
 				{
-					fOverwriteMode = value;
+					_overwriteMode = value;
 					OnOverwriteModeChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventOverwriteModeChanged = new object();
+		private static readonly object _overwriteModeChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:OverwriteMode"/> property has changed.</summary>
 		public event EventHandler OverwriteModeChanged
 		{
-			add { Events.AddHandler(fEventOverwriteModeChanged, value); }
-			remove { Events.RemoveHandler(fEventOverwriteModeChanged, value); }
+			add { Events.AddHandler(_overwriteModeChanged, value); }
+			remove { Events.RemoveHandler(_overwriteModeChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:OverwriteModeChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnOverwriteModeChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventOverwriteModeChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_overwriteModeChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
 
 		#region commands
 
-		private readonly SimpleActionCommand fUndoCommand;
+		private readonly SimpleActionCommand _undoCommand;
 
 		/// <summary>Gets the command to undo changes.</summary>
 		/// <value>The command to undo changes.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand UndoCommand { get { return fUndoCommand; } }
+		public ICommand UndoCommand { get { return _undoCommand; } }
 
-		private readonly SimpleActionCommand fRedoCommand;
+		private readonly SimpleActionCommand _redoCommand;
 
 		/// <summary>Gets the command to redo undone changes.</summary>
 		/// <value>The command to redo undone changes.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand RedoCommand { get { return fRedoCommand; } }
+		public ICommand RedoCommand { get { return _redoCommand; } }
 
-		private readonly SimpleActionCommand fCutCommand;
+		private readonly SimpleActionCommand _cutCommand;
 
 		/// <summary>Gets the command to cut the selected text to the clipboard.</summary>
 		/// <value>The command to cut the selected text to the clipboard.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand CutCommand { get { return fCutCommand; } }
+		public ICommand CutCommand { get { return _cutCommand; } }
 
-		private readonly SimpleActionCommand fPasteCommand;
+		private readonly SimpleActionCommand _pasteCommand;
 
 		/// <summary>Gets the command to paste text from the clipboard.</summary>
 		/// <value>The command to paste text from the clipboard.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand PasteCommand { get { return fPasteCommand; } }
+		public ICommand PasteCommand { get { return _pasteCommand; } }
 
-		private readonly SimpleActionCommand fDeleteCommand;
+		private readonly SimpleActionCommand _deleteCommand;
 
 		/// <summary>Gets the command to delete the selected text.</summary>
 		/// <value>The command to delete the selected text.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand DeleteCommand { get { return fDeleteCommand; } }
+		public ICommand DeleteCommand { get { return _deleteCommand; } }
 
 		#endregion
 
@@ -301,12 +301,12 @@ namespace TC.WinForms.Controls
 		{
 			switch (identifier)
 			{
-				case EditCommand.Undo: return fUndoCommand;
-				case EditCommand.Redo: return fRedoCommand;
-				case EditCommand.Cut: return fCutCommand;
+				case EditCommand.Undo: return _undoCommand;
+				case EditCommand.Redo: return _redoCommand;
+				case EditCommand.Cut: return _cutCommand;
 				case EditCommand.Copy: return CopyCommand;
-				case EditCommand.Paste: return fPasteCommand;
-				case EditCommand.Delete: return fDeleteCommand;
+				case EditCommand.Paste: return _pasteCommand;
+				case EditCommand.Delete: return _deleteCommand;
 				case EditCommand.SelectAll: return SelectAllCommand;
 				default: return null;
 			}

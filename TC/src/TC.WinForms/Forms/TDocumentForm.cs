@@ -21,62 +21,62 @@ namespace TC.WinForms.Forms
 		/// <summary>Initializes a new instance of the <see cref="TDocumentForm"/> class.</summary>
 		public TDocumentForm()
 		{
-			fClearDocumentCommand = new SimpleActionCommand(ClearDocument);
-			fLoadDocumentCommand = new SimpleActionCommand(LoadDocument);
-			fSaveDocumentCommand = new SimpleActionCommand(SaveDocument);
-			fSaveDocumentAsCommand = new SimpleActionCommand(SaveDocumentAs);
+			_clearDocumentCommand = new SimpleActionCommand(ClearDocument);
+			_loadDocumentCommand = new SimpleActionCommand(LoadDocument);
+			_saveDocumentCommand = new SimpleActionCommand(SaveDocument);
+			_saveDocumentAsCommand = new SimpleActionCommand(SaveDocumentAs);
 		}
 
 		#region commands
 
-		private readonly ICommand fClearDocumentCommand;
+		private readonly ICommand _clearDocumentCommand;
 
 		/// <summary>Gets the command to clear the document.</summary>
 		/// <value>The command to clear the document.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand ClearDocumentCommand { get { return fClearDocumentCommand; } }
+		public ICommand ClearDocumentCommand { get { return _clearDocumentCommand; } }
 
-		private readonly ICommand fLoadDocumentCommand;
+		private readonly ICommand _loadDocumentCommand;
 
 		/// <summary>Gets the command to load a document.</summary>
 		/// <value>The command to load a document.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand LoadDocumentCommand { get { return fLoadDocumentCommand; } }
+		public ICommand LoadDocumentCommand { get { return _loadDocumentCommand; } }
 
-		private readonly ICommand fSaveDocumentCommand;
+		private readonly ICommand _saveDocumentCommand;
 
 		/// <summary>Gets the command to save the current document.</summary>
 		/// <value>The command to save the current document.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand SaveDocumentCommand { get { return fSaveDocumentCommand; } }
+		public ICommand SaveDocumentCommand { get { return _saveDocumentCommand; } }
 
-		private readonly ICommand fSaveDocumentAsCommand;
+		private readonly ICommand _saveDocumentAsCommand;
 
 		/// <summary>Gets the command to save the current document as a different file.</summary>
 		/// <value>The command to save the current document as a different file.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand SaveDocumentAsCommand { get { return fSaveDocumentAsCommand; } }
+		public ICommand SaveDocumentAsCommand { get { return _saveDocumentAsCommand; } }
 
 		#endregion
 
 		#region DocumentContainer members
 
-		private IDocumentContainer fDocumentContainer;
+		private IDocumentContainer _documentContainer;
 
 		/// <summary>Gets or sets the component that contains the actual document.</summary>
 		/// <value>The component that contains the actual document.</value>
 		[Category("Behavior"), Description("The component that contains the document."), DefaultValue(null)]
 		public IDocumentContainer DocumentContainer
 		{
-			get { return fDocumentContainer; }
+			get { return _documentContainer; }
 			set
 			{
-				if (fDocumentContainer != value)
+				if (_documentContainer != value)
 				{
-					if (fDocumentContainer != null)
+					if (_documentContainer != null)
 					{
-						fDocumentContainer.FileNameChanged -= RaiseDocumentTitleChanged;
-						fDocumentContainer.IsModifiedChanged -= RaiseDocumentTitleChanged;
+						_documentContainer.FileNameChanged -= RaiseDocumentTitleChanged;
+						_documentContainer.IsModifiedChanged -= RaiseDocumentTitleChanged;
 					}
 
 					if (value != null)
@@ -85,29 +85,29 @@ namespace TC.WinForms.Forms
 						value.IsModifiedChanged += RaiseDocumentTitleChanged;
 					}
 
-					fDocumentContainer = value;
+					_documentContainer = value;
 					OnDocumentContainerChanged(EventArgs.Empty);
-					RaiseDocumentTitleChanged(fDocumentContainer, EventArgs.Empty);
+					RaiseDocumentTitleChanged(_documentContainer, EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventDocumentContainerChanged = new object();
+		private static readonly object _documentContainerChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:DocumentContainer"/> property has changed.</summary>
 		public event EventHandler DocumentContainerChanged
 		{
-			add { Events.AddHandler(fEventDocumentContainerChanged, value); }
-			remove { Events.RemoveHandler(fEventDocumentContainerChanged, value); }
+			add { Events.AddHandler(_documentContainerChanged, value); }
+			remove { Events.RemoveHandler(_documentContainerChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:DocumentContainerChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnDocumentContainerChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventDocumentContainerChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_documentContainerChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
@@ -121,29 +121,29 @@ namespace TC.WinForms.Forms
 		{
 			get
 			{
-				return fDocumentContainer != null
-					? (fDocumentContainer.FileName ?? String.Empty)
-						+ (fDocumentContainer.IsModified ? "*" : String.Empty)
+				return _documentContainer != null
+					? (_documentContainer.FileName ?? String.Empty)
+						+ (_documentContainer.IsModified ? "*" : String.Empty)
 					: String.Empty;
 			}
 		}
 
-		private static readonly object fEventDocumentTitleChanged = new object();
+		private static readonly object _documentTitleChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:DocumentTitle"/> property has changed.</summary>
 		public event EventHandler DocumentTitleChanged
 		{
-			add { Events.AddHandler(fEventDocumentTitleChanged, value); }
-			remove { Events.RemoveHandler(fEventDocumentTitleChanged, value); }
+			add { Events.AddHandler(_documentTitleChanged, value); }
+			remove { Events.RemoveHandler(_documentTitleChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:DocumentTitleChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnDocumentTitleChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventDocumentTitleChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_documentTitleChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		private void RaiseDocumentTitleChanged(object sender, EventArgs e)
@@ -158,11 +158,11 @@ namespace TC.WinForms.Forms
 		/// <summary>Clears the document.</summary>
 		public void ClearDocument()
 		{
-			if (fDocumentContainer == null)
+			if (_documentContainer == null)
 				throw new InvalidOperationException("DocumentContainer is not initialized.");
 
-			if (!fDocumentContainer.IsModified || AskToSaveDocument())
-				fDocumentContainer.ClearDocument(String.Empty);
+			if (!_documentContainer.IsModified || AskToSaveDocument())
+				_documentContainer.ClearDocument(String.Empty);
 		}
 
 		#endregion
@@ -172,31 +172,31 @@ namespace TC.WinForms.Forms
 		/// <summary>Loads the document from a file.</summary>
 		public void LoadDocument()
 		{
-			if (fDocumentContainer == null)
+			if (_documentContainer == null)
 				throw new InvalidOperationException("DocumentContainer is not initialized.");
 
-			if (!fDocumentContainer.IsModified || AskToSaveDocument())
-				using (OpenFileDialog lDialog = new OpenFileDialog())
+			if (!_documentContainer.IsModified || AskToSaveDocument())
+				using (OpenFileDialog dialog = new OpenFileDialog())
 				{
 					try
 					{
-						if (!string.IsNullOrEmpty(fCurrentDocumentFolder))
-							lDialog.InitialDirectory = fCurrentDocumentFolder;
+						if (!string.IsNullOrEmpty(_currentDocumentFolder))
+							dialog.InitialDirectory = _currentDocumentFolder;
 
-						lDialog.Filter = fDocumentContainer.FileDialogFilter;
-						lDialog.FilterIndex = fSelectedFilterIndex;
+						dialog.Filter = _documentContainer.FileDialogFilter;
+						dialog.FilterIndex = _selectedFilterIndex;
 
-						if (lDialog.ShowDialog(this) == DialogResult.OK)
+						if (dialog.ShowDialog(this) == DialogResult.OK)
 						{
-							fSelectedFilterIndex = lDialog.FilterIndex;
-							fCurrentDocumentFolder = Path.GetDirectoryName(lDialog.FileName);
-							fDocumentContainer.LoadDocument(lDialog.FileName, fSelectedFilterIndex);
+							_selectedFilterIndex = dialog.FilterIndex;
+							_currentDocumentFolder = Path.GetDirectoryName(dialog.FileName);
+							_documentContainer.LoadDocument(dialog.FileName, _selectedFilterIndex);
 						}
 					}
-					catch (Exception lException)
+					catch (Exception exception)
 					{
-						if (lException.IsCritical()) throw;
-						else ShowError(lException);
+						if (exception.IsCritical()) throw;
+						else ShowError(exception);
 					}
 				}
 		}
@@ -208,7 +208,7 @@ namespace TC.WinForms.Forms
 		/// <summary>Saves the document to a file.</summary>
 		public void SaveDocument()
 		{
-			if (fDocumentContainer == null)
+			if (_documentContainer == null)
 				throw new InvalidOperationException("DocumentContainer is not initialized.");
 
 			TryToSaveDocument();
@@ -217,17 +217,17 @@ namespace TC.WinForms.Forms
 		/// <summary>Saves the document to a different file.</summary>
 		public void SaveDocumentAs()
 		{
-			if (fDocumentContainer == null)
+			if (_documentContainer == null)
 				throw new InvalidOperationException("DocumentContainer is not initialized.");
 
 			try
 			{
-				SaveDocumentOrCancel(GetFilePathFromSaveFileDialog(fDocumentContainer.FilePath));
+				SaveDocumentOrCancel(GetFilePathFromSaveFileDialog(_documentContainer.FilePath));
 			}
-			catch (Exception lException)
+			catch (Exception exception)
 			{
-				if (lException.IsCritical()) throw;
-				else ShowError(lException);
+				if (exception.IsCritical()) throw;
+				else ShowError(exception);
 			}
 		}
 
@@ -235,16 +235,16 @@ namespace TC.WinForms.Forms
 		{
 			try
 			{
-				string lFilePath = fDocumentContainer.FilePath;
-				if (string.IsNullOrEmpty(lFilePath))
-					lFilePath = GetFilePathFromSaveFileDialog(fDocumentContainer.FileName);
+				string filePath = _documentContainer.FilePath;
+				if (string.IsNullOrEmpty(filePath))
+					filePath = GetFilePathFromSaveFileDialog(_documentContainer.FileName);
 
-				return SaveDocumentOrCancel(lFilePath);
+				return SaveDocumentOrCancel(filePath);
 			}
-			catch (Exception lException)
+			catch (Exception exception)
 			{
-				if (lException.IsCritical()) throw;
-				else ShowError(lException);
+				if (exception.IsCritical()) throw;
+				else ShowError(exception);
 			}
 
 			return false;
@@ -252,22 +252,22 @@ namespace TC.WinForms.Forms
 
 		private string GetFilePathFromSaveFileDialog(string filePath)
 		{
-			using (SaveFileDialog lDialog = new SaveFileDialog())
+			using (SaveFileDialog dialog = new SaveFileDialog())
 			{
-				lDialog.Filter = fDocumentContainer.FileDialogFilter;
-				lDialog.FilterIndex = fSelectedFilterIndex;
+				dialog.Filter = _documentContainer.FileDialogFilter;
+				dialog.FilterIndex = _selectedFilterIndex;
 
-				if (!string.IsNullOrEmpty(fCurrentDocumentFolder))
-					lDialog.InitialDirectory = fCurrentDocumentFolder;
+				if (!string.IsNullOrEmpty(_currentDocumentFolder))
+					dialog.InitialDirectory = _currentDocumentFolder;
 
 				if (!string.IsNullOrEmpty(filePath))
-					lDialog.FileName = filePath;
+					dialog.FileName = filePath;
 
-				if (lDialog.ShowDialog(this) == DialogResult.OK)
+				if (dialog.ShowDialog(this) == DialogResult.OK)
 				{
-					fSelectedFilterIndex = lDialog.FilterIndex;
-					fCurrentDocumentFolder = Path.GetDirectoryName(lDialog.FileName);
-					return lDialog.FileName;
+					_selectedFilterIndex = dialog.FilterIndex;
+					_currentDocumentFolder = Path.GetDirectoryName(dialog.FileName);
+					return dialog.FileName;
 				}
 			}
 
@@ -279,13 +279,13 @@ namespace TC.WinForms.Forms
 			if (!string.IsNullOrEmpty(filePath))
 				try
 				{
-					fDocumentContainer.SaveDocument(filePath, fSelectedFilterIndex);
+					_documentContainer.SaveDocument(filePath, _selectedFilterIndex);
 					return true;
 				}
-				catch (Exception lException)
+				catch (Exception exception)
 				{
-					if (lException.IsCritical()) throw;
-					else ShowError(lException);
+					if (exception.IsCritical()) throw;
+					else ShowError(exception);
 				}
 
 			return false;
@@ -294,7 +294,7 @@ namespace TC.WinForms.Forms
 		private bool AskToSaveDocument()
 		{
 			switch (AskYesNoCancel(
-				"Save changes to \"{0}\"?".FormatInvariant(fDocumentContainer.FileName ?? String.Empty),
+				"Save changes to \"{0}\"?".FormatInvariant(_documentContainer.FileName ?? String.Empty),
 				false))
 			{
 				case DialogResult.Yes: return TryToSaveDocument();
@@ -303,8 +303,8 @@ namespace TC.WinForms.Forms
 			}
 		}
 
-		private int fSelectedFilterIndex;
-		private string fCurrentDocumentFolder;
+		private int _selectedFilterIndex;
+		private string _currentDocumentFolder;
 
 		#endregion
 
@@ -316,8 +316,8 @@ namespace TC.WinForms.Forms
 		{
 			base.LoadBaseFormSettings(settings);
 
-			fCurrentDocumentFolder = settings.CurrentDocumentFolder;
-			fSelectedFilterIndex = settings.SelectedFilterIndex;
+			_currentDocumentFolder = settings.CurrentDocumentFolder;
+			_selectedFilterIndex = settings.SelectedFilterIndex;
 		}
 
 		/// <summary>Saves the base document form settings.</summary>
@@ -326,7 +326,7 @@ namespace TC.WinForms.Forms
 		{
 			base.SaveBaseFormSettings(settings);
 
-			settings.CurrentDocumentFolder = fCurrentDocumentFolder;
+			settings.CurrentDocumentFolder = _currentDocumentFolder;
 			settings.SelectedFilterIndex = settings.SelectedFilterIndex;
 		}
 
@@ -339,8 +339,8 @@ namespace TC.WinForms.Forms
 			base.OnClosing(e);
 
 			if (!e.Cancel
-				&& fDocumentContainer != null
-				&& fDocumentContainer.IsModified
+				&& _documentContainer != null
+				&& _documentContainer.IsModified
 				&& !AskToSaveDocument())
 			{
 				e.Cancel = true;

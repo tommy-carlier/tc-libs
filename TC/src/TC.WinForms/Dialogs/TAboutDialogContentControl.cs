@@ -37,10 +37,10 @@ namespace TC.WinForms.Dialogs
 
 			SuspendLayout();
 
-			string lTitle = TApplication.Title;
-			Text = "About " + lTitle;
+			string title = TApplication.Title;
+			Text = "About " + title;
 
-			LabelTitle.Text = LabelTitle.Text.Replace("{Title}", lTitle);
+			LabelTitle.Text = LabelTitle.Text.Replace("{Title}", title);
 			LabelVersion.Text = LabelVersion.Text.Replace("{Version}", TApplication.Version.ToString());
 			LabelCopyright.Text = LabelCopyright.Text.Replace("{Copyright}", TApplication.Copyright);
 			Hyperlink.Text = Hyperlink.Text.Replace("{URL}", TApplication.WebsiteDisplayString);
@@ -51,9 +51,9 @@ namespace TC.WinForms.Dialogs
 
 		private void HandlerVisitWebsiteCommandExecuted(object sender, EventArgs e)
 		{
-			Uri lUri = TApplication.WebsiteUri;
-			if (lUri != null)
-				try { Process.Start(lUri.ToString()); }
+			Uri uri = TApplication.WebsiteUri;
+			if (uri != null)
+				try { Process.Start(uri.ToString()); }
 				catch (Win32Exception lException) { ShowError(lException); }
 				catch (ObjectDisposedException lException) { ShowError(lException); }
 				catch (FileNotFoundException lException) { ShowError(lException); }

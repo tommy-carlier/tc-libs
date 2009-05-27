@@ -30,13 +30,13 @@ namespace TC.WinForms.Dialogs
 
 		#region DialogResultButtons
 
-		private readonly Collection<DialogResultButton> fDialogResultButtons = new Collection<DialogResultButton>();
+		private readonly Collection<DialogResultButton> _dialogResultButtons = new Collection<DialogResultButton>();
 
 		/// <summary>Gets the definition of the buttons that set the <see cref="T:DialogResult"/> of the dialog.</summary>
 		/// <value>The definition of the buttons that set the <see cref="T:DialogResult"/> of the dialog.</value>
 		[Category("Behavior"), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[Description("The definition of the DialogResult-buttons at the bottom of the dialog.")]
-		public Collection<DialogResultButton> DialogResultButtons { get { return fDialogResultButtons; } }
+		public Collection<DialogResultButton> DialogResultButtons { get { return _dialogResultButtons; } }
 
 		#endregion
 
@@ -60,9 +60,9 @@ namespace TC.WinForms.Dialogs
 		{
 			base.OnTextChanged(e);
 
-			Form lForm = FindForm();
-			if (lForm != null)
-				lForm.Text = Text;
+			Form form = FindForm();
+			if (form != null)
+				form.Text = Text;
 		}
 
 		#endregion
@@ -87,23 +87,23 @@ namespace TC.WinForms.Dialogs
 			set { base.ForeColor = value; }
 		}
 
-		private static readonly Padding fDefaultMargin = Padding.Empty;
+		private static readonly Padding _defaultMargin = Padding.Empty;
 
 		/// <summary>Gets the space, in pixels, that is specified by default between controls.</summary>
 		/// <returns>A <see cref="T:Padding"/> that represents the default space between controls.</returns>
-		protected override Padding DefaultMargin { get { return fDefaultMargin; } }
+		protected override Padding DefaultMargin { get { return _defaultMargin; } }
 
-		private static readonly Padding fDefaultPadding = new Padding(8);
+		private static readonly Padding _defaultPadding = new Padding(8);
 
 		/// <summary>Gets the internal spacing, in pixels, of the contents of a control.</summary>
 		/// <returns>A <see cref="T:Padding"/> that represents the internal spacing of the contents of a control.</returns>
-		protected override Padding DefaultPadding { get { return fDefaultPadding; } }
+		protected override Padding DefaultPadding { get { return _defaultPadding; } }
 
-		private static readonly Size fDefaultMinimumSize = new Size(100, 50);
+		private static readonly Size _defaultMinimumSize = new Size(100, 50);
 
 		/// <summary>Gets the length and height, in pixels, that is specified as the default minimum size of a control.</summary>
 		/// <returns>A <see cref="T:Size"/> representing the size of the control.</returns>
-		protected override Size DefaultMinimumSize { get { return fDefaultMinimumSize; } }
+		protected override Size DefaultMinimumSize { get { return _defaultMinimumSize; } }
 
 		#endregion
 
@@ -113,13 +113,13 @@ namespace TC.WinForms.Dialogs
 		{
 			base.OnPaintBackground(e);
 
-			Size lSize = Size;
-			Rectangle lBottomBounds = new Rectangle(0, lSize.Height - 1, lSize.Width, 1);
+			Size size = Size;
+			Rectangle bottomBounds = new Rectangle(0, size.Height - 1, size.Width, 1);
 
-			if (e.ClipRectangle.IntersectsWith(lBottomBounds))
+			if (e.ClipRectangle.IntersectsWith(bottomBounds))
 				e.Graphics.DrawSigmaBellGradient(
-					lBottomBounds,
-					lBottomBounds,
+					bottomBounds,
+					bottomBounds,
 					Color.FromArgb(48, ForeColor),
 					Color.FromArgb(96, ForeColor),
 					LinearGradientMode.Horizontal);
@@ -142,12 +142,12 @@ namespace TC.WinForms.Dialogs
 				ValidateControls();
 				return true;
 			}
-			catch (DialogValidationException lException)
+			catch (DialogValidationException exception)
 			{
-				if (lException.InvalidControl != null && lException.InvalidControl.CanSelect)
-					lException.InvalidControl.Select();
+				if (exception.InvalidControl != null && exception.InvalidControl.CanSelect)
+					exception.InvalidControl.Select();
 
-				ShowError(lException);
+				ShowError(exception);
 				return false;
 			}
 		}

@@ -22,15 +22,15 @@ namespace TC.WinForms.Dialogs
 			string message, 
 			params DialogResultButton[] buttons)
 		{
-			using (TMessageDialog lDialog = new TMessageDialog())
+			using (TMessageDialog dialog = new TMessageDialog())
 			{
-				lDialog.ContentControl.SideImage = sideImage;
-				lDialog.ContentControl.Message = message;
-				foreach (DialogResultButton lButton in buttons)
-					if (lButton != null)
-						lDialog.ContentControl.DialogResultButtons.Add(lButton);
+				dialog.ContentControl.SideImage = sideImage;
+				dialog.ContentControl.Message = message;
+				foreach (DialogResultButton button in buttons)
+					if (button != null)
+						dialog.ContentControl.DialogResultButtons.Add(button);
 
-				return lDialog.ShowDialog(owner);
+				return dialog.ShowDialog(owner);
 			}
 		}
 

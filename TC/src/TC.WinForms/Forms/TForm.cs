@@ -31,20 +31,20 @@ namespace TC.WinForms.Forms
 			Icon = TApplication.Icon;
 			StartPosition = FormStartPosition.Manual;
 
-			fCloseCommand = new SimpleActionCommand(Close);
-			fActivateCommand = new SimpleActionCommand(Activate);
+			_closeCommand = new SimpleActionCommand(Close);
+			_activateCommand = new SimpleActionCommand(Activate);
 		}
 
 		#region Commands
 
-		private readonly Collection<ApplicationCommand> fCommands = new Collection<ApplicationCommand>();
+		private readonly Collection<ApplicationCommand> _commands = new Collection<ApplicationCommand>();
 
 		/// <summary>Gets the commands of this <see cref="T:TForm"/>.</summary>
 		/// <value>The commands of this <see cref="T:TForm"/>.</value>
 		/// <remarks>This property enables you to add commands in the Visual Forms Designer.</remarks>
 		[Category("Behavior"), Description("The commands of this form.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public Collection<ApplicationCommand> Commands { get { return fCommands; } }
+		public Collection<ApplicationCommand> Commands { get { return _commands; } }
 
 		/// <summary>Gets the command to display information about the current application.</summary>
 		/// <value>The command to display information about the current application.</value>
@@ -56,19 +56,19 @@ namespace TC.WinForms.Forms
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ICommand ApplicationAboutCommand { get { return TApplication.Current.AboutCommand; } }
 
-		private readonly ICommand fCloseCommand;
+		private readonly ICommand _closeCommand;
 
 		/// <summary>Gets the command to close this form.</summary>
 		/// <value>The command to close this form.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand CloseCommand { get { return fCloseCommand; } }
+		public ICommand CloseCommand { get { return _closeCommand; } }
 
-		private readonly ICommand fActivateCommand;
+		private readonly ICommand _activateCommand;
 
 		/// <summary>Gets the command to activate this form.</summary>
 		/// <value>The command to activate this form.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand ActivateCommand { get { return fActivateCommand; } }
+		public ICommand ActivateCommand { get { return _activateCommand; } }
 
 		#endregion
 
@@ -104,67 +104,67 @@ namespace TC.WinForms.Forms
 
 		private void InitializeDialogSideImageControls()
 		{
-			foreach (SystemIconBox lControl in this.EnumerateDescendants<SystemIconBox>(false))
-				lControl.InitializeImage();
+			foreach (SystemIconBox control in this.EnumerateDescendants<SystemIconBox>(false))
+				control.InitializeImage();
 		}
 
 		private void SetInitialBounds()
 		{
-			Form lOwner = Owner;
-			if (lOwner == null && this != Application.MainForm)
-				lOwner = Application.MainForm;
+			Form owner = Owner;
+			if (owner == null && this != Application.MainForm)
+				owner = Application.MainForm;
 
-			Rectangle lOwnerBounds
-				= lOwner != null
-				&& lOwner.Visible
-				&& lOwner.WindowState != FormWindowState.Minimized
-					? lOwner.Bounds
+			Rectangle ownerBounds
+				= owner != null
+				&& owner.Visible
+				&& owner.WindowState != FormWindowState.Minimized
+					? owner.Bounds
 					: Screen.PrimaryScreen.WorkingArea;
 
-			Rectangle lFormBounds = Bounds;
-			lFormBounds.X = lOwnerBounds.X + ((lOwnerBounds.Width - lFormBounds.Width) / 2);
-			lFormBounds.Y = (int)Math.Round(
-				lOwnerBounds.Y + ((lOwnerBounds.Height - lFormBounds.Height) * HeightFactor));
+			Rectangle formBounds = Bounds;
+			formBounds.X = ownerBounds.X + ((ownerBounds.Width - formBounds.Width) / 2);
+			formBounds.Y = (int)Math.Round(
+				ownerBounds.Y + ((ownerBounds.Height - formBounds.Height) * _heightFactor));
 
-			Bounds = lFormBounds.AdjustBoundsToWorkingArea();
+			Bounds = formBounds.AdjustBoundsToWorkingArea();
 		}
 
 		private void AdjustBoundsToNotOverlapExistingForms()
 		{
-			Rectangle lBounds = Bounds;
-			int lCaptionHeight = SystemInformation.CaptionHeight;
-			Rectangle lScreenBounds = Screen.FromPoint(lBounds.Location).WorkingArea;
-			int lMinX = lScreenBounds.X;
-			int lMinY = lScreenBounds.Y;
-			int lDeltaX = lCaptionHeight - lMinX;
-			int lDeltaY = lCaptionHeight - lMinY;
-			int lModuloX = lScreenBounds.Width - lBounds.Width;
-			int lModuloY = lScreenBounds.Height - lBounds.Height;
+			Rectangle bounds = Bounds;
+			int captionHeight = SystemInformation.CaptionHeight;
+			Rectangle screenBounds = Screen.FromPoint(bounds.Location).WorkingArea;
+			int minX = screenBounds.X;
+			int minY = screenBounds.Y;
+			int deltaX = captionHeight - minX;
+			int deltaY = captionHeight - minY;
+			int moduloX = screenBounds.Width - bounds.Width;
+			int moduloY = screenBounds.Height - bounds.Height;
 
-			FormCollection lOpenForms = SWF.Application.OpenForms;
-			for (int i = lOpenForms.Count - 1; i >= 0; i--)
+			FormCollection openForms = SWF.Application.OpenForms;
+			for (int i = openForms.Count - 1; i >= 0; i--)
 			{
-				bool lCheckAgain = false;
+				bool checkAgain = false;
 
-				foreach (Form lOpenForm in lOpenForms)
-					if (lOpenForm != this
-						&& lOpenForm.Visible
-						&& lOpenForm.Location == lBounds.Location)
+				foreach (Form openForm in openForms)
+					if (openForm != this
+						&& openForm.Visible
+						&& openForm.Location == bounds.Location)
 					{
-						lBounds.X = lMinX + ((lBounds.X + lDeltaX) % lModuloX);
-						lBounds.Y = lMinY + ((lBounds.Y + lDeltaY) % lModuloY);
-						lCheckAgain = true;
+						bounds.X = minX + ((bounds.X + deltaX) % moduloX);
+						bounds.Y = minY + ((bounds.Y + deltaY) % moduloY);
+						checkAgain = true;
 						break;
 					}
 
-				if (!lCheckAgain) break;
+				if (!checkAgain) break;
 			}
 
-			Location = lBounds.Location;
+			Location = bounds.Location;
 		}
 
 		// height factor = 1 / (1 + golden ratio); golden ratio = (1 + SQRT(5)) / 2
-		private static readonly double HeightFactor = 2.0 / (3.0 + Math.Sqrt(5.0));
+		private static readonly double _heightFactor = 2.0 / (3.0 + Math.Sqrt(5.0));
 
 		/// <summary>Raises the <see cref="E:Shown"/> event.</summary>
 		/// <param name="e">A <see cref="T:EventArgs"/> that contains the event data.</param>
@@ -176,10 +176,10 @@ namespace TC.WinForms.Forms
 				FirstFocusControl.Select();
 			else
 			{
-				foreach (Control lControl in this.EnumerateDescendants<Control>(false))
-					if (lControl.CanSelect)
+				foreach (Control control in this.EnumerateDescendants<Control>(false))
+					if (control.CanSelect)
 					{
-						lControl.Select();
+						control.Select();
 						break;
 					}
 			}
@@ -212,8 +212,8 @@ namespace TC.WinForms.Forms
 
 		private void ExitApplicationWhenLastWindowIsClosed()
 		{
-			FormCollection lOpenForms = SWF.Application.OpenForms;
-			if (lOpenForms.Count == 0 || (lOpenForms.Count == 1 && lOpenForms[0] == this))
+			FormCollection openForms = SWF.Application.OpenForms;
+			if (openForms.Count == 0 || (openForms.Count == 1 && openForms[0] == this))
 				SWF.Application.Exit();
 		}
 
@@ -339,15 +339,15 @@ namespace TC.WinForms.Forms
 
 		#region loading and saving settings
 
-		private bool fSettingsLoaded;
+		private bool _settingsLoaded;
 
 		/// <summary>Loads the settings of this form.</summary>
 		public void LoadSettings()
 		{
 			LoadSettingsCore();
-			foreach (var lUserControl in this.EnumerateDescendants<TUserControl>(false))
-				lUserControl.LoadSettings();
-			fSettingsLoaded = true;
+			foreach (var userControl in this.EnumerateDescendants<TUserControl>(false))
+				userControl.LoadSettings();
+			_settingsLoaded = true;
 		}
 
 		/// <summary>When overriden in a derived class, loads the settings of this form.</summary>
@@ -361,12 +361,12 @@ namespace TC.WinForms.Forms
 		{
 			if (settings == null) throw new ArgumentNullException("settings");
 
-			Rectangle lBounds = Bounds;
-			if (settings.X >= 0) lBounds.X = settings.X;
-			if (settings.Y >= 0) lBounds.Y = settings.Y;
-			if (settings.Width >= 0) lBounds.Width = settings.Width;
-			if (settings.Height >= 0) lBounds.Height = settings.Height;
-			Bounds = lBounds.AdjustBoundsToWorkingArea();
+			Rectangle bounds = Bounds;
+			if (settings.X >= 0) bounds.X = settings.X;
+			if (settings.Y >= 0) bounds.Y = settings.Y;
+			if (settings.Width >= 0) bounds.Width = settings.Width;
+			if (settings.Height >= 0) bounds.Height = settings.Height;
+			Bounds = bounds.AdjustBoundsToWorkingArea();
 
 			WindowState = settings.IsMaximized ? FormWindowState.Maximized : FormWindowState.Normal;
 		}
@@ -374,11 +374,11 @@ namespace TC.WinForms.Forms
 		/// <summary>Saves the settings of this form.</summary>
 		public void SaveSettings()
 		{
-			if (fSettingsLoaded)
+			if (_settingsLoaded)
 			{
 				SaveSettingsCore();
-				foreach (var lUserControl in this.EnumerateDescendants<TUserControl>(false))
-					lUserControl.SaveSettings();
+				foreach (var userControl in this.EnumerateDescendants<TUserControl>(false))
+					userControl.SaveSettings();
 			}
 		}
 
@@ -396,11 +396,11 @@ namespace TC.WinForms.Forms
 			switch (WindowState)
 			{
 				case FormWindowState.Normal:
-					Rectangle lBounds = Bounds;
-					settings.X = lBounds.X;
-					settings.Y = lBounds.Y;
-					settings.Width = lBounds.Width;
-					settings.Height = lBounds.Height;
+					Rectangle bounds = Bounds;
+					settings.X = bounds.X;
+					settings.Y = bounds.Y;
+					settings.Width = bounds.Width;
+					settings.Height = bounds.Height;
 					settings.IsMaximized = false;
 					break;
 				case FormWindowState.Maximized:

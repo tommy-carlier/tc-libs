@@ -49,8 +49,8 @@ namespace TC.WinForms.Controls
 		/// <summary>Increases the line indent.</summary>
 		public override void IncreaseLineIndent()
 		{
-			string lText = SelectedText;
-			ReplaceSelectedText(IncreaseLineIndent(lText), lText.Length > 0);
+			string text = SelectedText;
+			ReplaceSelectedText(IncreaseLineIndent(text), text.Length > 0);
 		}
 
 		private static string IncreaseLineIndent(string text)
@@ -68,35 +68,35 @@ namespace TC.WinForms.Controls
 		{
 			if (SelectionLength == 0)
 			{
-				int lStart = SelectionStart;
-				if (lStart > 0 && Text[lStart - 1] == '\t')
+				int start = SelectionStart;
+				if (start > 0 && Text[start - 1] == '\t')
 					SendKeys.Send("{BS}");
 			}
 			else
 			{
-				string lText = SelectedText;
-				if (lText.StartsWith('\t'))
-					lText = lText.Length > 1
-						? lText.Substring(1)
+				string text = SelectedText;
+				if (text.StartsWith('\t'))
+					text = text.Length > 1
+						? text.Substring(1)
 						: String.Empty;
 
-				ReplaceSelectedText(lText.Replace("\n\t", "\n"), true);
+				ReplaceSelectedText(text.Replace("\n\t", "\n"), true);
 			}
 		}
 
 		private void HandleEnterKey()
 		{
-			int lFirstCharIndex = GetFirstCharIndexOfCurrentLine();
-			int lCurrentCharIndex = SelectionStart;
+			int firstCharIndex = GetFirstCharIndexOfCurrentLine();
+			int currentCharIndex = SelectionStart;
 
-			string lNewText = "\n";
-			if (lCurrentCharIndex > lFirstCharIndex)
-				lNewText += GetIndentForNewLine(Text.Substring(lFirstCharIndex, lCurrentCharIndex - lFirstCharIndex));
+			string newText = "\n";
+			if (currentCharIndex > firstCharIndex)
+				newText += GetIndentForNewLine(Text.Substring(firstCharIndex, currentCharIndex - firstCharIndex));
 
-			ReplaceSelectedText(lNewText, false);
+			ReplaceSelectedText(newText, false);
 		}
 
-		private static readonly Regex fRegexPreviousLineIndent
+		private static readonly Regex _regexPreviousLineIndent
 			= new Regex(@"^([\t ]*).*$", RegexOptions.Compiled);
 
 		/// <summary>Gets the indent to add to the new line after the user presses the Enter-key.</summary>
@@ -106,8 +106,8 @@ namespace TC.WinForms.Controls
 		{
 			if (previousLine == null) throw new ArgumentNullException("previousLine");
 
-			Match lMatch = fRegexPreviousLineIndent.Match(previousLine);
-			return lMatch.Success ? lMatch.Groups[1].Value : String.Empty;
+			Match match = _regexPreviousLineIndent.Match(previousLine);
+			return match.Success ? match.Groups[1].Value : String.Empty;
 		}
 
 		#region IHasSystemFont Members

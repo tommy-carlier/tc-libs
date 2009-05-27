@@ -24,11 +24,11 @@ namespace TC.WinForms.Controls
 		/// <summary>Initializes a new instance of the <see cref="TTextControl"/> class.</summary>
 		protected TTextControl()
 		{
-			fCopyCommand = new SimpleActionCommand(Copy);
-			fSelectAllCommand = new SimpleActionCommand(SelectAll);
+			_copyCommand = new SimpleActionCommand(Copy);
+			_selectAllCommand = new SimpleActionCommand(SelectAll);
 
-			fCopyCommand.CanExecute = false;
-			fSelectAllCommand.CanExecute = false;
+			_copyCommand.CanExecute = false;
+			_selectAllCommand.CanExecute = false;
 
 			AcceptsTab = true;
 			HideSelection = false;
@@ -83,12 +83,12 @@ namespace TC.WinForms.Controls
 			[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
 			get
 			{
-				CreateParams lParams = base.CreateParams;
+				CreateParams createParams = base.CreateParams;
 
 				if (ShouldRenderWithVisualStyles())
-					lParams.ExStyle &= ~NativeMethods.WS_EX_CLIENTEDGE;
+					createParams.ExStyle &= ~NativeMethods.WS_EX_CLIENTEDGE;
 
-				return lParams;
+				return createParams;
 			}
 		}
 
@@ -99,34 +99,34 @@ namespace TC.WinForms.Controls
 			return BorderStyle == BorderStyle.Fixed3D && Application.RenderWithVisualStyles;
 		}
 
-		private NativeMethods.RECT fBorderRect;
+		private NativeMethods.RECT _borderRect;
 
 		private void CalculateNonClientSize(ref Message m)
 		{
-			NativeMethods.NCCALCSIZE_PARAMS lParameters;
-			NativeMethods.RECT lWindowRect;
+			NativeMethods.NCCALCSIZE_PARAMS parameters;
+			NativeMethods.RECT windowRect;
 
-			ExtractParamsAndWindowRect(ref m, out lParameters, out lWindowRect);
-			var lRenderer = new VisualStyleRenderer(VisualStyleElement.TextBox.TextEdit.Normal);
+			ExtractParamsAndWindowRect(ref m, out parameters, out windowRect);
+			var renderer = new VisualStyleRenderer(VisualStyleElement.TextBox.TextEdit.Normal);
 
-			using (var lDeviceContext = new NativeMethods.DeviceContext(Handle))
+			using (var deviceContext = new NativeMethods.DeviceContext(Handle))
 			{
-				var lContentRect = new NativeMethods.RECT(
-					lRenderer.GetBackgroundContentRectangle(lDeviceContext, lWindowRect.ToRectangle()));
-				lContentRect.Inflate(-1, -1);
+				var contentRect = new NativeMethods.RECT(
+					renderer.GetBackgroundContentRectangle(deviceContext, windowRect.ToRectangle()));
+				contentRect.Inflate(-1, -1);
 
-				fBorderRect = new NativeMethods.RECT(
-					lContentRect.Left - lWindowRect.Left,
-					lContentRect.Top - lWindowRect.Top,
-					lWindowRect.Right - lContentRect.Right,
-					lWindowRect.Bottom - lContentRect.Bottom);
+				_borderRect = new NativeMethods.RECT(
+					contentRect.Left - windowRect.Left,
+					contentRect.Top - windowRect.Top,
+					windowRect.Right - contentRect.Right,
+					windowRect.Bottom - contentRect.Bottom);
 
 				if (m.WParam == IntPtr.Zero)
-					Marshal.StructureToPtr(lContentRect, m.LParam, false);
+					Marshal.StructureToPtr(contentRect, m.LParam, false);
 				else
 				{
-					lParameters.rgrc0 = lContentRect;
-					Marshal.StructureToPtr(lParameters, m.LParam, false);
+					parameters.rgrc0 = contentRect;
+					Marshal.StructureToPtr(parameters, m.LParam, false);
 				}
 			}
 
@@ -152,19 +152,19 @@ namespace TC.WinForms.Controls
 
 		private void PaintNonClientRegion(ref Message m)
 		{
-			IntPtr lHandle = Handle;
+			IntPtr handle = Handle;
 
-			NativeMethods.RECT lWindowRect;
-			NativeMethods.GetWindowRect(lHandle, out lWindowRect);
-			lWindowRect = new NativeMethods.RECT(
+			NativeMethods.RECT windowRect;
+			NativeMethods.GetWindowRect(handle, out windowRect);
+			windowRect = new NativeMethods.RECT(
 				0,
 				0,
-				lWindowRect.Right - lWindowRect.Left,
-				lWindowRect.Bottom - lWindowRect.Top);
+				windowRect.Right - windowRect.Left,
+				windowRect.Bottom - windowRect.Top);
 
-			using (var lDeviceContext = new NativeMethods.DeviceContext(lHandle))
+			using (var deviceContext = new NativeMethods.DeviceContext(handle))
 			{
-				var lRenderer = new VisualStyleRenderer(
+				var renderer = new VisualStyleRenderer(
 					Enabled
 						? ReadOnly
 							? VisualStyleElement.TextBox.TextEdit.ReadOnly
@@ -172,16 +172,16 @@ namespace TC.WinForms.Controls
 						: VisualStyleElement.TextBox.TextEdit.Disabled);
 
 				NativeMethods.ExcludeClipRect(
-					lDeviceContext.GetHdc(),
-					fBorderRect.Left,
-					fBorderRect.Top,
-					lWindowRect.Right - fBorderRect.Right,
-					lWindowRect.Bottom - fBorderRect.Bottom);
+					deviceContext.GetHdc(),
+					_borderRect.Left,
+					_borderRect.Top,
+					windowRect.Right - _borderRect.Right,
+					windowRect.Bottom - _borderRect.Bottom);
 
-				if (lRenderer.IsBackgroundPartiallyTransparent())
-					lRenderer.DrawParentBackground(lDeviceContext, lWindowRect.ToRectangle(), this);
+				if (renderer.IsBackgroundPartiallyTransparent())
+					renderer.DrawParentBackground(deviceContext, windowRect.ToRectangle(), this);
 
-				lRenderer.DrawBackground(lDeviceContext, lWindowRect.ToRectangle());
+				renderer.DrawBackground(deviceContext, windowRect.ToRectangle());
 			}
 
 			m.Result = IntPtr.Zero;
@@ -195,7 +195,7 @@ namespace TC.WinForms.Controls
 		{
 			base.OnTextChanged(e);
 
-			fSelectAllCommand.CanExecute = TextLength > 0;
+			_selectAllCommand.CanExecute = TextLength > 0;
 		}
 
 		/// <summary>Raises the <see cref="E:SelectionChanged"/> event.</summary>
@@ -204,11 +204,11 @@ namespace TC.WinForms.Controls
 		{
 			base.OnSelectionChanged(e);
 
-			fCopyCommand.CanExecute = SelectionLength > 0;
+			_copyCommand.CanExecute = SelectionLength > 0;
 
-			int lCharIndex = SelectionStart;
-			CurrentLineNumber = GetLineFromCharIndex(lCharIndex) + 1;
-			CurrentColumnNumber = lCharIndex - GetFirstCharIndexOfCurrentLine() + 1;
+			int charIndex = SelectionStart;
+			CurrentLineNumber = GetLineFromCharIndex(charIndex) + 1;
+			CurrentColumnNumber = charIndex - GetFirstCharIndexOfCurrentLine() + 1;
 		}
 
 		/// <summary>Raises the <see cref="E:KeyDown"/> event.</summary>
@@ -246,12 +246,12 @@ namespace TC.WinForms.Controls
 				case Keys.Control | Keys.C:
 				case Keys.Control | Keys.Insert:
 					// Ctrl+C or Ctrl+Insert => Copy
-					fCopyCommand.Execute();
+					_copyCommand.Execute();
 					return true;
 
 				case Keys.Control | Keys.A:
 					// Ctrl+A => select all text
-					fSelectAllCommand.Execute();
+					_selectAllCommand.Execute();
 					return true;
 			}
 
@@ -260,98 +260,98 @@ namespace TC.WinForms.Controls
 
 		#region commands
 
-		private readonly SimpleActionCommand fCopyCommand;
+		private readonly SimpleActionCommand _copyCommand;
 
 		/// <summary>Gets the command to copy the selected text to the clipboard.</summary>
 		/// <value>The command to copy the selected text to the clipboard.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand CopyCommand { get { return fCopyCommand; } }
+		public ICommand CopyCommand { get { return _copyCommand; } }
 
-		private readonly SimpleActionCommand fSelectAllCommand;
+		private readonly SimpleActionCommand _selectAllCommand;
 
 		/// <summary>Gets the command to select all the text.</summary>
 		/// <value>The command to select all the text.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ICommand SelectAllCommand { get { return fSelectAllCommand; } }
+		public ICommand SelectAllCommand { get { return _selectAllCommand; } }
 
 		#endregion
 
 		#region CurrentLineNumber members
 
-		private int fCurrentLineNumber;
+		private int _currentLineNumber;
 
 		/// <summary>Gets the current line number.</summary>
 		/// <value>The current line number.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int CurrentLineNumber
 		{
-			get { return fCurrentLineNumber; }
+			get { return _currentLineNumber; }
 			private set
 			{
-				if (fCurrentLineNumber != value)
+				if (_currentLineNumber != value)
 				{
-					fCurrentLineNumber = value;
+					_currentLineNumber = value;
 					OnCurrentLineNumberChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventCurrentLineNumberChanged = new object();
+		private static readonly object _currentLineNumberChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:CurrentLineNumber"/> property has changed.</summary>
 		public event EventHandler CurrentLineNumberChanged
 		{
-			add { Events.AddHandler(fEventCurrentLineNumberChanged, value); }
-			remove { Events.RemoveHandler(fEventCurrentLineNumberChanged, value); }
+			add { Events.AddHandler(_currentLineNumberChanged, value); }
+			remove { Events.RemoveHandler(_currentLineNumberChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:CurrentLineNumberChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCurrentLineNumberChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventCurrentLineNumberChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_currentLineNumberChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion
 
 		#region CurrentColumnNumber members
 
-		private int fCurrentColumnNumber;
+		private int _currentColumnNumber;
 
 		/// <summary>Gets the current column number.</summary>
 		/// <value>The current column number.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int CurrentColumnNumber
 		{
-			get { return fCurrentColumnNumber; }
+			get { return _currentColumnNumber; }
 			private set
 			{
-				if (fCurrentColumnNumber != value)
+				if (_currentColumnNumber != value)
 				{
-					fCurrentColumnNumber = value;
+					_currentColumnNumber = value;
 					OnCurrentColumnNumberChanged(EventArgs.Empty);
 				}
 			}
 		}
 
-		private static readonly object fEventCurrentColumnNumberChanged = new object();
+		private static readonly object _currentColumnNumberChanged = new object();
 
 		/// <summary>Occurs when the value of the <see cref="P:CurrentColumnNumber"/> property has changed.</summary>
 		public event EventHandler CurrentColumnNumberChanged
 		{
-			add { Events.AddHandler(fEventCurrentColumnNumberChanged, value); }
-			remove { Events.RemoveHandler(fEventCurrentColumnNumberChanged, value); }
+			add { Events.AddHandler(_currentColumnNumberChanged, value); }
+			remove { Events.RemoveHandler(_currentColumnNumberChanged, value); }
 		}
 
 		/// <summary>Raises the <see cref="E:CurrentColumnNumberChanged"/> event.</summary>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCurrentColumnNumberChanged(EventArgs e)
 		{
-			EventHandler lEventHandler = Events[fEventCurrentColumnNumberChanged] as EventHandler;
-			if (lEventHandler != null)
-				lEventHandler(this, e);
+			EventHandler handler = Events[_currentColumnNumberChanged] as EventHandler;
+			if (handler != null)
+				handler(this, e);
 		}
 
 		#endregion

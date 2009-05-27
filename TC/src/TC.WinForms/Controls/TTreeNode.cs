@@ -27,16 +27,16 @@ namespace TC.WinForms.Controls
 
 			if (hasChildNodes)
 			{
-				fHasChildNodes = true;
+				_hasChildNodes = true;
 				Nodes.Add(new TTreeView.LoadingTreeNode());
 				Collapse();
 			}
 		}
 
-		private readonly bool fHasChildNodes;
+		private readonly bool _hasChildNodes;
 		internal bool HasChildNodes
 		{
-			get { return fHasChildNodes; }
+			get { return _hasChildNodes; }
 		}
 
 		internal TTreeNode[] LoadChildNodesInternal()

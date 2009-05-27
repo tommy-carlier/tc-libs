@@ -70,22 +70,22 @@ namespace TC.WinForms
 		protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
 		{
 			// render a background only when the button is pressed or highlighted
-			ToolStripItemState lState = GetState(e.Item);
-			if (lState == ToolStripItemState.HighlightedButton
-				|| lState == ToolStripItemState.PressedButton)
+			ToolStripItemState state = GetState(e.Item);
+			if (state == ToolStripItemState.HighlightedButton
+				|| state == ToolStripItemState.PressedButton)
 			{
-				Rectangle lBounds = new Rectangle(Point.Empty, e.Item.Size);
-				lBounds.Width -= 1;
-				lBounds.Height -= 1;
+				Rectangle bounds = new Rectangle(Point.Empty, e.Item.Size);
+				bounds.Width -= 1;
+				bounds.Height -= 1;
 
 				e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
 				FillAndStrokeButtonBackground(
 					e.Graphics,
-					lBounds,
+					bounds,
 					ColorTable.ButtonSelectedHighlight,
 					ColorTable.ButtonSelectedBorder,
-					lState == ToolStripItemState.PressedButton);
+					state == ToolStripItemState.PressedButton);
 			}
 		}
 
@@ -97,19 +97,19 @@ namespace TC.WinForms
 			bool pressed)
 		{
 			// the background is filled and stroked as a rounded rectangle
-			using (GraphicsPath lPath = bounds.CreateRoundedRectanglePath(1))
+			using (GraphicsPath path = bounds.CreateRoundedRectanglePath(1))
 			{
-				using (Brush lBrush = new SolidBrush(Color.White))
-					g.FillPath(lBrush, lPath);
+				using (Brush brush = new SolidBrush(Color.White))
+					g.FillPath(brush, path);
 
 				// fill the rounded rectangle with a shiny vertical gradient
-				using (Brush lBrush = CreateButtonBackgroundBrush(bounds, backColor, pressed ? 32 : 64))
-					g.FillPath(lBrush, lPath);
+				using (Brush brush = CreateButtonBackgroundBrush(bounds, backColor, pressed ? 32 : 64))
+					g.FillPath(brush, path);
 
 				// stroke the rounded rectangle with a subtle shiny vertical gradient
-				using (Brush lBrush = CreateButtonBackgroundBrush(bounds, borderColor, pressed ? 192 : 128))
-				using (Pen lPen = new Pen(lBrush))
-					g.DrawPath(lPen, lPath);
+				using (Brush brush = CreateButtonBackgroundBrush(bounds, borderColor, pressed ? 192 : 128))
+				using (Pen pen = new Pen(brush))
+					g.DrawPath(pen, path);
 			}
 		}
 
@@ -130,10 +130,10 @@ namespace TC.WinForms
 					break;
 
 				case ToolStripItemState.HighlightedMenuItem:
-					Rectangle lBounds = new Rectangle(Point.Empty, e.Item.Size);
+					Rectangle bounds = new Rectangle(Point.Empty, e.Item.Size);
 					e.Graphics.DrawShinyVerticalGradient(
-						lBounds,
-						lBounds,
+						bounds,
+						bounds,
 						Color.FromArgb(180, SystemColors.Highlight),
 						SystemColors.Highlight);
 					break;
@@ -231,33 +231,33 @@ namespace TC.WinForms
 		{
 			if (e.Image != null)
 			{
-				float lTranslucency = 1F, lLighting = 0F;
+				float translucency = 1F, lighting = 0F;
 
 				switch (GetState(e.Item))
 				{
 					case ToolStripItemState.DisabledMenuItem:
 					case ToolStripItemState.DisabledButton:
 						// disabled images are drawn translucently
-						lTranslucency = 0.3F;
+						translucency = 0.3F;
 						break;
 
 					case ToolStripItemState.HighlightedMenuItem:
 					case ToolStripItemState.HighlightedButton:
 						// highlighted images are a drawn lighter
-						lLighting = 0.15F;
+						lighting = 0.15F;
 						break;
 
 					case ToolStripItemState.PressedButton:
 						// pressed images are drawn darker
-						lLighting = -0.15F;
+						lighting = -0.15F;
 						break;
 				}
 
 				e.Graphics.DrawImage(
 					e.Image,
 					e.ImageRectangle,
-					lTranslucency,
-					lLighting);
+					translucency,
+					lighting);
 			}
 		}
 
@@ -265,23 +265,23 @@ namespace TC.WinForms
 		/// <param name="e">A <see cref="T:ToolStripSeparatorRenderEventArgs"/> that contains the event data.</param>
 		protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
 		{
-			Rectangle lBounds = new Rectangle(Point.Empty, e.Item.Size);
-			DrawSeparatorPart(e.Graphics, lBounds, e.Vertical, false);
-			DrawSeparatorPart(e.Graphics, lBounds, e.Vertical, true);
+			Rectangle bounds = new Rectangle(Point.Empty, e.Item.Size);
+			DrawSeparatorPart(e.Graphics, bounds, e.Vertical, false);
+			DrawSeparatorPart(e.Graphics, bounds, e.Vertical, true);
 		}
 
 		private void DrawSeparatorPart(Graphics g, Rectangle bounds, bool vertical, bool light)
 		{
-			using (Brush lBrush = CreateSeparatorBrush(bounds, vertical, light))
-				g.FillRectangle(lBrush, CalculateSeparatorPartBounds(bounds, vertical, light));
+			using (Brush brush = CreateSeparatorBrush(bounds, vertical, light))
+				g.FillRectangle(brush, CalculateSeparatorPartBounds(bounds, vertical, light));
 		}
 
 		private static Rectangle CalculateSeparatorPartBounds(Rectangle bounds, bool vertical, bool light)
 		{
-			int lOffset = light ? 1 : 0;
+			int offset = light ? 1 : 0;
 			return vertical
-				? new Rectangle((bounds.Width / 2) + lOffset, 4, 1, bounds.Height - 8)
-				: new Rectangle(4, (bounds.Height / 2) + lOffset, bounds.Width - 8, 1);
+				? new Rectangle((bounds.Width / 2) + offset, 4, 1, bounds.Height - 8)
+				: new Rectangle(4, (bounds.Height / 2) + offset, bounds.Width - 8, 1);
 		}
 
 		private Brush CreateSeparatorBrush(Rectangle bounds, bool vertical, bool light)
@@ -301,14 +301,14 @@ namespace TC.WinForms
 			{
 				if (e.Item.Enabled)
 				{
-					Rectangle lBounds = e.ImageRectangle;
-					lBounds.Inflate(1, 1);
+					Rectangle bounds = e.ImageRectangle;
+					bounds.Inflate(1, 1);
 
 					e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
 					FillAndStrokeButtonBackground(
 						e.Graphics,
-						lBounds,
+						bounds,
 						ColorTable.ButtonCheckedHighlight,
 						ColorTable.ButtonCheckedHighlightBorder,
 						e.Item.Pressed);
