@@ -104,7 +104,7 @@ namespace TC.WinForms.Forms
 
 		private void InitializeDialogSideImageControls()
 		{
-			foreach (SystemIconBox control in this.EnumerateDescendants<SystemIconBox>(false))
+			foreach (var control in this.EnumerateDescendants<TSystemIconBox>(false))
 				control.InitializeImage();
 		}
 

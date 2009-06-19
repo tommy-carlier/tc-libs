@@ -20,15 +20,15 @@ namespace TC.WinForms.Controls
 		/// <summary>Initializes a new instance of the <see cref="THorizontalRule"/> class.</summary>
 		public THorizontalRule()
 		{
-			Size = new Size(100, 1);
+			Size = new Size(100, 2);
 			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			ForeColor = SystemColors.ControlDark;
-			BackColor = SystemColors.Control;
 			
 			SetStyle(
-				ControlStyles.AllPaintingInWmPaint | ControlStyles.FixedHeight 
-					| ControlStyles.Opaque | ControlStyles.ResizeRedraw 
-					| ControlStyles.UserPaint,
+				ControlStyles.AllPaintingInWmPaint 
+				| ControlStyles.FixedHeight 
+				| ControlStyles.Opaque 
+				| ControlStyles.ResizeRedraw 
+				| ControlStyles.UserPaint,
 				true);
 
 			SetStyle(ControlStyles.Selectable, false);
@@ -46,7 +46,8 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Gets or sets the foreground color of the control.</summary>
 		/// <returns>The foreground <see cref="T:Color"/> of the control.</returns>
-		[DefaultValue(typeof(Color), "ControlDark")]
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override Color ForeColor
 		{
 			get { return base.ForeColor; }
@@ -55,7 +56,8 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Gets or sets the background color for the control.</summary>
 		/// <returns>A <see cref="T:Color"/> that represents the background color of the control.</returns>
-		[DefaultValue(typeof(Color), "Control")]
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override Color BackColor
 		{
 			get { return base.BackColor; }
@@ -81,7 +83,7 @@ namespace TC.WinForms.Controls
 		protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
 		{
 			if ((specified & BoundsSpecified.Height) == BoundsSpecified.Height)
-				height = 1;
+				height = 2;
 
 			base.SetBoundsCore(x, y, width, height, specified);
 		}
@@ -90,11 +92,24 @@ namespace TC.WinForms.Controls
 		/// <param name="e">A <see cref="T:PaintEventArgs"/> that contains the event data.</param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			Rectangle 
+				totalBounds = new Rectangle(Point.Empty, Size),
+				clippingBounds = new Rectangle(e.ClipRectangle.Left, 0, e.ClipRectangle.Width, 1);
+
 			e.Graphics.DrawSigmaBellGradient(
-				new Rectangle(Point.Empty, Size),
-				new Rectangle(e.ClipRectangle.Left, 0, e.ClipRectangle.Width, 1),
-				DrawingUtilities.GetAverageColor(BackColor, ForeColor),
-				ForeColor,
+				totalBounds,
+				clippingBounds,
+				DrawingUtilities.GetAverageColor(SystemColors.Control, SystemColors.ControlDark),
+				SystemColors.ControlDark,
+				LinearGradientMode.Horizontal);
+
+			clippingBounds.Offset(0, 1);
+
+			e.Graphics.DrawSigmaBellGradient(
+				totalBounds,
+				clippingBounds,
+				DrawingUtilities.GetAverageColor(SystemColors.Control, SystemColors.ControlLightLight),
+				SystemColors.ControlLightLight,
 				LinearGradientMode.Horizontal);
 		}
 	}

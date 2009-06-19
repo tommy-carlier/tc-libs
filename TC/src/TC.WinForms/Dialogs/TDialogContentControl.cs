@@ -114,7 +114,8 @@ namespace TC.WinForms.Dialogs
 			base.OnPaintBackground(e);
 
 			Size size = Size;
-			Rectangle bottomBounds = new Rectangle(0, size.Height - 1, size.Width, 1);
+
+			Rectangle bottomBounds = new Rectangle(0, size.Height - 2, size.Width, 1);
 
 			if (e.ClipRectangle.IntersectsWith(bottomBounds))
 				e.Graphics.DrawSigmaBellGradient(
@@ -122,6 +123,16 @@ namespace TC.WinForms.Dialogs
 					bottomBounds,
 					Color.FromArgb(48, ForeColor),
 					Color.FromArgb(96, ForeColor),
+					LinearGradientMode.Horizontal);
+
+			bottomBounds.Offset(0, 1);
+
+			if (e.ClipRectangle.IntersectsWith(bottomBounds))
+				e.Graphics.DrawSigmaBellGradient(
+					bottomBounds,
+					bottomBounds,
+					Color.FromArgb(48, BackColor),
+					Color.FromArgb(96, BackColor),
 					LinearGradientMode.Horizontal);
 		}
 

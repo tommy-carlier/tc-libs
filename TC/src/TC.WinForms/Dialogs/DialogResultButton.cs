@@ -10,6 +10,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 
+using TC.WinForms.Controls;
+
 namespace TC.WinForms.Dialogs
 {
 	/// <summary>Defines a button that sets the <see cref="P:Form.DialogResult"/> of a <see cref="T:TDialog{TContentControl}"/>.</summary>
@@ -44,27 +46,35 @@ namespace TC.WinForms.Dialogs
 		{
 			return (Text ?? String.Empty) + " (" + DialogResult.ToString() + ")";
 		}
-
-		private static readonly Padding _defaultPadding = new Padding(12, 0, 12, 0);
 		
 		internal Button CreateButton()
 		{
-			Button button = new Button();
-			button.Text = Text ?? DialogResult.ToString();
-			button.Click += HandlerButtonClick;
-			button.Padding = _defaultPadding;
-			button.Tag = this;
-			return button;
+			return new DialogResultButtonControl(this);
 		}
 
-		private void HandlerButtonClick(object sender, EventArgs e)
+		internal sealed class DialogResultButtonControl : TButton
 		{
-			Button button = sender as Button;
-			Form form = button.FindForm();
-			if (form != null)
+			internal DialogResultButtonControl(DialogResultButton button)
 			{
-				form.DialogResult = DialogResult;
-				if (!form.Modal) form.Close();
+				_button = button;
+				Text = button.Text ?? button.DialogResult.ToString();
+				Padding = _defaultPadding;
+			}
+
+			private readonly DialogResultButton _button;
+			
+			private static readonly Padding _defaultPadding = new Padding(12, 0, 12, 0);
+
+			protected override void OnClick(EventArgs e)
+			{
+				base.OnClick(e);
+
+				Form form = FindForm();
+				if (form != null)
+				{
+					form.DialogResult = _button.DialogResult;
+					if (!form.Modal) form.Close();
+				}
 			}
 		}
 

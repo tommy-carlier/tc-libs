@@ -73,6 +73,12 @@
     <Compile Include="Commands\SimpleActionCommand.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TListBox.Generic.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -98,6 +104,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TPlainTextEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TSplitContainer.cs">
@@ -158,7 +167,7 @@
     </Compile>
     <Compile Include="ControlUtilities.cs" />
     <Compile Include="SystemIcon.cs" />
-    <Compile Include="SystemIconBox.cs">
+    <Compile Include="Controls\TSystemIconBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Dialogs\DialogValidationException.cs" />

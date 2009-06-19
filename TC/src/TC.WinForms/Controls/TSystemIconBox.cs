@@ -10,37 +10,40 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TC.WinForms
+namespace TC.WinForms.Controls
 {
 	/// <summary>Represents a control that displays one of the system icons.</summary>
 	[ToolboxBitmap(typeof(PictureBox)), DefaultProperty("SystemIcon")]
-	public class SystemIconBox : PictureBox
+	public class TSystemIconBox : Control
 	{
-		/// <summary>Initializes a new instance of the <see cref="SystemIconBox"/> class.</summary>
-		public SystemIconBox()
+		/// <summary>Initializes a new instance of the <see cref="TSystemIconBox"/> class.</summary>
+		public TSystemIconBox()
 		{
-			SizeMode = PictureBoxSizeMode.AutoSize;
+			AutoSize = true;
+
+			SetStyle(
+				ControlStyles.FixedWidth
+				| ControlStyles.FixedHeight
+				| ControlStyles.OptimizedDoubleBuffer
+				| ControlStyles.SupportsTransparentBackColor
+				| ControlStyles.ResizeRedraw,
+				true);
+
+			SetStyle(
+				ControlStyles.Selectable
+				| ControlStyles.Opaque,
+				false);
 		}
 
 		#region overrides to define the default designer behavior
 
-		/// <summary>Gets or sets the image that is displayed by <see cref="T:PictureBox"/>.</summary>
-		/// <returns>The <see cref="T:Image"/> to display.</returns>
-		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new Image Image
+		/// <summary>This property is not relevant for this class.</summary>
+		/// <returns>true if enabled; otherwise, false.</returns>
+		[DefaultValue(true)]
+		public override bool AutoSize
 		{
-			get { return base.Image; }
-			set { base.Image = value; }
-		}
-
-		/// <summary>Indicates how the image is displayed.</summary>
-		/// <returns>One of the <see cref="T:PictureBoxSizeMode"/> values. The default is <see cref="F:PictureBoxSizeMode.AutoSize"/>.</returns>
-		[DefaultValue(typeof(PictureBoxSizeMode), "AutoSize")]
-		public new PictureBoxSizeMode SizeMode
-		{
-			get { return base.SizeMode; }
-			set { base.SizeMode = value; }
+			get { return base.AutoSize; }
+			set { base.AutoSize = value; }
 		}
 
 		private static readonly Padding _defaultPadding = new Padding(5);
@@ -58,6 +61,7 @@ namespace TC.WinForms
 		#endregion
 
 		private SystemIcon _systemIcon;
+		private Image _customImage, _image;
 
 		/// <summary>Gets or sets the <see cref="T:SystemIcon"/> that should be displayed.</summary>
 		/// <value>The <see cref="T:SystemIcon"/> that should be displayed.</value>
@@ -71,14 +75,14 @@ namespace TC.WinForms
 				if (_systemIcon != value)
 				{
 					_systemIcon = value;
+
 					if (value != SystemIcon.Custom)
 						_customImage = null;
-					Image = CreateImage();
+
+					InitializeImage();
 				}
 			}
 		}
-
-		private Image _customImage;
 
 		/// <summary>Gets or sets the custom image that should be displayed.</summary>
 		/// <value>The custom image that should be displayed.</value>
@@ -92,11 +96,13 @@ namespace TC.WinForms
 				if (_customImage != value)
 				{
 					_customImage = value;
+
 					if (value != null)
 						_systemIcon = SystemIcon.Custom;
 					else if (_systemIcon == SystemIcon.Custom)
 						_systemIcon = SystemIcon.None;
-					Image = CreateImage();
+
+					InitializeImage();
 				}
 			}
 		}
@@ -114,7 +120,23 @@ namespace TC.WinForms
 			CustomImage = null;
 		}
 
-		internal void InitializeImage() { Image = CreateImage(); }
+		internal void InitializeImage()
+		{
+			Size size = GetImageSize(_image);
+			_image = CreateImage();
+
+			if (size != GetImageSize(_image))
+				Size = PreferredSize;
+
+			Invalidate();
+		}
+
+		private static Size GetImageSize(Image image)
+		{
+			return image != null
+				? image.Size
+				: Size.Empty;
+		}
 
 		private Image CreateImage()
 		{
@@ -134,6 +156,48 @@ namespace TC.WinForms
 		{
 			Form form = FindForm();
 			return form != null ? form.Icon.ToBitmap() : null;
+		}
+
+		/// <summary>Retrieves the size of a rectangular area into which a control can be fitted.</summary>
+		/// <param name="proposedSize">The custom-sized area for a control.</param>
+		/// <returns>An ordered pair of type <see cref="T:Size"/> representing the width and height of a rectangle.</returns>
+		public override Size GetPreferredSize(Size proposedSize)
+		{
+			return _image != null
+				? _image.Size + Padding.Size
+				: new Size(32, 32);
+		}
+
+		/// <summary>Raises the <see cref="E:Paint"/> event.</summary>
+		/// <param name="e">A <see cref="T:PaintEventArgs"/> that contains the event data.</param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			if (_image != null)
+			{
+				Size imageSize = _image.Size;
+				Padding padding = Padding;
+
+				Rectangle destinationRectangle =
+					new Rectangle(
+						padding.Left,
+						padding.Top,
+						imageSize.Width,
+						imageSize.Height);
+				destinationRectangle.Intersect(e.ClipRectangle);
+				if (!destinationRectangle.IsEmpty)
+				{
+					Rectangle sourceRectangle = destinationRectangle;
+					sourceRectangle.Offset(-padding.Left, -padding.Top);
+
+					e.Graphics.DrawImage(
+						_image,
+						destinationRectangle,
+						sourceRectangle,
+						GraphicsUnit.Pixel);
+				}
+			}
+
+			base.OnPaint(e);
 		}
 	}
 }

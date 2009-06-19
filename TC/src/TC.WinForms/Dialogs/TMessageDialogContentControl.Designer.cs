@@ -29,29 +29,11 @@
 		private void InitializeComponent()
 		{
 			System.Windows.Forms.TableLayoutPanel TableLayout;
-			this.SideImageControl = new TC.WinForms.SystemIconBox();
+			this.SideImageControl = new TC.WinForms.Controls.TSystemIconBox();
 			this.MessageLabel = new TC.WinForms.Controls.TLabel();
 			TableLayout = new System.Windows.Forms.TableLayoutPanel();
-			((System.ComponentModel.ISupportInitialize)(this.SideImageControl)).BeginInit();
 			TableLayout.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// SideImageControl
-			// 
-			this.SideImageControl.Location = new System.Drawing.Point(3, 3);
-			this.SideImageControl.Name = "SideImageControl";
-			this.SideImageControl.Size = new System.Drawing.Size(42, 42);
-			this.SideImageControl.TabIndex = 0;
-			this.SideImageControl.TabStop = false;
-			// 
-			// MessageLabel
-			// 
-			this.MessageLabel.AutoSize = true;
-			this.MessageLabel.Location = new System.Drawing.Point(51, 0);
-			this.MessageLabel.Name = "MessageLabel";
-			this.MessageLabel.Padding = new System.Windows.Forms.Padding(10);
-			this.MessageLabel.Size = new System.Drawing.Size(20, 33);
-			this.MessageLabel.TabIndex = 0;
 			// 
 			// TableLayout
 			// 
@@ -67,8 +49,25 @@
 			TableLayout.Name = "TableLayout";
 			TableLayout.RowCount = 1;
 			TableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			TableLayout.Size = new System.Drawing.Size(84, 48);
+			TableLayout.Size = new System.Drawing.Size(84, 38);
 			TableLayout.TabIndex = 0;
+			// 
+			// SideImageControl
+			// 
+			this.SideImageControl.Location = new System.Drawing.Point(3, 3);
+			this.SideImageControl.Name = "SideImageControl";
+			this.SideImageControl.Size = new System.Drawing.Size(42, 42);
+			this.SideImageControl.TabIndex = 0;
+			this.SideImageControl.TabStop = false;
+			// 
+			// MessageLabel
+			// 
+			this.MessageLabel.AutoSize = true;
+			this.MessageLabel.Location = new System.Drawing.Point(41, 0);
+			this.MessageLabel.Name = "MessageLabel";
+			this.MessageLabel.Padding = new System.Windows.Forms.Padding(10);
+			this.MessageLabel.Size = new System.Drawing.Size(20, 33);
+			this.MessageLabel.TabIndex = 0;
 			// 
 			// TMessageDialogContentControl
 			// 
@@ -76,8 +75,7 @@
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.Controls.Add(TableLayout);
 			this.Name = "TMessageDialogContentControl";
-			this.Size = new System.Drawing.Size(100, 64);
-			((System.ComponentModel.ISupportInitialize)(this.SideImageControl)).EndInit();
+			this.Size = new System.Drawing.Size(100, 54);
 			TableLayout.ResumeLayout(false);
 			TableLayout.PerformLayout();
 			this.ResumeLayout(false);
@@ -87,7 +85,7 @@
 
 		#endregion
 
-		private SystemIconBox SideImageControl;
+		private TC.WinForms.Controls.TSystemIconBox SideImageControl;
 		private TC.WinForms.Controls.TLabel MessageLabel;
 	}
 }

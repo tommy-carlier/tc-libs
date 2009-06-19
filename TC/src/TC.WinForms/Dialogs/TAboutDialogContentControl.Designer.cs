@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			TC.WinForms.SystemIconBox SideImageControl;
+			TC.WinForms.Controls.TSystemIconBox SideImageControl;
 			System.Windows.Forms.TableLayoutPanel PanelLayout;
 			TC.WinForms.Commands.ApplicationCommand VisitWebsiteCommand;
 			TC.WinForms.Dialogs.DialogResultButton dialogResultButton1 = new TC.WinForms.Dialogs.DialogResultButton();
@@ -36,10 +36,9 @@
 			this.LabelCopyright = new TC.WinForms.Controls.TLabel();
 			this.LabelVersion = new TC.WinForms.Controls.TLabel();
 			this.Hyperlink = new TC.WinForms.Controls.TCommandHyperlink();
-			SideImageControl = new TC.WinForms.SystemIconBox();
+			SideImageControl = new TC.WinForms.Controls.TSystemIconBox();
 			PanelLayout = new System.Windows.Forms.TableLayoutPanel();
 			VisitWebsiteCommand = new TC.WinForms.Commands.ApplicationCommand();
-			((System.ComponentModel.ISupportInitialize)(SideImageControl)).BeginInit();
 			PanelLayout.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -136,7 +135,6 @@
 			this.DialogResultButtons.Add(dialogResultButton1);
 			this.Name = "TAboutDialogContentControl";
 			this.Size = new System.Drawing.Size(180, 114);
-			((System.ComponentModel.ISupportInitialize)(SideImageControl)).EndInit();
 			PanelLayout.ResumeLayout(false);
 			PanelLayout.PerformLayout();
 			this.ResumeLayout(false);

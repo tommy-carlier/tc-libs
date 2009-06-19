@@ -20,8 +20,8 @@ namespace TC.WinForms.Controls
 		"Microsoft.Design",
 		"CA1063:ImplementIDisposableCorrectly",
 		Justification = "IDisposable is already implemented.")]
-	[DefaultProperty("Command"), ToolboxBitmap(typeof(Button))]
-	public class TCommandButton : Button, ICommandControl
+	[DefaultProperty("Command")]
+	public class TCommandButton : TButton, ICommandControl
 	{
 		/// <summary>Initializes a new instance of the <see cref="TCommandButton"/> class.</summary>
 		public TCommandButton()
@@ -109,23 +109,5 @@ namespace TC.WinForms.Controls
 		}
 
 		#endregion
-
-		/// <summary>Raises the <see cref="E:BackColorChanged"/> event when the <see cref="P:BackColor"/> property value of the control's container changes.</summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-		protected override void OnParentBackColorChanged(EventArgs e)
-		{
-			base.OnParentBackColorChanged(e);
-			if (BackColor == SystemColors.Window)
-				BackColor = SystemColors.Control;
-		}
-
-		/// <summary>Raises the <see cref="E:ForeColorChanged"/> event when the <see cref="P:ForeColor"/> property value of the control's container changes.</summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-		protected override void OnParentForeColorChanged(EventArgs e)
-		{
-			base.OnParentForeColorChanged(e);
-			if (ForeColor == SystemColors.WindowText)
-				ForeColor = SystemColors.ControlText;
-		}
 	}
 }
