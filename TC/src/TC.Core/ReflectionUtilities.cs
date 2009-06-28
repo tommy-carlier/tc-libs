@@ -23,7 +23,9 @@ namespace TC
 			"Microsoft.Design",
 			"CA1004:GenericMethodsShouldProvideTypeParameter",
 			Justification = "The type TAttribute is an important parameter and knowledge of generics is essential for using this function.")]
-		public static TAttribute GetFirstAttribute<TAttribute>(this ICustomAttributeProvider provider, bool inherit) where TAttribute : Attribute
+		public static TAttribute GetFirstAttribute<TAttribute>(
+			this ICustomAttributeProvider provider, 
+			bool inherit) where TAttribute : Attribute
 		{
 			if (provider == null) throw new ArgumentNullException("provider");
 
@@ -43,10 +45,19 @@ namespace TC
 			"Microsoft.Design",
 			"CA1004:GenericMethodsShouldProvideTypeParameter",
 			Justification = "The type TAttribute is an important parameter and knowledge of generics is essential for using this function.")]
-		public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this ICustomAttributeProvider provider, bool inherit) where TAttribute : Attribute
+		public static IEnumerable<TAttribute> GetAttributes<TAttribute>(
+			this ICustomAttributeProvider provider, 
+			bool inherit) where TAttribute : Attribute
 		{
 			if (provider == null) throw new ArgumentNullException("provider");
 
+			return GetAttributesCore<TAttribute>(provider, inherit);
+		}
+
+		private static IEnumerable<TAttribute> GetAttributesCore<TAttribute>(
+			ICustomAttributeProvider provider,
+			bool inherit) where TAttribute : Attribute
+		{
 			TAttribute attribute;
 			object[] attributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
 			if (attributes != null)

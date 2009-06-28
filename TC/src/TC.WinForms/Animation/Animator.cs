@@ -24,8 +24,8 @@ namespace TC.WinForms.Animation
 		[SuppressMessage(
 			"Microsoft.Performance",
 			"CA1804:RemoveUnusedLocals",
-			MessageId = "lHandle",
-			Justification = "The handle of fInvokeControl has to be created, so the getter of the Handle property has to be called.")]
+			MessageId = "handle",
+			Justification = "The handle of _invokeControl has to be created, so the getter of the Handle property has to be called.")]
 		internal static void Initialize()
 		{
 			if (_invokeControl == null)

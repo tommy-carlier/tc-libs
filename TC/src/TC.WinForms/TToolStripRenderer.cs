@@ -99,8 +99,8 @@ namespace TC.WinForms
 			// the background is filled and stroked as a rounded rectangle
 			using (GraphicsPath path = bounds.CreateRoundedRectanglePath(1))
 			{
-				using (Brush brush = new SolidBrush(Color.White))
-					g.FillPath(brush, path);
+				// reset the background to white
+				g.FillPath(Brushes.White, path);
 
 				// fill the rounded rectangle with a shiny vertical gradient
 				using (Brush brush = CreateButtonBackgroundBrush(bounds, backColor, pressed ? 32 : 64))

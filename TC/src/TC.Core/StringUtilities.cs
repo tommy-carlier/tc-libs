@@ -23,7 +23,7 @@ namespace TC
 			if (collection == null) throw new ArgumentNullException("collection");
 
 			StringBuilder builder = new StringBuilder();
-			JoinInternal(builder, collection);
+			JoinCore(builder, collection);
 			return builder.ToString();
 		}
 
@@ -38,8 +38,8 @@ namespace TC
 			StringBuilder builder = new StringBuilder();
 
 			if (string.IsNullOrEmpty(separator))
-				JoinInternal(builder, collection);
-			else JoinInternal(builder, collection, separator);
+				JoinCore(builder, collection);
+			else JoinCore(builder, collection, separator);
 
 			return builder.ToString();
 		}
@@ -50,7 +50,11 @@ namespace TC
 		/// <param name="separator">The separator to concatenate between each element.</param>
 		/// <param name="suffix">The optional suffix to concatenate after the last element.</param>
 		/// <returns>The single concatenated string.</returns>
-		public static string Join(this IEnumerable<string> collection, string prefix, string separator, string suffix)
+		public static string Join(
+			this IEnumerable<string> collection, 
+			string prefix, 
+			string separator, 
+			string suffix)
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
@@ -58,20 +62,20 @@ namespace TC
 
 			AppendIfNotEmpty(builder, prefix);
 			if (string.IsNullOrEmpty(separator))
-				JoinInternal(builder, collection);
-			else JoinInternal(builder, collection, separator);
+				JoinCore(builder, collection);
+			else JoinCore(builder, collection, separator);
 			AppendIfNotEmpty(builder, suffix);
 
 			return builder.ToString();
 		}
 
-		private static void JoinInternal(StringBuilder builder, IEnumerable<string> collection)
+		private static void JoinCore(StringBuilder builder, IEnumerable<string> collection)
 		{
 			foreach (string item in collection)
 				AppendIfNotEmpty(builder, item);
 		}
 
-		private static void JoinInternal(StringBuilder builder, IEnumerable<string> collection, string separator)
+		private static void JoinCore(StringBuilder builder, IEnumerable<string> collection, string separator)
 		{
 			using (var enumerator = collection.GetEnumerator())
 				if (enumerator.MoveNext())
@@ -106,7 +110,7 @@ namespace TC
 
 			return value.Length > 0
 				? separator.Length > 0
-					? LazySplitInternal(value, separator)
+					? LazySplitCore(value, separator)
 					: CollectionUtilities.CreateOneItemCollection(value)
 				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
@@ -120,7 +124,7 @@ namespace TC
 			if (value == null) throw new ArgumentNullException("value");
 
 			return value.Length > 0
-				? LazySplitInternal(value, separator)
+				? LazySplitCore(value, separator)
 				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
 
@@ -135,12 +139,12 @@ namespace TC
 
 			return value.Length > 0
 				? separators.Length > 0
-					? LazySplitInternal(value, separators)
+					? LazySplitCore(value, separators)
 					: CollectionUtilities.CreateOneItemCollection(value)
 				: CollectionUtilities.CreateEmptyCollection<string>();
 		}
 
-		private static IEnumerable<string> LazySplitInternal(string value, string separator)
+		private static IEnumerable<string> LazySplitCore(string value, string separator)
 		{
 			// offset = the start index of each found substring
 			int offset = 0;
@@ -171,7 +175,7 @@ namespace TC
 			if (offset < value.Length) yield return value.Substring(offset);
 		}
 
-		private static IEnumerable<string> LazySplitInternal(string value, char separator)
+		private static IEnumerable<string> LazySplitCore(string value, char separator)
 		{
 			// offset = the start index of each found substring
 			int offset = 0;
@@ -202,7 +206,7 @@ namespace TC
 			if (offset < value.Length) yield return value.Substring(offset);
 		}
 
-		private static IEnumerable<string> LazySplitInternal(string value, char[] separators)
+		private static IEnumerable<string> LazySplitCore(string value, char[] separators)
 		{
 			// offset = the start index of each found substring
 			int offset = 0;
@@ -252,6 +256,11 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
+			return SkipEmptyCore(collection);
+		}
+
+		private static IEnumerable<string> SkipEmptyCore(IEnumerable<string> collection)
+		{
 			foreach (string item in collection)
 				if (!string.IsNullOrEmpty(item))
 					yield return item;
@@ -264,28 +273,36 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
+			return TrimCore(collection);
+		}
+
+		private static IEnumerable<string> TrimCore(IEnumerable<string> collection)
+		{
 			foreach (string item in collection)
-				yield return string.IsNullOrEmpty(item) ? String.Empty : item.Trim();
+				yield return 
+					string.IsNullOrEmpty(item) 
+						? String.Empty 
+						: item.Trim();
 		}
 
 		/// <summary>Determines whether the first character of the specified string is the specified character.</summary>
-		/// <param name="str">The string to check.</param>
-		/// <param name="firstChar">The character to check with.</param>
+		/// <param name="value">The string to check.</param>
+		/// <param name="firstCharacter">The character to check with.</param>
 		/// <returns>If the specified string starts with the specified character, true; otherwise, false.</returns>
-		public static bool StartsWith(this string str, char firstChar)
+		public static bool StartsWith(this string value, char firstCharacter)
 		{
-			if (str == null) throw new ArgumentNullException("str");
-			return str.Length > 0 && str[0] == firstChar;
+			if (value == null) throw new ArgumentNullException("value");
+			return value.Length > 0 && value[0] == firstCharacter;
 		}
 
 		/// <summary>Determines whether the last character of the specified string is the specified character.</summary>
-		/// <param name="str">The string to check.</param>
-		/// <param name="lastChar">The character to check with.</param>
+		/// <param name="value">The string to check.</param>
+		/// <param name="lastCharacter">The character to check with.</param>
 		/// <returns>If the specified string ends with the specified character, true; otherwise, false.</returns>
-		public static bool EndsWith(this string str, char lastChar)
+		public static bool EndsWith(this string value, char lastCharacter)
 		{
-			if (str == null) throw new ArgumentNullException("str");
-			return str.Length > 0 && str[str.Length - 1] == lastChar;
+			if (value == null) throw new ArgumentNullException("value");
+			return value.Length > 0 && value[value.Length - 1] == lastCharacter;
 		}
 	}
 }

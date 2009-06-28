@@ -5,9 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
+
+using Microsoft.Win32.SafeHandles;
 
 namespace TC.WinForms
 {
@@ -36,18 +39,27 @@ namespace TC.WinForms
 			WM_NCCALCSIZE = 0x83,
 			WM_NCPAINT = 0x85,
 			WM_THEMECHANGED = 0x031A,
+
 			WS_EX_CLIENTEDGE = 0x0200,
+
 			WVR_HREDRAW = 0x0100,
 			WVR_VREDRAW = 0x0200,
 			WVR_REDRAW = WVR_HREDRAW | WVR_VREDRAW,
+
 			TV_FIRST = 0x1100,
 			TVM_SETEXTENDEDSTYLE = TV_FIRST + 44,
 			TVM_GETEXTENDEDSTYLE = TV_FIRST + 45,
 			TVM_SETAUTOSCROLLINFO = TV_FIRST + 59,
+
 			TVS_NOHSCROLL = 0x8000,
 			TVS_EX_DOUBLEBUFFER = 0x0004,
 			TVS_EX_AUTOHSCROLL = 0x0020,
-			TVS_EX_FADEINOUTEXPANDOS = 0x0040;
+			TVS_EX_FADEINOUTEXPANDOS = 0x0040,
+
+			ERROR = 0,
+			NULLREGION = 1,
+			SIMPLEREGION = 2,
+			COMPLEXREGION = 3;
 
 		[StructLayout(LayoutKind.Sequential)]
 		internal struct RECT
@@ -98,13 +110,13 @@ namespace TC.WinForms
 
 		internal sealed class DeviceContext : IDisposable, IDeviceContext
 		{
-			private readonly IntPtr _handle;
-			private IntPtr _dc;
-			private bool _disposed;
+			private readonly IntPtr _hWnd;
+			private Hdc _dc;
+			private bool _disposed, _shouldCallDangerousRelease;
 
-			public DeviceContext(IntPtr handle)
+			public DeviceContext(IntPtr hWnd)
 			{
-				_handle = handle;
+				_hWnd = hWnd;
 			}
 
 			~DeviceContext()
@@ -129,19 +141,52 @@ namespace TC.WinForms
 
 			#region IDeviceContext Members
 
+			[SuppressMessage(
+				"Microsoft.Reliability", 
+				"CA2001:AvoidCallingProblematicMethods", 
+				MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle",
+				Justification = "The IDeviceContext requires the HDC to be returned.")]
 			public IntPtr GetHdc()
 			{
-				if (_dc == IntPtr.Zero)
-					_dc = GetWindowDC(_handle);
-				return _dc;
+				if (_dc == null)
+					_dc = new Hdc(_hWnd);
+
+				_shouldCallDangerousRelease = false;
+				_dc.DangerousAddRef(ref _shouldCallDangerousRelease);
+
+				return _dc.DangerousGetHandle();
 			}
 
 			public void ReleaseHdc()
 			{
-				if (_dc != IntPtr.Zero)
+				if (_dc != null)
 				{
-					ReleaseDC(_handle, _dc);
-					_dc = IntPtr.Zero;
+					if (_shouldCallDangerousRelease)
+						_dc.DangerousRelease();
+
+					_dc.Close();
+					_dc = null;
+				}
+			}
+
+			#endregion
+
+			#region inner class Hdc
+
+			private sealed class Hdc : SafeHandleZeroOrMinusOneIsInvalid
+			{
+				internal Hdc(IntPtr hWnd)
+					: base(true)
+				{
+					_hWnd = hWnd;
+					SetHandle(GetWindowDC(hWnd));
+				}
+
+				private readonly IntPtr _hWnd;
+
+				protected override bool ReleaseHandle()
+				{
+					return ReleaseDC(_hWnd, handle) != 0;
 				}
 			}
 

@@ -171,17 +171,22 @@ namespace TC.WinForms.Controls
 							: VisualStyleElement.TextBox.TextEdit.Normal
 						: VisualStyleElement.TextBox.TextEdit.Disabled);
 
-				NativeMethods.ExcludeClipRect(
-					deviceContext.GetHdc(),
-					_borderRect.Left,
-					_borderRect.Top,
-					windowRect.Right - _borderRect.Right,
-					windowRect.Bottom - _borderRect.Bottom);
+				int clipResult = 
+					NativeMethods.ExcludeClipRect(
+						deviceContext.GetHdc(),
+						_borderRect.Left,
+						_borderRect.Top,
+						windowRect.Right - _borderRect.Right,
+						windowRect.Bottom - _borderRect.Bottom);
 
-				if (renderer.IsBackgroundPartiallyTransparent())
-					renderer.DrawParentBackground(deviceContext, windowRect.ToRectangle(), this);
+				if (clipResult == NativeMethods.SIMPLEREGION
+					|| clipResult == NativeMethods.COMPLEXREGION)
+				{
+					if (renderer.IsBackgroundPartiallyTransparent())
+						renderer.DrawParentBackground(deviceContext, windowRect.ToRectangle(), this);
 
-				renderer.DrawBackground(deviceContext, windowRect.ToRectangle());
+					renderer.DrawBackground(deviceContext, windowRect.ToRectangle());
+				}
 			}
 
 			m.Result = IntPtr.Zero;

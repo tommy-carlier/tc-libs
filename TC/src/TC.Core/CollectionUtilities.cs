@@ -42,11 +42,20 @@ namespace TC
 		/// <param name="collection">The collection to convert the items of.</param>
 		/// <param name="converter">The function that converts the items.</param>
 		/// <returns>A collection of the converted items.</returns>
-		public static IEnumerable<TOutput> Convert<TInput, TOutput>(this IEnumerable<TInput> collection, Converter<TInput, TOutput> converter)
+		public static IEnumerable<TOutput> Convert<TInput, TOutput>(
+			this IEnumerable<TInput> collection, 
+			Converter<TInput, TOutput> converter)
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 			if (converter == null) throw new ArgumentNullException("converter");
 
+			return ConvertCore(collection, converter);
+		}
+
+		private static IEnumerable<TOutput> ConvertCore<TInput, TOutput>(
+			IEnumerable<TInput> collection, 
+			Converter<TInput, TOutput> converter)
+		{
 			foreach (TInput item in collection)
 				yield return converter(item);
 		}
@@ -63,6 +72,11 @@ namespace TC
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
 
+			return ToGenericCore<T>(collection);
+		}
+
+		private static IEnumerable<T> ToGenericCore<T>(this SC.IEnumerable collection)
+		{
 			foreach (object item in collection)
 				yield return (T)item;
 		}

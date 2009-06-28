@@ -158,11 +158,17 @@ namespace TC.WinForms
 			context.Graphics.DrawShinyVerticalGradient(
 				context.Bounds,
 				context.Bounds,
+				CalculateShinySelectedItemLightColor(),
+				SystemColors.Highlight);
+		}
+
+		private static Color CalculateShinySelectedItemLightColor()
+		{
+			return
 				DrawingUtilities.MixColors(
 					SystemColors.Highlight,
 					SystemColors.Window,
-					0.7),
-				SystemColors.Highlight);
+					0.7);
 		}
 
 		private static void DrawSolidItemBackground(DrawItemEventArgs context)

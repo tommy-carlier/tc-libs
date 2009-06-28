@@ -30,25 +30,30 @@ namespace TC.WinForms
 			where T : class
 		{
 			if (control == null) throw new ArgumentNullException("control");
+
 			return EnumerateDescendantsCore<T>(control, includeControl);
 		}
 
 		private static IEnumerable<T> EnumerateDescendantsCore<T>(Control control, bool includeControl)
 			where T : class
 		{
+			// if includeControl is true, the passed control is returned (if it is of type T)
 			T current;
 			if (includeControl && (current = control as T) != null)
 				yield return current;
 
+			// enumerate the descendants of each child control
 			foreach (Control childControl in control.Controls)
 				foreach (T descendant in EnumerateDescendantsCore<T>(childControl, true))
 					yield return descendant;
 
+			// enumerate the descendants of the ContextMenuStrip
 			ContextMenuStrip contextMenu = control.ContextMenuStrip;
 			if (contextMenu != null)
 				foreach (T descendant in EnumerableDescendantsCore<T>(contextMenu.Items))
 					yield return descendant;
 
+			// enumerate the descendants that are not controls, but ToolStripItems
 			ToolStrip toolStrip = control as ToolStrip;
 			if (toolStrip != null)
 				foreach (T descendant in EnumerableDescendantsCore<T>(toolStrip.Items))
