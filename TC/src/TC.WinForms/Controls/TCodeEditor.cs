@@ -57,7 +57,7 @@ namespace TC.WinForms.Controls
 				{
 					_filePath = value;
 					OnFilePathChanged(EventArgs.Empty);
-					if (!string.IsNullOrEmpty(value))
+					if (value.IsNotEmpty())
 						FileName = Path.GetFileName(value);
 				}
 			}

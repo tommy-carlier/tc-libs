@@ -149,11 +149,11 @@ namespace TC.WinForms.Dialogs
 			
 			SetBounds();
 			
-			if (string.IsNullOrEmpty(Text))
+			if (Text.IsEmpty())
 			{
 				Form owner = Owner ?? Application.MainForm;
 				string text = owner != null ? owner.Text : String.Empty;
-				Text = string.IsNullOrEmpty(text) ? TApplication.Title : text;
+				Text = text.IsEmpty() ? TApplication.Title : text;
 			}
 		}
 

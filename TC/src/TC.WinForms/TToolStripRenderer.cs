@@ -144,7 +144,7 @@ namespace TC.WinForms
 		/// <param name="e">A <see cref="T:ToolStripItemTextRenderEventArgs"/> that contains the event data.</param>
 		protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
 		{
-			if (!string.IsNullOrEmpty(e.Text))
+			if (e.Text.IsNotEmpty())
 				TextRenderer.DrawText(
 					e.Graphics,
 					e.Text,

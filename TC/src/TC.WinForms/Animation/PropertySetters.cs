@@ -40,8 +40,8 @@ namespace TC.WinForms.Animation
 
 			return setMethod != null
 				? Delegate.CreateDelegate(
-					typeof(PropertySetter<TTarget, TValue>),
-					setMethod) as PropertySetter<TTarget, TValue>
+						typeof(PropertySetter<TTarget, TValue>),
+						setMethod) as PropertySetter<TTarget, TValue>
 				: null;
 		}
 	}

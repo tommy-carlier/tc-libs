@@ -33,8 +33,10 @@ namespace TC.WinForms.Settings
 		protected override void SaveCore(XmlWriter writer)
 		{
 			base.SaveCore(writer);
-			if (!string.IsNullOrEmpty(CurrentDocumentFolder))
+
+			if (CurrentDocumentFolder.IsNotEmpty())
 				writer.WriteAttributeString("folder", CurrentDocumentFolder);
+			
 			if (SelectedFilterIndex > 0)
 				writer.WriteAttributeString("filter", ConvertString.FromInt32(SelectedFilterIndex));
 		}

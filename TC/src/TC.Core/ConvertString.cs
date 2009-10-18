@@ -138,7 +138,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToByte(string value, out byte result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return byte.TryParse(value, NumberStyles.Integer, _invariantCulture, out result);
 			else
 			{
@@ -195,7 +195,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToInt16(string value, out short result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return short.TryParse(value, NumberStyles.Integer, _invariantCulture, out result);
 			else
 			{
@@ -252,7 +252,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToInt32(string value, out int result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return int.TryParse(value, NumberStyles.Integer, _invariantCulture, out result);
 			else
 			{
@@ -309,7 +309,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToInt64(string value, out long result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return long.TryParse(value, NumberStyles.Integer, _invariantCulture, out result);
 			else
 			{
@@ -368,7 +368,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToSingle(string value, out float result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return float.TryParse(value, NumberStyles.Float, _invariantCulture, out result);
 			else
 			{
@@ -427,7 +427,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToDouble(string value, out double result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return double.TryParse(value, NumberStyles.Float, _invariantCulture, out result);
 			else
 			{
@@ -484,7 +484,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToDecimal(string value, out decimal result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return decimal.TryParse(value, NumberStyles.Number, _invariantCulture, out result);
 			else
 			{
@@ -593,7 +593,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToDateTime(string value, out DateTime result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return DateTime.TryParse(value, _invariantCulture, DateTimeStyles.None, out result);
 			else
 			{
@@ -651,7 +651,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToDate(string value, out DateTime result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 			{
 				if (DateTime.TryParse(value, _invariantCulture, DateTimeStyles.None, out result))
 				{
@@ -716,7 +716,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToTimeSpan(string value, out TimeSpan result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return TimeSpan.TryParse(value, out result);
 			else
 			{
@@ -740,7 +740,7 @@ namespace TC
 		/// <returns>The specified value, converted to a string.</returns>
 		public static string FromBytes(byte[] value, Base64FormattingOptions options)
 		{
-			return value != null && value.Length > 0
+			return value.HasItems()
 				? Convert.ToBase64String(value, options)
 				: String.Empty;
 		}
@@ -760,7 +760,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToBytes(string value, out byte[] result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				try
 				{
 					result = Convert.FromBase64String(value.Trim());
@@ -821,7 +821,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToGuid(string value, out Guid result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				try
 				{
 					result = new Guid(value.Trim());
@@ -860,7 +860,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToCultureInfo(string value, out CultureInfo result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				try
 				{
 					result = CultureInfo.GetCultureInfo(value.Trim());
@@ -899,7 +899,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToUri(string value, out Uri result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out result);
 			else
 			{
@@ -935,7 +935,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToIPAddress(string value, out IPAddress result)
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				return IPAddress.TryParse(value, out result);
 			else
 			{
@@ -1013,7 +1013,7 @@ namespace TC
 		/// <returns>If the conversion succeeded, true; otherwise, false.</returns>
 		public static bool TryToEnum<TEnum>(string value, out TEnum result) where TEnum : struct
 		{
-			if (!string.IsNullOrEmpty(value))
+			if (value.IsNotEmpty())
 				try
 				{
 					result = (TEnum)Enum.Parse(typeof(TEnum), value);

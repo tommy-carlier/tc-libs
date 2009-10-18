@@ -44,7 +44,9 @@ namespace TC.WinForms.Dialogs
 			LabelVersion.Text = LabelVersion.Text.Replace("{Version}", TApplication.Version.ToString());
 			LabelCopyright.Text = LabelCopyright.Text.Replace("{Copyright}", TApplication.Copyright);
 			Hyperlink.Text = Hyperlink.Text.Replace("{URL}", TApplication.WebsiteDisplayString);
-			if (string.IsNullOrEmpty(Hyperlink.Text)) Hyperlink.Visible = false;
+			
+			if (Hyperlink.Text.IsEmpty())
+				Hyperlink.Visible = false;
 
 			ResumeLayout();
 		}

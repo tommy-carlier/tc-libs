@@ -31,7 +31,7 @@ namespace TC
 
 			object[] attributes = provider.GetCustomAttributes(typeof(TAttribute), inherit);
 			return
-				(attributes != null && attributes.Length > 0)
+				attributes.HasItems()
 					? attributes[0] as TAttribute
 					: null;
 		}

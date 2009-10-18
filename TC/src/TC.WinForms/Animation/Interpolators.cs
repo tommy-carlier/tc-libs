@@ -23,27 +23,27 @@ namespace TC.WinForms.Animation
 		{
 			var interpolators = new Dictionary<Type, Delegate>(20);
 
-			AddInterpolator(interpolators, new Interpolator<bool>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<byte>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<short>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<int>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<long>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<float>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<double>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<decimal>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<Color>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<Point>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<PointF>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<Size>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<SizeF>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<Rectangle>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<RectangleF>(Interpolate));
-			AddInterpolator(interpolators, new Interpolator<Padding>(Interpolate));
+			interpolators.Add<bool>(Interpolate);
+			interpolators.Add<byte>(Interpolate);
+			interpolators.Add<short>(Interpolate);
+			interpolators.Add<int>(Interpolate);
+			interpolators.Add<long>(Interpolate);
+			interpolators.Add<float>(Interpolate);
+			interpolators.Add<double>(Interpolate);
+			interpolators.Add<decimal>(Interpolate);
+			interpolators.Add<Color>(Interpolate);
+			interpolators.Add<Point>(Interpolate);
+			interpolators.Add<PointF>(Interpolate);
+			interpolators.Add<Size>(Interpolate);
+			interpolators.Add<SizeF>(Interpolate);
+			interpolators.Add<Rectangle>(Interpolate);
+			interpolators.Add<RectangleF>(Interpolate);
+			interpolators.Add<Padding>(Interpolate);
 
 			return interpolators;
 		}
 
-		private static void AddInterpolator<T>(Dictionary<Type, Delegate> interpolators, Interpolator<T> interpolator)
+		private static void Add<T>(this IDictionary<Type, Delegate> interpolators, Interpolator<T> interpolator)
 		{
 			interpolators[typeof(T)] = interpolator;
 		}
@@ -59,10 +59,7 @@ namespace TC.WinForms.Animation
 			Justification = "The type T is an important parameter and knowledge of generics is essential for using this function.")]
 		public static Interpolator<T> GetInterpolator<T>()
 		{
-			Delegate interpolator;
-			if (_defaultInterpolators.TryGetValue(typeof(T), out interpolator))
-				return interpolator as Interpolator<T>;
-			else return null;
+			return _defaultInterpolators.GetValue(typeof(T)) as Interpolator<T>;
 		}
 
 		#region interpolator implementations

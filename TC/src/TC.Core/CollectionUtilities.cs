@@ -36,6 +36,8 @@ namespace TC
 			return new OneItemCollection<T>(item);
 		}
 
+		#region Convert
+
 		/// <summary>Converts the items of the specified collection.</summary>
 		/// <typeparam name="TInput">The type of the items in the original collection.</typeparam>
 		/// <typeparam name="TOutput">The type to convert the items to.</typeparam>
@@ -60,6 +62,10 @@ namespace TC
 				yield return converter(item);
 		}
 
+		#endregion
+
+		#region ToGeneric
+
 		/// <summary>Converts the specified non-generic collection to a generic collection of the specified type.</summary>
 		/// <typeparam name="T">The type of the items in the collection.</typeparam>
 		/// <param name="collection">The non-generic collection to convert.</param>
@@ -80,6 +86,187 @@ namespace TC
 			foreach (object item in collection)
 				yield return (T)item;
 		}
+
+		#endregion
+
+		#region GetValue
+
+		/// <summary>Gets the value associated with the specified key.</summary>
+		/// <typeparam name="TKey">The type of the key.</typeparam>
+		/// <typeparam name="TValue">The type of the value.</typeparam>
+		/// <param name="collection">The collection to get the value from.</param>
+		/// <param name="key">The key to get the associated value from.</param>
+		/// <returns>The value associated with the specified key, or the default value of type <typeparamref name="TValue"/>.</returns>
+		public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> collection, TKey key)
+		{
+			if (collection == null) throw new ArgumentNullException("collection");
+			return GetValueCore(collection, key, default(TValue));
+		}
+
+		/// <summary>Gets the value associated with the specified key.</summary>
+		/// <typeparam name="TKey">The type of the key.</typeparam>
+		/// <typeparam name="TValue">The type of the value.</typeparam>
+		/// <param name="collection">The collection to get the value from.</param>
+		/// <param name="key">The key to get the associated value from.</param>
+		/// <param name="defaultValue">The default value to return if there is no value associated with the specified key.</param>
+		/// <returns>The value associated with the specified key, or <paramref name="defaultValue"/>.</returns>
+		public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> collection, TKey key, TValue defaultValue)
+		{
+			if (collection == null) throw new ArgumentNullException("collection");
+			return GetValueCore(collection, key, defaultValue);
+		}
+
+		private static TValue GetValueCore<TKey, TValue>(IDictionary<TKey, TValue> collection, TKey key, TValue defaultValue)
+		{
+			TValue value;
+			return collection.TryGetValue(key, out value)
+				? value
+				: defaultValue;
+		}
+
+		#endregion
+
+		#region IsEmpty
+
+		/// <summary>Determines whether the specified array is empty.</summary>
+		/// <param name="array">The array to check.</param>
+		/// <returns>If the specified array is empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty<T>(this T[] array)
+		{
+			return array == null || array.Length == 0;
+		}
+
+		/// <summary>Determines whether the specified collection is null or empty.</summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is null or empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty<T>(this ICollection<T> collection)
+		{
+			return collection == null || collection.Count == 0;
+		}
+
+		/// <summary>Determines whether the specified collection is null or empty.</summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is null or empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty<T>(this IEnumerable<T> collection)
+		{
+			if (collection == null) 
+				return true;
+
+			var countCollection = collection as ICollection<T>;
+			if (countCollection != null)
+				return countCollection.Count == 0;
+
+			using (var enumerator = collection.GetEnumerator())
+				return !enumerator.MoveNext();
+		}
+
+		/// <summary>Determines whether the specified collection is null or empty.</summary>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is null or empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty(this SC.ICollection collection)
+		{
+			return collection == null || collection.Count == 0;
+		}
+
+		/// <summary>Determines whether the specified collection is null or empty.</summary>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is null or empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty(this SC.IEnumerable collection)
+		{
+			if (collection == null)
+				return true;
+
+			var countCollection = collection as SC.ICollection;
+			if (countCollection != null)
+				return countCollection.Count == 0;
+
+			var enumerator = collection.GetEnumerator();
+			try
+			{
+				return !enumerator.MoveNext();
+			}
+			finally
+			{
+				var disposable = enumerator as IDisposable;
+				if (disposable != null)
+					disposable.Dispose();
+			}
+		}
+
+		#endregion
+
+		#region HasItems
+
+		/// <summary>Determines whether the specified array has items.</summary>
+		/// <param name="array">The array to check.</param>
+		/// <returns>If the specified array has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems<T>(this T[] array)
+		{
+			return array != null && array.Length > 0;
+		}
+
+		/// <summary>Determines whether the specified collection has items.</summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is not null and has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems<T>(this ICollection<T> collection)
+		{
+			return collection != null && collection.Count > 0;
+		}
+
+		/// <summary>Determines whether the specified collection has items.</summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is not null and has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems<T>(this IEnumerable<T> collection)
+		{
+			if (collection == null)
+				return false;
+
+			var countCollection = collection as ICollection<T>;
+			if (countCollection != null)
+				return countCollection.Count > 0;
+
+			using (var enumerator = collection.GetEnumerator())
+				return enumerator.MoveNext();
+		}
+
+		/// <summary>Determines whether the specified collection has items.</summary>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is not null and has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems(this SC.ICollection collection)
+		{
+			return collection != null && collection.Count > 0;
+		}
+
+		/// <summary>Determines whether the specified collection has items.</summary>
+		/// <param name="collection">The collection to check.</param>
+		/// <returns>If the specified collection is not null and has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems(this SC.IEnumerable collection)
+		{
+			if (collection == null)
+				return false;
+
+			var countCollection = collection as SC.ICollection;
+			if (countCollection != null)
+				return countCollection.Count > 0;
+
+			var enumerator = collection.GetEnumerator();
+			try
+			{
+				return enumerator.MoveNext();
+			}
+			finally
+			{
+				var disposable = enumerator as IDisposable;
+				if (disposable != null)
+					disposable.Dispose();
+			}
+		}
+
+		#endregion
 
 		#region inner class EmptyCollection
 

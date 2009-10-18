@@ -38,8 +38,11 @@ namespace TC.WinForms.Commands
 			{
 				if (_command != value)
 				{
-					if (_command != null) _command.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
-					if (value != null) value.CanExecuteChanged += HandlerCommandCanExecuteChanged;
+					if (_command != null)
+						_command.CanExecuteChanged -= HandlerCommandCanExecuteChanged;
+
+					if (value != null)
+						value.CanExecuteChanged += HandlerCommandCanExecuteChanged;
 
 					_command = value;
 					_control.SetCommandEnabled(CanExecute);
@@ -47,7 +50,10 @@ namespace TC.WinForms.Commands
 			}
 		}
 
-		private bool CanExecute { get { return _command != null && _command.CanExecute; } }
+		private bool CanExecute
+		{
+			get { return _command != null && _command.CanExecute; }
+		}
 
 		private void HandlerCommandCanExecuteChanged(object sender, EventArgs e)
 		{
@@ -64,6 +70,7 @@ namespace TC.WinForms.Commands
 		{
 			_control.Activated -= HandlerControlActivated;
 			_control.Disposed -= HandlerControlDisposed;
+
 			if (_command != null)
 			{
 				_command.CanExecuteChanged -= HandlerCommandCanExecuteChanged;

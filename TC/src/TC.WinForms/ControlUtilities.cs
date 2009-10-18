@@ -112,7 +112,7 @@ namespace TC.WinForms
 		public static void SetWindowTheme(this Control control, string applicationName)
 		{
 			if (control == null) throw new ArgumentNullException("control");
-			SetWindowThemeImpl(control, applicationName, null);
+			SetWindowThemeCore(control, applicationName, null);
 		}
 
 		/// <summary>Causes a control to use Windows Explorer's visual style information.</summary>
@@ -120,10 +120,10 @@ namespace TC.WinForms
 		public static void SetExplorerWindowTheme(this Control control)
 		{
 			if (control == null) throw new ArgumentNullException("control");
-			SetWindowThemeImpl(control, "Explorer", null);
+			SetWindowThemeCore(control, "Explorer", null);
 		}
 
-		private static void SetWindowThemeImpl(Control control, string applicationName, string idList)
+		private static void SetWindowThemeCore(Control control, string applicationName, string idList)
 		{
 			// only possible in Windows XP or later
 			if (SystemUtilities.IsWindowsXPOrLater)

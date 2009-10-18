@@ -43,8 +43,9 @@ namespace TC.Settings
 		protected override void LoadCore(XPathNavigator xml)
 		{
 			_items.Clear();
+
 			foreach (XPathNavigator navigator in xml.Select(_listItemElementName))
-				if (!string.IsNullOrEmpty(navigator.Value))
+				if (navigator.Value.IsNotEmpty())
 					_items.Add(navigator.Value);
 
 			if (_sorted) _items.Sort();

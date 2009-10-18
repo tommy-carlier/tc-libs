@@ -29,8 +29,7 @@ namespace TC
 			if (!Uri.TryCreate(uri, UriKind.Absolute, out _uri))
 				throw new ArgumentException("uri is not a valid absolute URI", "uri");
 
-			_title 
-				= string.IsNullOrEmpty(title) 
+			_title = title.IsEmpty() 
 					? uri.ToString() 
 					: title;
 		}

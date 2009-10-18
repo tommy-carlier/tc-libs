@@ -110,7 +110,7 @@ namespace TC.WinForms.Controls
 		protected virtual bool Insert(IDataObject data)
 		{
 			string textToInsert = data.GetData(DataFormats.UnicodeText, true) as string;
-			if (!string.IsNullOrEmpty(textToInsert))
+			if (textToInsert.IsNotEmpty())
 			{
 				ReplaceSelectedText(textToInsert, true);
 				return true;

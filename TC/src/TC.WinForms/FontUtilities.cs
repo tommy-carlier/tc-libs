@@ -60,13 +60,9 @@ namespace TC.WinForms
 		/// or null if the specified font cannot be found.</returns>
 		public static FontFamily GetFontFamily(string fontName)
 		{
-			FontFamily fontFamily;
-			if (!string.IsNullOrEmpty(fontName)
-				&& _fontFamiliesByFontName.TryGetValue(fontName, out fontFamily))
-			{
-				return fontFamily;
-			}
-			else return null;
+			return fontName.IsNotEmpty()
+				? _fontFamiliesByFontName.GetValue(fontName)
+				: null;
 		}
 
 		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
@@ -129,18 +125,18 @@ namespace TC.WinForms
 			_systemFonts[SystemFont.Italic] = new Font(defaultFont, FontStyle.Italic);
 			_systemFonts[SystemFont.Header] 
 				= new Font(
-					defaultFont.FontFamily, 
-					defaultFont.SizeInPoints * 1.5F, 
-					FontStyle.Bold);
+						defaultFont.FontFamily, 
+						defaultFont.SizeInPoints * 1.5F, 
+						FontStyle.Bold);
 
 			_systemFonts[SystemFont.Monospace]
 				= new Font(
-					(SystemUsesClearTypeRendering // Consolas only looks good when ClearType rendering is used
-						? GetFontFamily("Envy Code R", "Consolas", "Lucida Console", "Courier New")
-						: GetFontFamily("Envy Code R", "Lucida Console", "Courier New"))
+						(SystemUsesClearTypeRendering // Consolas only looks good when ClearType rendering is used
+							? GetFontFamily("Envy Code R", "Consolas", "Lucida Console", "Courier New")
+							: GetFontFamily("Envy Code R", "Lucida Console", "Courier New"))
 						?? FontFamily.GenericMonospace,
-					defaultFont.SizeInPoints * 1.2F,
-					FontStyle.Regular);
+						defaultFont.SizeInPoints * 1.2F,
+						FontStyle.Regular);
 		}
 
 		/// <summary>Converts the specified <see cref="T:SystemFont"/> to a <see cref="T:Font"/>.</summary>
@@ -148,10 +144,7 @@ namespace TC.WinForms
 		/// <returns>The <see cref="T:Font"/> that represents the specified <see cref="T:SystemFont"/>.</returns>
 		public static Font ToFont(this SystemFont systemFont)
 		{
-			Font font;
-			if (_systemFonts.TryGetValue(systemFont, out font))
-				return font;
-			else return SystemFonts.DefaultFont;
+			return _systemFonts.GetValue(systemFont, SystemFonts.DefaultFont);
 		}
 
 		#endregion

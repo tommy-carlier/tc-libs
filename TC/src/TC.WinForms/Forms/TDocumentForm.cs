@@ -180,7 +180,7 @@ namespace TC.WinForms.Forms
 				{
 					try
 					{
-						if (!string.IsNullOrEmpty(_currentDocumentFolder))
+						if (_currentDocumentFolder.IsNotEmpty())
 							dialog.InitialDirectory = _currentDocumentFolder;
 
 						dialog.Filter = _documentContainer.FileDialogFilter;
@@ -236,7 +236,7 @@ namespace TC.WinForms.Forms
 			try
 			{
 				string filePath = _documentContainer.FilePath;
-				if (string.IsNullOrEmpty(filePath))
+				if (filePath.IsEmpty())
 					filePath = GetFilePathFromSaveFileDialog(_documentContainer.FileName);
 
 				return SaveDocumentOrCancel(filePath);
@@ -257,10 +257,10 @@ namespace TC.WinForms.Forms
 				dialog.Filter = _documentContainer.FileDialogFilter;
 				dialog.FilterIndex = _selectedFilterIndex;
 
-				if (!string.IsNullOrEmpty(_currentDocumentFolder))
+				if (_currentDocumentFolder.IsNotEmpty())
 					dialog.InitialDirectory = _currentDocumentFolder;
 
-				if (!string.IsNullOrEmpty(filePath))
+				if (filePath.IsNotEmpty())
 					dialog.FileName = filePath;
 
 				if (dialog.ShowDialog(this) == DialogResult.OK)
@@ -276,7 +276,7 @@ namespace TC.WinForms.Forms
 
 		private bool SaveDocumentOrCancel(string filePath)
 		{
-			if (!string.IsNullOrEmpty(filePath))
+			if (filePath.IsNotEmpty())
 				try
 				{
 					_documentContainer.SaveDocument(filePath, _selectedFilterIndex);

@@ -261,7 +261,7 @@ namespace TC.WinForms.Controls
 					SelectedNode = node;
 					ContextMenuStrip contextMenu = new ContextMenuStrip();
 					node.InitializeContextMenuInternal(contextMenu);
-					if (contextMenu.Items.Count > 0)
+					if (contextMenu.Items.HasItems())
 					{
 						contextMenu.Closed += delegate { this.InvokeAsync(contextMenu.Dispose); };
 						contextMenu.Show(this, e.Location);

@@ -15,6 +15,8 @@ namespace TC.WinForms
 	/// <summary>Provides utilities that deal with list controls.</summary>
 	public static class ListControlUtilities
 	{
+		#region Initialize
+
 		/// <summary>Initializes the specified combo box control with the specified items.</summary>
 		/// <typeparam name="T">The type of the items to add.</typeparam>
 		/// <param name="comboBox">The combo box control to initialize.</param>
@@ -36,7 +38,7 @@ namespace TC.WinForms
 			{
 				comboBox.EndUpdate();
 
-				if (comboBoxItems.Count > 0)
+				if (comboBoxItems.HasItems())
 				{
 					comboBox.Enabled = true;
 					if (comboBox.DropDownStyle == ComboBoxStyle.DropDownList)
@@ -68,7 +70,7 @@ namespace TC.WinForms
 			{
 				listBox.EndUpdate();
 
-				if (listBoxItems.Count > 0)
+				if (listBoxItems.HasItems())
 				{
 					listBox.Enabled = true;
 					listBox.SelectedIndex = 0;
@@ -76,5 +78,47 @@ namespace TC.WinForms
 				else listBox.Enabled = false;
 			}
 		}
+
+		#endregion
+
+		#region IsEmpty and HasItems
+
+		/// <summary>Determines whether the specified <see cref="T:ComboBox"/> is empty.</summary>
+		/// <param name="comboBox">The <see cref="T:ComboBox"/> to check.</param>
+		/// <returns>If the specified <see cref="T:ComboBox"/> is empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty(this ComboBox comboBox)
+		{
+			if (comboBox == null) throw new ArgumentNullException("comboBox");
+			return comboBox.Items.Count == 0;
+		}
+
+		/// <summary>Determines whether the specified <see cref="T:ListBox"/> is empty.</summary>
+		/// <param name="listBox">The <see cref="T:ListBox"/> to check.</param>
+		/// <returns>If the specified <see cref="T:ListBox"/> is empty, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty(this ListBox listBox)
+		{
+			if (listBox == null) throw new ArgumentNullException("listBox");
+			return listBox.Items.Count == 0;
+		}
+
+		/// <summary>Determines whether the specified <see cref="T:ComboBox"/> has items.</summary>
+		/// <param name="comboBox">The <see cref="T:ComboBox"/> to check.</param>
+		/// <returns>If the specified <see cref="T:ComboBox"/> has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems(this ComboBox comboBox)
+		{
+			if (comboBox == null) throw new ArgumentNullException("comboBox");
+			return comboBox.Items.Count > 0;
+		}
+
+		/// <summary>Determines whether the specified <see cref="T:ListBox"/> has items.</summary>
+		/// <param name="listBox">The <see cref="T:ListBox"/> to check.</param>
+		/// <returns>If the specified <see cref="T:ListBox"/> has items, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool HasItems(this ListBox listBox)
+		{
+			if (listBox == null) throw new ArgumentNullException("listBox");
+			return listBox.Items.Count > 0;
+		}
+
+		#endregion
 	}
 }

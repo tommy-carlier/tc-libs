@@ -344,8 +344,7 @@ namespace TC.WinForms.Animation
 
 		private static PropertySetter<TTarget, TValue> GetPropertySetter<TTarget, TValue>(string propertyName)
 		{
-			PropertySetter<TTarget, TValue> propertySetter =
-				PropertySetters<TTarget, TValue>.GetPropertySetter(propertyName);
+			var propertySetter = PropertySetters<TTarget, TValue>.GetPropertySetter(propertyName);
 
 			if (propertySetter == null)
 				throw new ArgumentException(
@@ -358,7 +357,7 @@ namespace TC.WinForms.Animation
 
 		private static Interpolator<TValue> GetInterpolator<TValue>()
 		{
-			Interpolator<TValue> interpolator = Interpolators.GetInterpolator<TValue>();
+			var interpolator = Interpolators.GetInterpolator<TValue>();
 
 			if (interpolator == null)
 				throw new NotSupportedException(

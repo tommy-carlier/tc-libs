@@ -38,7 +38,7 @@ namespace TC
 
 			StringBuilder builder = new StringBuilder();
 
-			if (string.IsNullOrEmpty(separator))
+			if (separator.IsEmpty())
 				JoinCore(builder, collection);
 			else JoinCore(builder, collection, separator);
 
@@ -62,19 +62,19 @@ namespace TC
 
 			StringBuilder builder = new StringBuilder();
 
-			AppendIfNotEmpty(builder, prefix);
-			if (string.IsNullOrEmpty(separator))
+			builder.AppendIfNotEmpty(prefix);
+
+			if (separator.IsEmpty())
 				JoinCore(builder, collection);
 			else JoinCore(builder, collection, separator);
-			AppendIfNotEmpty(builder, suffix);
 
-			return builder.ToString();
+			return builder.AppendIfNotEmpty(suffix).ToString();
 		}
 
 		private static void JoinCore(StringBuilder builder, IEnumerable<string> collection)
 		{
 			foreach (string item in collection)
-				AppendIfNotEmpty(builder, item);
+				builder.AppendIfNotEmpty(item);
 		}
 
 		private static void JoinCore(StringBuilder builder, IEnumerable<string> collection, string separator)
@@ -82,19 +82,12 @@ namespace TC
 			using (var enumerator = collection.GetEnumerator())
 				if (enumerator.MoveNext())
 				{
-					AppendIfNotEmpty(builder, enumerator.Current);
+					builder.AppendIfNotEmpty(enumerator.Current);
 					while (enumerator.MoveNext())
-					{
-						builder.Append(separator);
-						AppendIfNotEmpty(builder, enumerator.Current);
-					}
+						builder
+							.Append(separator)
+							.AppendIfNotEmpty(enumerator.Current);
 				}
-		}
-
-		private static void AppendIfNotEmpty(StringBuilder builder, string value)
-		{
-			if (!string.IsNullOrEmpty(value))
-				builder.Append(value);
 		}
 
 		#endregion
@@ -266,7 +259,7 @@ namespace TC
 		private static IEnumerable<string> SkipEmptyCore(IEnumerable<string> collection)
 		{
 			foreach (string item in collection)
-				if (!string.IsNullOrEmpty(item))
+				if (item.IsNotEmpty())
 					yield return item;
 		}
 
@@ -285,7 +278,7 @@ namespace TC
 		{
 			foreach (string item in collection)
 				yield return
-					string.IsNullOrEmpty(item)
+					item.IsEmpty()
 						? String.Empty
 						: item.Trim();
 		}
@@ -323,6 +316,33 @@ namespace TC
 			if (substring == null) throw new ArgumentNullException("substring");
 
 			return value.IndexOf(substring, comparisonType) >= 0;
+		}
+
+		/// <summary>Determines whether the specified value is null or an empty string.</summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>If the specified value is null or an empty string, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsEmpty(this string value)
+		{
+			return string.IsNullOrEmpty(value);
+		}
+
+		/// <summary>Determines whether the specified value is not null or an empty string.</summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>If the specified value is not null or an empty string, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool IsNotEmpty(this string value)
+		{
+			return !string.IsNullOrEmpty(value);
+		}
+
+		/// <summary>Appends a copy of the specified string value to the specified <see cref="T:StringBuilder"/>, if it's not empty.</summary>
+		/// <param name="output">The <see cref="T:StringBuilder"/> to append to.</param>
+		/// <param name="value">The string value to append.</param>
+		/// <returns>The specified <see cref="T:StringBuilder"/>.</returns>
+		public static StringBuilder AppendIfNotEmpty(this StringBuilder output, string value)
+		{
+			return value.IsEmpty()
+				? output
+				: output.Append(value);
 		}
 	}
 }
