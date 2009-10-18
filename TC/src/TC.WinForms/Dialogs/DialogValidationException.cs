@@ -45,17 +45,23 @@ namespace TC.WinForms.Dialogs
 			: base(message, inner) { }
 
 		/// <summary>Initializes a new instance of the <see cref="DialogValidationException"/> class.</summary>
-		/// <param name="info">The <see cref="T:SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
-		/// <param name="context">The <see cref="T:StreamingContext"/> that contains contextual information about the source or destination.</param>
+		/// <param name="info">The <see cref="T:SerializationInfo"/> that holds the serialized object data
+		/// about the exception being thrown.</param>
+		/// <param name="context">The <see cref="T:StreamingContext"/> that contains contextual information 
+		/// about the source or destination.</param>
 		/// <exception cref="T:ArgumentNullException">The <paramref name="info"/> parameter is null.</exception>
 		/// <exception cref="T:SerializationException">The class name is null or <see cref="P:HResult"/> is zero (0).</exception>
 		protected DialogValidationException(SerializationInfo info, StreamingContext context)
 			: base(info, context) { }
 
-		/// <summary>When overridden in a derived class, sets the <see cref="T:SerializationInfo"/> with information about the exception.</summary>
-		/// <param name="info">The <see cref="T:SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
-		/// <param name="context">The <see cref="T:StreamingContext"/> that contains contextual information about the source or destination.</param>
-		/// <exception cref="T:ArgumentNullException">The <paramref name="info"/> parameter is a null reference (Nothing in Visual Basic).</exception>
+		/// <summary>When overridden in a derived class, sets the <see cref="T:SerializationInfo"/> 
+		/// with information about the exception.</summary>
+		/// <param name="info">The <see cref="T:SerializationInfo"/> that holds the serialized object data
+		/// about the exception being thrown.</param>
+		/// <param name="context">The <see cref="T:StreamingContext"/> that contains contextual information
+		/// about the source or destination.</param>
+		/// <exception cref="T:ArgumentNullException">The <paramref name="info"/> parameter is a null reference 
+		/// (Nothing in Visual Basic).</exception>
 		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{

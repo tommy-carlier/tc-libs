@@ -33,8 +33,10 @@ namespace TC.WinForms.Controls
 			set { base.DropDownStyle = value; }
 		}
 
-		/// <summary>Gets or sets a value indicating whether your code or the operating system will handle drawing of elements in the list.</summary>
-		/// <returns>One of the <see cref="T:DrawMode"/> enumeration values. The default is <see cref="F:DrawMode.OwnerDrawFixed"/>.</returns>
+		/// <summary>Gets or sets a value indicating whether your code or the operating system
+		/// will handle drawing of elements in the list.</summary>
+		/// <returns>One of the <see cref="T:DrawMode"/> enumeration values. 
+		/// The default is <see cref="F:DrawMode.OwnerDrawFixed"/>.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
 		public new DrawMode DrawMode
 		{

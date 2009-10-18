@@ -18,7 +18,8 @@ namespace TC.WinForms.Commands
 
 		private ICommand _implementation;
 
-		/// <summary>Gets or sets the <see cref="T:ICommand"/> that implements the functionality of this <see cref="T:ProxyCommand"/>.</summary>
+		/// <summary>Gets or sets the <see cref="T:ICommand"/> that implements the functionality
+		/// of this <see cref="T:ProxyCommand"/>.</summary>
 		/// <value>The <see cref="T:ICommand"/> that implements the functionality of this <see cref="T:ProxyCommand"/>.</value>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ICommand Implementation
@@ -74,8 +75,10 @@ namespace TC.WinForms.Commands
 
 		#endregion
 
-		/// <summary>Releases the unmanaged resources used by the <see cref="T:Component"/> and optionally releases the managed resources.</summary>
-		/// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+		/// <summary>Releases the unmanaged resources used by the <see cref="T:Component"/> and
+		/// optionally releases the managed resources.</summary>
+		/// <param name="disposing">true to release both managed and unmanaged resources;
+		/// false to release only unmanaged resources.</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (_implementation != null)

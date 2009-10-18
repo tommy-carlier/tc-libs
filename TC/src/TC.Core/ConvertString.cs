@@ -12,7 +12,8 @@ using System.Text;
 
 namespace TC
 {
-	/// <summary>Provides functions to convert values of the basic data types from and to string in a culture-independent way.</summary>
+	/// <summary>Provides functions to convert values of the basic data types
+	/// from and to string in a culture-independent way.</summary>
 	public static class ConvertString
 	{
 		private static readonly CultureInfo _invariantCulture = CultureInfo.InvariantCulture;
@@ -37,13 +38,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a boolean.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a boolean, or false if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a boolean,
+		/// or false if the value could not be converted.</returns>
 		public static bool ToBoolean(string value) { return ToBoolean(value, false); }
 
 		/// <summary>Converts the specified string to a boolean.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a boolean, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a boolean, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static bool ToBoolean(string value, bool defaultValue)
 		{
 			bool result;
@@ -112,7 +115,8 @@ namespace TC
 		/// <summary>Converts the specified string to a byte.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a byte, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a byte, or <paramref name="defaultValue"/> 
+		/// if the value could not be converted.</returns>
 		public static byte ToByte(string value, byte defaultValue)
 		{
 			byte result;
@@ -168,7 +172,8 @@ namespace TC
 		/// <summary>Converts the specified string to a short integer.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a short integer, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a short integer, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static short ToInt16(string value, short defaultValue)
 		{
 			short result;
@@ -224,7 +229,8 @@ namespace TC
 		/// <summary>Converts the specified string to an integer.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to an integer, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to an integer, or <paramref name="defaultValue"/> 
+		/// if the value could not be converted.</returns>
 		public static int ToInt32(string value, int defaultValue)
 		{
 			int result;
@@ -280,7 +286,8 @@ namespace TC
 		/// <summary>Converts the specified string to a long integer.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a long integer, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a long integer, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static long ToInt64(string value, long defaultValue)
 		{
 			long result;
@@ -330,13 +337,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a single-precision floating point number.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a single-precision floating point number, or 0 if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a single-precision floating point number, 
+		/// or 0 if the value could not be converted.</returns>
 		public static float ToSingle(string value) { return ToSingle(value, 0); }
 
 		/// <summary>Converts the specified string to a single-precision floating point number.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a single-precision floating point number, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a single-precision floating point number, 
+		/// or <paramref name="defaultValue"/> if the value could not be converted.</returns>
 		public static float ToSingle(string value, float defaultValue)
 		{
 			float result;
@@ -345,7 +354,8 @@ namespace TC
 
 		/// <summary>Converts the specified string to a nullable float integer.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a single-precision floating point number, or null if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a single-precision floating point number, 
+		/// or null if the value could not be converted.</returns>
 		public static float? ToSingleOrNull(string value)
 		{
 			float result;
@@ -386,13 +396,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a double-precision floating point number.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a double-precision floating point number, or 0 if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a double-precision floating point number, 
+		/// or 0 if the value could not be converted.</returns>
 		public static double ToDouble(string value) { return ToDouble(value, 0); }
 
 		/// <summary>Converts the specified string to a double-precision floating point number.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a double-precision floating point number, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a double-precision floating point number, 
+		/// or <paramref name="defaultValue"/> if the value could not be converted.</returns>
 		public static double ToDouble(string value, double defaultValue)
 		{
 			double result;
@@ -401,7 +413,8 @@ namespace TC
 
 		/// <summary>Converts the specified string to a nullable double integer.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a double-precision floating point number, or null if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a double-precision floating point number,
+		/// or null if the value could not be converted.</returns>
 		public static double? ToDoubleOrNull(string value)
 		{
 			double result;
@@ -448,7 +461,8 @@ namespace TC
 		/// <summary>Converts the specified string to a decimal number.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a decimal number, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a decimal number, or <paramref name="defaultValue"/> 
+		/// if the value could not be converted.</returns>
 		public static decimal ToDecimal(string value, decimal defaultValue)
 		{
 			decimal result;
@@ -504,7 +518,8 @@ namespace TC
 		/// <summary>Converts the specified string to a character.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a character, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a character, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static char ToChar(string value, char defaultValue)
 		{
 			char result;
@@ -548,13 +563,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a date and time.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a date and time, or <see cref="F:DateTime.MinValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a date and time, or <see cref="F:DateTime.MinValue"/>
+		/// if the value could not be converted.</returns>
 		public static DateTime ToDateTime(string value) { return ToDateTime(value, DateTime.MinValue); }
 
 		/// <summary>Converts the specified string to a date and time.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a date and time, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a date and time, or <paramref name="defaultValue"/> 
+		/// if the value could not be converted.</returns>
 		public static DateTime ToDateTime(string value, DateTime defaultValue)
 		{
 			DateTime result;
@@ -604,13 +621,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a date.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a date, or <see cref="F:Date.MinValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a date, or <see cref="F:Date.MinValue"/>
+		/// if the value could not be converted.</returns>
 		public static DateTime ToDate(string value) { return ToDate(value, DateTime.MinValue.Date); }
 
 		/// <summary>Converts the specified string to a date.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a date, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a date, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static DateTime ToDate(string value, DateTime defaultValue)
 		{
 			DateTime result;
@@ -667,13 +686,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a time span.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a time span, or <see cref="F:TimeSpan.Zero"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a time span, or <see cref="F:TimeSpan.Zero"/>
+		/// if the value could not be converted.</returns>
 		public static TimeSpan ToTimeSpan(string value) { return ToTimeSpan(value, TimeSpan.Zero); }
 
 		/// <summary>Converts the specified string to a time span.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a time span, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a time span, or <paramref name="defaultValue"/> 
+		/// if the value could not be converted.</returns>
 		public static TimeSpan ToTimeSpan(string value, TimeSpan defaultValue)
 		{
 			TimeSpan result;
@@ -770,13 +791,15 @@ namespace TC
 
 		/// <summary>Converts the specified string to a GUID.</summary>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a GUID, or <see cref="F:Guid.Empty"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a GUID, or <see cref="F:Guid.Empty"/>
+		/// if the value could not be converted.</returns>
 		public static Guid ToGuid(string value) { return ToGuid(value, Guid.Empty); }
 
 		/// <summary>Converts the specified string to a GUID.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a GUID, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a GUID, or <paramref name="defaultValue"/>
+		/// if the value could not be converted.</returns>
 		public static Guid ToGuid(string value, Guid defaultValue)
 		{
 			Guid result;
@@ -945,7 +968,8 @@ namespace TC
 		/// <summary>Converts the specified string to an enum of type <typeparamref name="TEnum"/>.</summary>
 		/// <typeparam name="TEnum">The type of the Enum.</typeparam>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>, or the default value of <typeparamref name="TEnum"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>,
+		/// or the default value of <typeparamref name="TEnum"/> if the value could not be converted.</returns>
 		[SuppressMessage(
 			"Microsoft.Design",
 			"CA1004:GenericMethodsShouldProvideTypeParameter",
@@ -959,7 +983,8 @@ namespace TC
 		/// <typeparam name="TEnum">The type of the Enum.</typeparam>
 		/// <param name="value">The value to convert.</param>
 		/// <param name="defaultValue">The default value that is returned if the value could not be converted.</param>
-		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>, or <paramref name="defaultValue"/> if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>,
+		/// or <paramref name="defaultValue"/> if the value could not be converted.</returns>
 		public static TEnum ToEnum<TEnum>(string value, TEnum defaultValue) where TEnum : struct
 		{
 			TEnum result;
@@ -969,7 +994,8 @@ namespace TC
 		/// <summary>Converts the specified string to an enum of type <typeparamref name="TEnum"/>.</summary>
 		/// <typeparam name="TEnum">The type of the Enum.</typeparam>
 		/// <param name="value">The value to convert.</param>
-		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>, or null if the value could not be converted.</returns>
+		/// <returns>The specified value, converted to a <typeparamref name="TEnum"/>,
+		/// or null if the value could not be converted.</returns>
 		[SuppressMessage(
 			"Microsoft.Design",
 			"CA1004:GenericMethodsShouldProvideTypeParameter",

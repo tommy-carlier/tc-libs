@@ -17,7 +17,8 @@ namespace TC
 		/// <summary>Determines whether the specified exception is a critical exception.</summary>
 		/// <param name="exception">The exception to check.</param>
 		/// <returns><c>true</c> if the specified exception is critical; otherwise, <c>false</c>.</returns>
-		/// <remarks>This function is used to determine whether to re-throw an exception in a generic try { } catch(Exception) { } construct.</remarks>
+		/// <remarks>This function is used to determine whether to re-throw an exception 
+		/// in a generic try { } catch(Exception) { } construct.</remarks>
 		public static bool IsCritical(this Exception exception)
 		{
 			if (exception == null) throw new ArgumentNullException("exception");

@@ -27,7 +27,8 @@ namespace TC
 			return builder.ToString();
 		}
 
-		/// <summary>Concatenates the specified separator between each element of the specified collection of strings, yielding a single concatenated string.</summary>
+		/// <summary>Concatenates the specified separator between each element of the specified collection of strings,
+		/// yielding a single concatenated string.</summary>
 		/// <param name="collection">The collection of elements to join.</param>
 		/// <param name="separator">The separator to concatenate between each element.</param>
 		/// <returns>The single concatenated string.</returns>
@@ -44,16 +45,17 @@ namespace TC
 			return builder.ToString();
 		}
 
-		/// <summary>Concatenates the specified separator between each element of the specified collection of strings, with an optional prefix and suffix, yielding a single concatenated string.</summary>
+		/// <summary>Concatenates the specified separator between each element of the specified collection of strings,
+		/// with an optional prefix and suffix, yielding a single concatenated string.</summary>
 		/// <param name="collection">The collection of elements to join.</param>
 		/// <param name="prefix">The optional prefix to concatenate before the first element.</param>
 		/// <param name="separator">The separator to concatenate between each element.</param>
 		/// <param name="suffix">The optional suffix to concatenate after the last element.</param>
 		/// <returns>The single concatenated string.</returns>
 		public static string Join(
-			this IEnumerable<string> collection, 
-			string prefix, 
-			string separator, 
+			this IEnumerable<string> collection,
+			string prefix,
+			string separator,
 			string suffix)
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
@@ -239,10 +241,12 @@ namespace TC
 
 		#endregion
 
-		/// <summary>Replaces the format item in <paramref name="format"/> with the text equivalent of the value of a corresponding object in <paramref name="args"/>.</summary>
+		/// <summary>Replaces the format item in <paramref name="format"/> with the text equivalent of
+		/// the value of a corresponding object in <paramref name="args"/>.</summary>
 		/// <param name="format">The composite format string.</param>
 		/// <param name="args">The objects to format.</param>
-		/// <returns>A copy of <paramref name="format"/> with the format item replaced by the string equivalent of a corresponding object in <paramref name="args"/>.</returns>
+		/// <returns>A copy of <paramref name="format"/> with the format item replaced by the string equivalent of
+		/// a corresponding object in <paramref name="args"/>.</returns>
 		public static string FormatInvariant(this string format, params object[] args)
 		{
 			if (format == null) throw new ArgumentNullException("format");
@@ -266,7 +270,8 @@ namespace TC
 					yield return item;
 		}
 
-		/// <summary>Returns all the items of the specified collection, trimming the leading and trailing white-space from each element.</summary>
+		/// <summary>Returns all the items of the specified collection, trimming the leading and 
+		/// trailing white-space from each element.</summary>
 		/// <param name="collection">The collection of strings to enumerate.</param>
 		/// <returns>The collection of all the trimmed elements.</returns>
 		public static IEnumerable<string> Trim(this IEnumerable<string> collection)
@@ -279,9 +284,9 @@ namespace TC
 		private static IEnumerable<string> TrimCore(IEnumerable<string> collection)
 		{
 			foreach (string item in collection)
-				yield return 
-					string.IsNullOrEmpty(item) 
-						? String.Empty 
+				yield return
+					string.IsNullOrEmpty(item)
+						? String.Empty
 						: item.Trim();
 		}
 
@@ -292,6 +297,7 @@ namespace TC
 		public static bool StartsWith(this string value, char firstCharacter)
 		{
 			if (value == null) throw new ArgumentNullException("value");
+
 			return value.Length > 0 && value[0] == firstCharacter;
 		}
 
@@ -302,7 +308,21 @@ namespace TC
 		public static bool EndsWith(this string value, char lastCharacter)
 		{
 			if (value == null) throw new ArgumentNullException("value");
+
 			return value.Length > 0 && value[value.Length - 1] == lastCharacter;
+		}
+
+		/// <summary>Determines whether the specified value contains the specified substring.</summary>
+		/// <param name="value">The value to check.</param>
+		/// <param name="substring">The substring to find.</param>
+		/// <param name="comparisonType">The type of comparison to perform.</param>
+		/// <returns>If the specified value contains the specified substring, <c>true</c>; otherwise, <c>false</c>.</returns>
+		public static bool Contains(this string value, string substring, StringComparison comparisonType)
+		{
+			if (value == null) throw new ArgumentNullException("value");
+			if (substring == null) throw new ArgumentNullException("substring");
+
+			return value.IndexOf(substring, comparisonType) >= 0;
 		}
 	}
 }

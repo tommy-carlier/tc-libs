@@ -36,7 +36,8 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Gets or sets the edges of the container to which a control is bound and
 		/// determines how a control is resized with its parent.</summary>
-		/// <returns>A bitwise combination of the <see cref="T:AnchorStyles"/> values. The default is Top, Left and Right.</returns>
+		/// <returns>A bitwise combination of the <see cref="T:AnchorStyles"/> values.
+		/// The default is Top, Left and Right.</returns>
 		[DefaultValue(typeof(AnchorStyles), "Top, Left, Right")]
 		public override AnchorStyles Anchor
 		{

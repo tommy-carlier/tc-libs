@@ -27,8 +27,10 @@ namespace TC.WinForms.Commands
 		private readonly ICommandControl _control;
 		private ICommand _command;
 
-		/// <summary>Gets or sets the <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/> of this <see cref="T:CommandBinding"/>.</summary>
-		/// <value>The <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/> of this <see cref="T:CommandBinding"/>.</value>
+		/// <summary>Gets or sets the <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/>
+		/// of this <see cref="T:CommandBinding"/>.</summary>
+		/// <value>The <see cref="T:ICommand"/> to bind to the <see cref="T:ICommandControl"/> 
+		/// of this <see cref="T:CommandBinding"/>.</value>
 		public ICommand Command
 		{
 			get { return _command; }

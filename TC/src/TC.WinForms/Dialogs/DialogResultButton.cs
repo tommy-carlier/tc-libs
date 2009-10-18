@@ -14,7 +14,8 @@ using TC.WinForms.Controls;
 
 namespace TC.WinForms.Dialogs
 {
-	/// <summary>Defines a button that sets the <see cref="P:Form.DialogResult"/> of a <see cref="T:TDialog{TContentControl}"/>.</summary>
+	/// <summary>Defines a button that sets the <see cref="P:Form.DialogResult"/> of
+	/// a <see cref="T:TDialog{TContentControl}"/>.</summary>
 	public sealed class DialogResultButton
 	{
 		/// <summary>Initializes a new instance of the <see cref="DialogResultButton"/> class.</summary>

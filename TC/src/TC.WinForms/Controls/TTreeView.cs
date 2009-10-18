@@ -51,8 +51,10 @@ namespace TC.WinForms.Controls
 
 		#region overriding properties to change their default values
 
-		/// <summary>Gets or sets a value indicating whether lines are drawn between tree nodes in the tree view control.</summary>
-		/// <returns>true if lines are drawn between tree nodes in the tree view control; otherwise, false. The default is false.</returns>
+		/// <summary>Gets or sets a value indicating whether lines are drawn
+		/// between tree nodes in the tree view control.</summary>
+		/// <returns>true if lines are drawn between tree nodes in the tree view control;
+		/// otherwise, false. The default is false.</returns>
 		[DefaultValue(false)]
 		public new bool ShowLines
 		{
@@ -60,8 +62,10 @@ namespace TC.WinForms.Controls
 			set { base.ShowLines = value; }
 		}
 
-		/// <summary>Gets or sets a value indicating ToolTips are shown when the mouse pointer hovers over a <see cref="T:TreeNode"/>.</summary>
-		/// <returns>true if ToolTips are shown when the mouse pointer hovers over a <see cref="T:TreeNode"/>; otherwise, false. The default is true.</returns>
+		/// <summary>Gets or sets a value indicating ToolTips are shown when the mouse pointer
+		/// hovers over a <see cref="T:TreeNode"/>.</summary>
+		/// <returns>true if ToolTips are shown when the mouse pointer hovers over a <see cref="T:TreeNode"/>;
+		/// otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		public new bool ShowNodeToolTips
 		{
@@ -106,7 +110,8 @@ namespace TC.WinForms.Controls
 		}
 
 		/// <summary>Overrides <see cref="P:CreateParams"/>.</summary>
-		/// <returns>A <see cref="T:CreateParams"/> that contains the required creation parameters when the handle to the control is created.</returns>
+		/// <returns>A <see cref="T:CreateParams"/> that contains the required creation parameters
+		/// when the handle to the control is created.</returns>
 		protected override CreateParams CreateParams
 		{
 			[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]

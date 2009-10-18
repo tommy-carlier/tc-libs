@@ -34,8 +34,10 @@ namespace TC.WinForms.Controls
 			HideSelection = false;
 		}
 
-		/// <summary>Gets or sets a value indicating whether pressing the TAB key in a multiline text box control types a TAB character in the control instead of moving the focus to the next control in the tab order.</summary>
-		/// <returns>true if users can enter tabs in a multiline text box using the TAB key; false if pressing the TAB key moves the focus. The default is true.</returns>
+		/// <summary>Gets or sets a value indicating whether pressing the TAB key in a multiline text box control
+		/// types a TAB character in the control instead of moving the focus to the next control in the tab order.</summary>
+		/// <returns>true if users can enter tabs in a multiline text box using the TAB key;
+		/// false if pressing the TAB key moves the focus. The default is true.</returns>
 		[DefaultValue(true)]
 		public new bool AcceptsTab
 		{
@@ -43,8 +45,10 @@ namespace TC.WinForms.Controls
 			set { base.AcceptsTab = value; }
 		}
 
-		/// <summary>Gets or sets a value indicating whether the selected text in the text box control remains highlighted when the control loses focus.</summary>
-		/// <returns>true if the selected text does not appear highlighted when the text box control loses focus; false, if the selected text remains highlighted when the text box control loses focus. The default is false.</returns>
+		/// <summary>Gets or sets a value indicating whether the selected text in the text box control 
+		/// remains highlighted when the control loses focus.</summary>
+		/// <returns>true if the selected text does not appear highlighted when the text box control loses focus;
+		/// false, if the selected text remains highlighted when the text box control loses focus. The default is false.</returns>
 		[DefaultValue(false)]
 		public new bool HideSelection
 		{

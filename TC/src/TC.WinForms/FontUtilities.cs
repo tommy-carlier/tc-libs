@@ -56,7 +56,8 @@ namespace TC.WinForms
 
 		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with the specified name.</summary>
 		/// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or null if the specified font cannot be found.</returns>
+		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name,
+		/// or null if the specified font cannot be found.</returns>
 		public static FontFamily GetFontFamily(string fontName)
 		{
 			FontFamily fontFamily;
@@ -71,7 +72,8 @@ namespace TC.WinForms
 		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
 		/// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
 		/// <param name="alternativeFontName">The name of the alternative font to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or the alternative font, or null if none of the specified fonts can be found.</returns>
+		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or the alternative font,
+		/// or null if none of the specified fonts can be found.</returns>
 		public static FontFamily GetFontFamily(string fontName, string alternativeFontName)
 		{
 			return GetFontFamily(fontName) ?? GetFontFamily(alternativeFontName);
@@ -79,7 +81,8 @@ namespace TC.WinForms
 
 		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
 		/// <param name="fontNames">The names of the possible fonts to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the first font with one of the specified names, or null if none of the specified fonts can be found.</returns>
+		/// <returns>The <see cref="T:FontFamily"/> of the first font with one of the specified names,
+		/// or null if none of the specified fonts can be found.</returns>
 		public static FontFamily GetFontFamily(params string[] fontNames)
 		{
 			FontFamily fontFamily;

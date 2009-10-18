@@ -9,7 +9,8 @@ using System.Text;
 
 namespace TC.WinForms.Commands
 {
-	/// <summary>Represents an object that implements all or some of the <see cref="T:TCommandIdentifier">command identifiers</see>.</summary>
+	/// <summary>Represents an object that implements all or some of the
+	/// <see cref="T:TCommandIdentifier">command identifiers</see>.</summary>
 	/// <typeparam name="TCommandIdentifier">The type of the command identifiers to implement.</typeparam>
 	public interface IProxyCommandsImplementation<TCommandIdentifier>
 	{

@@ -86,7 +86,8 @@ namespace TC.WinForms.Controls
 		/// <summary>Asks the user to confirm an action.</summary>
 		/// <param name="question">The question to display.</param>
 		/// <param name="confirmButtonCaption">The caption of the button to confirm.</param>
-		/// <param name="dangerousAction">Indicates that the action to confirm is potentially dangerous and a warning icon should be displayed.</param>
+		/// <param name="dangerousAction">Indicates that the action to confirm is potentially dangerous 
+		/// and a warning icon should be displayed.</param>
 		/// <returns>If the user pressed the confirm button, true; otherwise, false.</returns>
 		protected bool AskToConfirm(string question, string confirmButtonCaption, bool dangerousAction)
 		{
@@ -97,7 +98,8 @@ namespace TC.WinForms.Controls
 		/// <param name="question">The question to display.</param>
 		/// <param name="yesButtonCaption">The caption of the Yes-button.</param>
 		/// <param name="noButtonCaption">The caption of the No-button.</param>
-		/// <param name="dangerousAction">Indicates that the action is potentially dangerous and a warning icon should be displayed.</param>
+		/// <param name="dangerousAction">Indicates that the action is potentially dangerous
+		/// and a warning icon should be displayed.</param>
 		/// <returns>If the user pressed the Yes-button, true; otherwise, false.</returns>
 		protected bool AskYesNo(string question, string yesButtonCaption, string noButtonCaption, bool dangerousAction)
 		{
@@ -106,7 +108,8 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Asks the user a question where the answer can be yes or no.</summary>
 		/// <param name="question">The question to display.</param>
-		/// <param name="dangerousAction">Indicates that the action is potentially dangerous and a warning icon should be displayed.</param>
+		/// <param name="dangerousAction">Indicates that the action is potentially dangerous
+		/// and a warning icon should be displayed.</param>
 		/// <returns>If the user pressed the Yes-button, true; otherwise, false.</returns>
 		protected bool AskYesNo(string question, bool dangerousAction)
 		{
@@ -117,7 +120,8 @@ namespace TC.WinForms.Controls
 		/// <param name="question">The question to display.</param>
 		/// <param name="yesButtonCaption">The caption of the Yes-button.</param>
 		/// <param name="noButtonCaption">The caption of the No-button.</param>
-		/// <param name="dangerousAction">Indicates that the action is potentially dangerous and a warning icon should be displayed.</param>
+		/// <param name="dangerousAction">Indicates that the action is potentially dangerous
+		/// and a warning icon should be displayed.</param>
 		/// <returns>The dialog result.</returns>
 		protected DialogResult AskYesNoCancel(string question, string yesButtonCaption, string noButtonCaption, bool dangerousAction)
 		{
@@ -126,7 +130,8 @@ namespace TC.WinForms.Controls
 
 		/// <summary>Asks the user a question where the answer can be yes, no or cancel.</summary>
 		/// <param name="question">The question to display.</param>
-		/// <param name="dangerousAction">Indicates that the action is potentially dangerous and a warning icon should be displayed.</param>
+		/// <param name="dangerousAction">Indicates that the action is potentially dangerous
+		/// and a warning icon should be displayed.</param>
 		/// <returns>The dialog result.</returns>
 		protected DialogResult AskYesNoCancel(string question, bool dangerousAction)
 		{

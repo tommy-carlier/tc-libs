@@ -21,7 +21,8 @@ namespace TC.WinForms
 		/// <typeparam name="T">The type of the descendants to enumerate.</typeparam>
 		/// <param name="control">The control to enumerate descendants of.</param>
 		/// <param name="includeControl">Indicates whether to include the specified control itself.</param>
-		/// <returns>A collection of all the descendants of the specified control that are of type <typeparamref name="T"/>.</returns>
+		/// <returns>A collection of all the descendants of the specified control that
+		/// are of type <typeparamref name="T"/>.</returns>
 		[SuppressMessage(
 			"Microsoft.Design",
 			"CA1004:GenericMethodsShouldProvideTypeParameter",
