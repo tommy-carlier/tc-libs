@@ -144,7 +144,7 @@ namespace TC.WinForms
 			else if (radius > int.MaxValue / 2)
 				throw new ArgumentOutOfRangeException(
 					"radius",
-					"radius cannot be greater than " + ConvertString.FromInt32(int.MaxValue / 2));
+					"radius cannot be greater than " + (int.MaxValue / 2).ToDataString());
 
 			if (width < 0) throw new ArgumentOutOfRangeException("width", "width cannot be negative");
 			if (height < 0) throw new ArgumentOutOfRangeException("height", "height cannot be negative");

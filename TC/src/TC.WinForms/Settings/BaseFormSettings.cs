@@ -31,22 +31,22 @@ namespace TC.WinForms.Settings
 		/// <param name="xml">The <see cref="T:XPathNavigator"/> to load the settings from.</param>
 		protected override void LoadCore(XPathNavigator xml)
 		{
-			X = ConvertString.ToInt32(xml.GetAttribute("x", String.Empty), -1);
-			Y = ConvertString.ToInt32(xml.GetAttribute("y", String.Empty), -1);
-			Width = ConvertString.ToInt32(xml.GetAttribute("width", String.Empty), -1);
-			Height = ConvertString.ToInt32(xml.GetAttribute("height", String.Empty), -1);
-			IsMaximized = ConvertString.ToBoolean(xml.GetAttribute("maximized", String.Empty));
+			X = xml.GetAttribute("x", String.Empty).ToInt32(-1);
+			Y = xml.GetAttribute("y", String.Empty).ToInt32(-1);
+			Width = xml.GetAttribute("width", String.Empty).ToInt32(-1);
+			Height = xml.GetAttribute("height", String.Empty).ToInt32(-1);
+			IsMaximized = xml.GetAttribute("maximized", String.Empty).ToBoolean();
 		}
 
 		/// <summary>Saves the settings to the specified <see cref="T:XmlWriter"/>.</summary>
 		/// <param name="writer">The <see cref="T:XmlWriter"/> to save the settings to.</param>
 		protected override void SaveCore(XmlWriter writer)
 		{
-			if (X >= 0) writer.WriteAttributeString("x", ConvertString.FromInt32(X));
-			if (Y >= 0) writer.WriteAttributeString("y", ConvertString.FromInt32(Y));
-			if (Width >= 0) writer.WriteAttributeString("width", ConvertString.FromInt32(Width));
-			if (Height >= 0) writer.WriteAttributeString("height", ConvertString.FromInt32(Height));
-			if (IsMaximized) writer.WriteAttributeString("maximized", ConvertString.FromBoolean(true));
+			if (X >= 0) writer.WriteAttributeString("x", X.ToDataString());
+			if (Y >= 0) writer.WriteAttributeString("y", Y.ToDataString());
+			if (Width >= 0) writer.WriteAttributeString("width", Width.ToDataString());
+			if (Height >= 0) writer.WriteAttributeString("height", Height.ToDataString());
+			if (IsMaximized) writer.WriteAttributeString("maximized", true.ToDataString());
 		}
 
 		/// <summary>Gets or sets the X-coordinate of the location of the form.</summary>

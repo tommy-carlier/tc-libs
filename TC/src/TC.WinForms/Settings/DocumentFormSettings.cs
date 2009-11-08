@@ -25,7 +25,7 @@ namespace TC.WinForms.Settings
 		{
 			base.LoadCore(xml);
 			CurrentDocumentFolder = xml.GetAttribute("folder", String.Empty);
-			SelectedFilterIndex = ConvertString.ToInt32(xml.GetAttribute("filter", String.Empty));
+			SelectedFilterIndex = xml.GetAttribute("filter", String.Empty).ToInt32();
 		}
 
 		/// <summary>Saves the settings to the specified <see cref="T:XmlWriter"/>.</summary>
@@ -38,7 +38,7 @@ namespace TC.WinForms.Settings
 				writer.WriteAttributeString("folder", CurrentDocumentFolder);
 			
 			if (SelectedFilterIndex > 0)
-				writer.WriteAttributeString("filter", ConvertString.FromInt32(SelectedFilterIndex));
+				writer.WriteAttributeString("filter", SelectedFilterIndex.ToDataString());
 		}
 
 		/// <summary>Gets or sets the initial folder in file dialogs.</summary>

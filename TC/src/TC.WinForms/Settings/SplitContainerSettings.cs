@@ -27,7 +27,7 @@ namespace TC.WinForms.Settings
 		protected override void LoadCore(XPathNavigator xml)
 		{
 			CollapsedPanel = ToFixedPanel(xml.GetAttribute("collapsed-panel", String.Empty));
-			int splitterDistance = ConvertString.ToInt32(xml.GetAttribute("splitter-distance", String.Empty));
+			int splitterDistance = xml.GetAttribute("splitter-distance", String.Empty).ToInt32();
 			if (splitterDistance > 0) SplitterDistance = splitterDistance;
 		}
 
@@ -42,7 +42,7 @@ namespace TC.WinForms.Settings
 			}
 
 			if (SplitterDistance > 0)
-				writer.WriteAttributeString("splitter-distance", ConvertString.FromInt32(SplitterDistance));
+				writer.WriteAttributeString("splitter-distance", SplitterDistance.ToDataString());
 		}
 
 		private static FixedPanel ToFixedPanel(string value)
