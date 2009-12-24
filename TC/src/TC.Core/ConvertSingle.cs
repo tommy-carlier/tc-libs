@@ -42,7 +42,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToSingle(this string value, out float result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return
 					Single.TryParse(
 						value,
