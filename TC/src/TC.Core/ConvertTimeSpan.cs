@@ -41,7 +41,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToTimeSpan(this string value, out TimeSpan result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return
 					TimeSpan.TryParse(
 						value,

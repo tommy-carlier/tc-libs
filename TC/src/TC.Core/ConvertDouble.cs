@@ -42,7 +42,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToDouble(this string value, out double result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return
 					Double.TryParse(
 						value,

@@ -42,7 +42,7 @@ namespace TC
 		public static bool TryToBoolean(this string value, out bool result)
 		{
 			// if value is null or an empty string: conversion fails
-			if (value.IsEmpty())
+			if (value.IsNullOrEmpty())
 				return result = false;
 
 			// if value is "true" or "1", the result is "true"

@@ -30,7 +30,7 @@
     <DocumentationFile>..\..\bin\Debug\TC.WinForms.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -194,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Commands\Commands.cd" />
+    <None Include="Settings.StyleCop" />
     <None Include="TC.snk" />
   </ItemGroup>
   <ItemGroup>

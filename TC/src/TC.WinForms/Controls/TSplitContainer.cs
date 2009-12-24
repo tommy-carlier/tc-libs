@@ -41,8 +41,12 @@ namespace TC.WinForms.Controls
 
 			switch (settings.CollapsedPanel)
 			{
-				case FixedPanel.Panel1: Panel1Collapsed = true; break;
-				case FixedPanel.Panel2: Panel2Collapsed = true; break;
+				case FixedPanel.Panel1: 
+					Panel1Collapsed = true; 
+					break;
+				case FixedPanel.Panel2: 
+					Panel2Collapsed = true; 
+					break;
 			}
 		}
 

@@ -60,7 +60,7 @@ namespace TC.WinForms
 		/// or null if the specified font cannot be found.</returns>
 		public static FontFamily GetFontFamily(string fontName)
 		{
-			return fontName.IsNotEmpty()
+			return fontName.IsNotNullOrEmpty()
 				? _fontFamiliesByFontName.GetValue(fontName)
 				: null;
 		}
@@ -103,7 +103,10 @@ namespace TC.WinForms
 					return SystemUtilities.IsWindowsXPOrLater
 						&& SystemInformation.FontSmoothingType == 2;
 				}
-				catch (NotSupportedException) { return false; }
+				catch (NotSupportedException)
+				{
+					return false;
+				}
 			}
 		}
 
@@ -111,7 +114,7 @@ namespace TC.WinForms
 
 		#region system fonts
 
-		private static readonly Dictionary<SystemFont, Font> 
+		private static readonly Dictionary<SystemFont, Font>
 			_systemFonts = new Dictionary<SystemFont, Font>();
 
 		private static void InitializeSystemFonts()
@@ -123,10 +126,10 @@ namespace TC.WinForms
 			_systemFonts[SystemFont.Default] = defaultFont;
 			_systemFonts[SystemFont.Bold] = new Font(defaultFont, FontStyle.Bold);
 			_systemFonts[SystemFont.Italic] = new Font(defaultFont, FontStyle.Italic);
-			_systemFonts[SystemFont.Header] 
+			_systemFonts[SystemFont.Header]
 				= new Font(
-						defaultFont.FontFamily, 
-						defaultFont.SizeInPoints * 1.5F, 
+						defaultFont.FontFamily,
+						defaultFont.SizeInPoints * 1.5F,
 						FontStyle.Bold);
 
 			_systemFonts[SystemFont.Monospace]

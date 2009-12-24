@@ -30,7 +30,7 @@
     <DocumentationFile>..\..\bin\Debug\TC.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -59,7 +59,6 @@
     <Compile Include="ConvertInt64.cs" />
     <Compile Include="ConvertSingle.cs" />
     <Compile Include="ConvertTimeSpan.cs" />
-    <Compile Include="DateTimeComponents.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +74,7 @@
     <None Include="Code Snippets\FieldProperty.snippet" />
     <None Include="Code Snippets\FieldPropertyChangedEvent.snippet" />
     <None Include="Code Snippets\ReadOnlyFieldProperty.snippet" />
+    <None Include="Settings.StyleCop" />
     <None Include="TC.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

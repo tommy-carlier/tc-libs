@@ -17,8 +17,9 @@ using System.Windows.Forms;
 
 namespace TC.WinForms.Dialogs
 {
+	/// <summary>Represents the content of the About-dialog.</summary>
 	[SuppressMessage(
-		"Microsoft.Performance", 
+		"Microsoft.Performance",
 		"CA1812:AvoidUninstantiatedInternalClasses",
 		Justification = "This class is instantiated by TApplication.ShowAboutDialog")]
 	internal partial class TAboutDialogContentControl : TDialogContentControl
@@ -44,8 +45,8 @@ namespace TC.WinForms.Dialogs
 			LabelVersion.Text = LabelVersion.Text.Replace("{Version}", TApplication.Version.ToString());
 			LabelCopyright.Text = LabelCopyright.Text.Replace("{Copyright}", TApplication.Copyright);
 			Hyperlink.Text = Hyperlink.Text.Replace("{URL}", TApplication.WebsiteDisplayString);
-			
-			if (Hyperlink.Text.IsEmpty())
+
+			if (Hyperlink.Text.IsNullOrEmpty())
 				Hyperlink.Visible = false;
 
 			ResumeLayout();
@@ -55,10 +56,22 @@ namespace TC.WinForms.Dialogs
 		{
 			Uri uri = TApplication.WebsiteUri;
 			if (uri != null)
-				try { Process.Start(uri.ToString()); }
-				catch (Win32Exception lException) { ShowError(lException); }
-				catch (ObjectDisposedException lException) { ShowError(lException); }
-				catch (FileNotFoundException lException) { ShowError(lException); }
+			{
+				try
+				{
+					Process.Start(uri.ToString());
+				}
+				catch (Exception exception)
+				{
+					if ((exception is Win32Exception)
+						|| (exception is ObjectDisposedException)
+						|| (exception is FileNotFoundException))
+					{
+						ShowError(exception);
+					}
+					else throw;
+				}
+			}
 		}
 	}
 }

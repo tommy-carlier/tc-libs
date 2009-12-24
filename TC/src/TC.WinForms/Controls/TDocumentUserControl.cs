@@ -23,7 +23,11 @@ namespace TC.WinForms.Controls
 		[Category("Behavior"), Description("The component that contains the document."), DefaultValue(null)]
 		public IDocumentContainer DocumentContainer
 		{
-			get { return _documentContainer; }
+			get
+			{
+				return _documentContainer;
+			}
+
 			set
 			{
 				if (_documentContainer != value)

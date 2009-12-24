@@ -45,7 +45,7 @@ namespace TC.Settings
 			_items.Clear();
 
 			foreach (XPathNavigator navigator in xml.Select(_listItemElementName))
-				if (navigator.Value.IsNotEmpty())
+				if (navigator.Value.IsNotNullOrEmpty())
 					_items.Add(navigator.Value);
 
 			if (_sorted) _items.Sort();

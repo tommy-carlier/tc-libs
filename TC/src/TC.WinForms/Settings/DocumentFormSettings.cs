@@ -34,7 +34,7 @@ namespace TC.WinForms.Settings
 		{
 			base.SaveCore(writer);
 
-			if (CurrentDocumentFolder.IsNotEmpty())
+			if (CurrentDocumentFolder.IsNotNullOrEmpty())
 				writer.WriteAttributeString("folder", CurrentDocumentFolder);
 			
 			if (SelectedFilterIndex > 0)

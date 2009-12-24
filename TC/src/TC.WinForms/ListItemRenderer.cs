@@ -57,13 +57,13 @@ namespace TC.WinForms
 			if (image != null)
 			{
 				size.Width += image.Width;
-				if (size.Height > image.Height)
+				if (image.Height > size.Height)
 					size.Height = image.Height;
 			}
 
 			// measure the text of the specified item
 			string text = GetItemText(item);
-			if (text.IsNotEmpty())
+			if (text.IsNotNullOrEmpty())
 			{
 				Size textSize = TextRenderer.MeasureText(
 					context.Graphics,
@@ -119,7 +119,7 @@ namespace TC.WinForms
 
 			// draw the text
 			string text = GetItemText(item);
-			if (text.IsNotEmpty())
+			if (text.IsNotNullOrEmpty())
 			{
 				Rectangle textBounds = new Rectangle(
 					imageBounds.Right,

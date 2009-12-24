@@ -69,7 +69,11 @@ namespace TC.WinForms.Controls
 		[Category("Appearance"), Description("The system icon that is displayed.")]
 		public SystemIcon SystemIcon
 		{
-			get { return _systemIcon; }
+			get
+			{
+				return _systemIcon;
+			}
+
 			set
 			{
 				if (_systemIcon != value)
@@ -90,7 +94,11 @@ namespace TC.WinForms.Controls
 		[Description("The custom image that is displayed.")]
 		public Image CustomImage
 		{
-			get { return _customImage; }
+			get
+			{
+				return _customImage;
+			}
+
 			set
 			{
 				if (_customImage != value)

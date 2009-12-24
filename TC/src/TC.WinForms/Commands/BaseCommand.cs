@@ -26,7 +26,11 @@ namespace TC.WinForms.Commands
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public virtual bool CanExecute
 		{
-			get { return _canExecute; }
+			get
+			{
+				return _canExecute;
+			}
+
 			set
 			{
 				if (_canExecute != value)

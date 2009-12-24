@@ -42,7 +42,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToInt64(this string value, out long result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return
 					Int64.TryParse(
 						value,

@@ -21,16 +21,7 @@ namespace TC
 		/// <returns>The converted string.</returns>
 		public static string ToDataString(this DateTime value)
 		{
-			return ToDataString(value, DateTimeComponents.DateAndTime);
-		}
-
-		/// <summary>Converts the specified value to a culture-independent string.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <param name="components">The <see cref="T:DateTimeComponents"/> to include in the string.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this DateTime value, DateTimeComponents components)
-		{
-			return value.ToString(GetFormat(components), CultureInfo.InvariantCulture);
+			return value.ToString(GetFormat(value), CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>Converts the specified value to a culture-independent string.</summary>
@@ -41,28 +32,23 @@ namespace TC
 			return value.HasValue ? ToDataString(value.Value) : String.Empty;
 		}
 
-		/// <summary>Converts the specified value to a culture-independent string.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <param name="components">The <see cref="T:DateTimeComponents"/> to include in the string.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this DateTime? value, DateTimeComponents components)
-		{
-			return value.HasValue ? ToDataString(value.Value, components) : String.Empty;
-		}
-
 		private const string
 			DateFormat = "yyyy-MM-dd",
-			TimeFormat = "HH:mm:ss.fffffffzzzz",
-			DateAndTimeFormat = DateFormat + "T" + TimeFormat;
+			TimeFormat = "HH:mm:ss.fffffff",
+			DateAndTimeFormat = DateFormat + "T" + TimeFormat,
+			LocalSuffix = "zzzz",
+			UtcSuffix = "Z";
 
-		private static string GetFormat(DateTimeComponents components)
+		private static string GetFormat(DateTime value)
 		{
-			switch (components)
+			if (value.TimeOfDay == TimeSpan.Zero)
+				return DateFormat;
+
+			switch (value.Kind)
 			{
-				case DateTimeComponents.Date: return DateFormat;
-				case DateTimeComponents.Time: return TimeFormat;
-				case DateTimeComponents.DateAndTime: return DateAndTimeFormat;
-				default: return String.Empty;
+				case DateTimeKind.Utc: return DateAndTimeFormat + UtcSuffix;
+				case DateTimeKind.Local: return DateAndTimeFormat + LocalSuffix;
+				default: return DateAndTimeFormat;
 			}
 		}
 
@@ -76,7 +62,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToDateTime(this string value, out DateTime result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return
 					DateTime.TryParse(
 						value,

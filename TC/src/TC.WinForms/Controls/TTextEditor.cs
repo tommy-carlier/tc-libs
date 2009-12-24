@@ -110,7 +110,7 @@ namespace TC.WinForms.Controls
 		protected virtual bool Insert(IDataObject data)
 		{
 			string textToInsert = data.GetData(DataFormats.UnicodeText, true) as string;
-			if (textToInsert.IsNotEmpty())
+			if (textToInsert.IsNotNullOrEmpty())
 			{
 				ReplaceSelectedText(textToInsert, true);
 				return true;
@@ -222,7 +222,11 @@ namespace TC.WinForms.Controls
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool OverwriteMode
 		{
-			get { return _overwriteMode; }
+			get
+			{
+				return _overwriteMode;
+			}
+
 			private set
 			{
 				if (_overwriteMode != value)

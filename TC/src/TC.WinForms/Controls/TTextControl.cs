@@ -175,7 +175,7 @@ namespace TC.WinForms.Controls
 							: VisualStyleElement.TextBox.TextEdit.Normal
 						: VisualStyleElement.TextBox.TextEdit.Disabled);
 
-				int clipResult = 
+				int clipResult =
 					NativeMethods.ExcludeClipRect(
 						deviceContext.GetHdc(),
 						_borderRect.Left,
@@ -294,7 +294,11 @@ namespace TC.WinForms.Controls
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int CurrentLineNumber
 		{
-			get { return _currentLineNumber; }
+			get
+			{
+				return _currentLineNumber;
+			}
+
 			private set
 			{
 				if (_currentLineNumber != value)
@@ -334,7 +338,11 @@ namespace TC.WinForms.Controls
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int CurrentColumnNumber
 		{
-			get { return _currentColumnNumber; }
+			get
+			{
+				return _currentColumnNumber;
+			}
+
 			private set
 			{
 				if (_currentColumnNumber != value)

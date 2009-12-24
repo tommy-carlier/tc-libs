@@ -50,14 +50,18 @@ namespace TC.WinForms.Controls
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public string FilePath
 		{
-			get { return _filePath; }
+			get
+			{
+				return _filePath;
+			}
+
 			private set
 			{
 				if (_filePath != value)
 				{
 					_filePath = value;
 					OnFilePathChanged(EventArgs.Empty);
-					if (value.IsNotEmpty())
+					if (value.IsNotNullOrEmpty())
 						FileName = Path.GetFileName(value);
 				}
 			}
@@ -92,7 +96,11 @@ namespace TC.WinForms.Controls
 		[Category("Behavior"), Description("The file name of the document file."), DefaultValue(null)]
 		public string FileName
 		{
-			get { return _fileName; }
+			get
+			{
+				return _fileName;
+			}
+
 			set
 			{
 				if (_fileName != value)
@@ -132,7 +140,11 @@ namespace TC.WinForms.Controls
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsModified
 		{
-			get { return _isModified; }
+			get
+			{
+				return _isModified;
+			}
+
 			private set
 			{
 				if (_isModified != value)
@@ -176,7 +188,11 @@ namespace TC.WinForms.Controls
 		[Category("Behavior"), Description("The filter that is used in the dialog to open or save the document.")]
 		public string FileDialogFilter
 		{
-			get { return _fileDialogFilter; }
+			get
+			{
+				return _fileDialogFilter;
+			}
+
 			set
 			{
 				if (_fileDialogFilter != value)

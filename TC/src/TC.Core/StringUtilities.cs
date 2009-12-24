@@ -38,7 +38,7 @@ namespace TC
 
 			StringBuilder builder = new StringBuilder();
 
-			if (separator.IsEmpty())
+			if (separator.IsNullOrEmpty())
 				JoinCore(builder, collection);
 			else JoinCore(builder, collection, separator);
 
@@ -64,7 +64,7 @@ namespace TC
 
 			builder.AppendIfNotEmpty(prefix);
 
-			if (separator.IsEmpty())
+			if (separator.IsNullOrEmpty())
 				JoinCore(builder, collection);
 			else JoinCore(builder, collection, separator);
 
@@ -259,7 +259,7 @@ namespace TC
 		private static IEnumerable<string> SkipEmptyCore(IEnumerable<string> collection)
 		{
 			foreach (string item in collection)
-				if (item.IsNotEmpty())
+				if (item.IsNotNullOrEmpty())
 					yield return item;
 		}
 
@@ -278,7 +278,7 @@ namespace TC
 		{
 			foreach (string item in collection)
 				yield return
-					item.IsEmpty()
+					item.IsNullOrEmpty()
 						? String.Empty
 						: item.Trim();
 		}
@@ -321,17 +321,23 @@ namespace TC
 		/// <summary>Determines whether the specified value is null or an empty string.</summary>
 		/// <param name="value">The value to check.</param>
 		/// <returns>If the specified value is null or an empty string, <c>true</c>; otherwise, <c>false</c>.</returns>
-		public static bool IsEmpty(this string value)
+		public static bool IsNullOrEmpty(this string value)
 		{
-			return string.IsNullOrEmpty(value);
+			if (value != null)
+				return value.Length == 0;
+
+			return true;
 		}
 
 		/// <summary>Determines whether the specified value is not null or an empty string.</summary>
 		/// <param name="value">The value to check.</param>
 		/// <returns>If the specified value is not null or an empty string, <c>true</c>; otherwise, <c>false</c>.</returns>
-		public static bool IsNotEmpty(this string value)
+		public static bool IsNotNullOrEmpty(this string value)
 		{
-			return !string.IsNullOrEmpty(value);
+			if (value != null)
+				return value.Length != 0;
+
+			return false;
 		}
 
 		/// <summary>Appends a copy of the specified string value to the specified <see cref="T:StringBuilder"/>, if it's not empty.</summary>
@@ -340,7 +346,7 @@ namespace TC
 		/// <returns>The specified <see cref="T:StringBuilder"/>.</returns>
 		public static StringBuilder AppendIfNotEmpty(this StringBuilder output, string value)
 		{
-			return value.IsEmpty()
+			return value.IsNullOrEmpty()
 				? output
 				: output.Append(value);
 		}

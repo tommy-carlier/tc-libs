@@ -45,7 +45,7 @@ namespace TC
 		/// <param name="converter">The function that converts the items.</param>
 		/// <returns>A collection of the converted items.</returns>
 		public static IEnumerable<TOutput> Convert<TInput, TOutput>(
-			this IEnumerable<TInput> collection, 
+			this IEnumerable<TInput> collection,
 			Converter<TInput, TOutput> converter)
 		{
 			if (collection == null) throw new ArgumentNullException("collection");
@@ -55,7 +55,7 @@ namespace TC
 		}
 
 		private static IEnumerable<TOutput> ConvertCore<TInput, TOutput>(
-			IEnumerable<TInput> collection, 
+			IEnumerable<TInput> collection,
 			Converter<TInput, TOutput> converter)
 		{
 			foreach (TInput item in collection)
@@ -129,6 +129,7 @@ namespace TC
 		#region IsEmpty
 
 		/// <summary>Determines whether the specified array is empty.</summary>
+		/// <typeparam name="T">The type of the items in the array.</typeparam>
 		/// <param name="array">The array to check.</param>
 		/// <returns>If the specified array is empty, <c>true</c>; otherwise, <c>false</c>.</returns>
 		public static bool IsEmpty<T>(this T[] array)
@@ -151,7 +152,7 @@ namespace TC
 		/// <returns>If the specified collection is null or empty, <c>true</c>; otherwise, <c>false</c>.</returns>
 		public static bool IsEmpty<T>(this IEnumerable<T> collection)
 		{
-			if (collection == null) 
+			if (collection == null)
 				return true;
 
 			var countCollection = collection as ICollection<T>;
@@ -200,6 +201,7 @@ namespace TC
 		#region HasItems
 
 		/// <summary>Determines whether the specified array has items.</summary>
+		/// <typeparam name="T">The type of the items in the array.</typeparam>
 		/// <param name="array">The array to check.</param>
 		/// <returns>If the specified array has items, <c>true</c>; otherwise, <c>false</c>.</returns>
 		public static bool HasItems<T>(this T[] array)
@@ -273,13 +275,17 @@ namespace TC
 		private sealed class EmptyCollection<T> : IList<T>, IEnumerator<T>
 		{
 			private EmptyCollection() { }
+
 			public static readonly EmptyCollection<T> Instance = new EmptyCollection<T>();
 
 			#region IList<T> Members
 
 			int IList<T>.IndexOf(T item) { return -1; }
+			
 			void IList<T>.Insert(int index, T item) { throw new NotSupportedException(); }
+			
 			void IList<T>.RemoveAt(int index) { throw new NotSupportedException(); }
+
 			T IList<T>.this[int index]
 			{
 				get { throw new ArgumentOutOfRangeException("index"); }
@@ -291,11 +297,17 @@ namespace TC
 			#region ICollection<T> Members
 
 			void ICollection<T>.Add(T item) { throw new NotSupportedException(); }
+			
 			void ICollection<T>.Clear() { throw new NotSupportedException(); }
+			
 			bool ICollection<T>.Contains(T item) { return false; }
+			
 			void ICollection<T>.CopyTo(T[] array, int arrayIndex) { }
+			
 			int ICollection<T>.Count { get { return 0; } }
+			
 			bool ICollection<T>.IsReadOnly { get { return true; } }
+
 			bool ICollection<T>.Remove(T item) { throw new NotSupportedException(); }
 
 			#endregion
@@ -342,13 +354,17 @@ namespace TC
 		private sealed class OneItemCollection<T> : IList<T>
 		{
 			private readonly T _item;
+
 			public OneItemCollection(T item) { _item = item; }
 
 			#region IList<T> Members
 
 			int IList<T>.IndexOf(T item) { return object.Equals(_item, item) ? 0 : -1; }
+			
 			void IList<T>.Insert(int index, T item) { throw new NotSupportedException(); }
+			
 			void IList<T>.RemoveAt(int index) { throw new NotSupportedException(); }
+
 			T IList<T>.this[int index]
 			{
 				get
@@ -357,7 +373,10 @@ namespace TC
 					else throw new ArgumentOutOfRangeException("index");
 				}
 
-				set { throw new NotSupportedException(); }
+				set
+				{
+					throw new NotSupportedException();
+				}
 			}
 
 			#endregion
@@ -365,11 +384,17 @@ namespace TC
 			#region ICollection<T> Members
 
 			void ICollection<T>.Add(T item) { throw new NotSupportedException(); }
+			
 			void ICollection<T>.Clear() { throw new NotSupportedException(); }
+			
 			bool ICollection<T>.Contains(T item) { return object.Equals(_item, item); }
+			
 			void ICollection<T>.CopyTo(T[] array, int arrayIndex) { array[arrayIndex] = _item; }
+			
 			int ICollection<T>.Count { get { return 1; } }
+			
 			bool ICollection<T>.IsReadOnly { get { return true; } }
+
 			bool ICollection<T>.Remove(T item) { throw new NotSupportedException(); }
 
 			#endregion
@@ -392,6 +417,7 @@ namespace TC
 			{
 				private readonly T _item;
 				private bool _hasMovedNext;
+
 				public Enumerator(T item) { _item = item; }
 
 				#region IEnumerator<T> Members
@@ -409,10 +435,17 @@ namespace TC
 				#region IEnumerator Members
 
 				object SC.IEnumerator.Current { get { return _item; } }
+
 				bool SC.IEnumerator.MoveNext()
 				{
-					try { return !_hasMovedNext; }
-					finally { _hasMovedNext = true; }
+					try
+					{
+						return !_hasMovedNext;
+					}
+					finally
+					{
+						_hasMovedNext = true;
+					}
 				}
 
 				void SC.IEnumerator.Reset() { _hasMovedNext = false; }

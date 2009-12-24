@@ -13,7 +13,7 @@ namespace TC.WinForms.Dialogs
 	/// <summary>Represents a dialog to display simple messages.</summary>
 	public sealed class TMessageDialog : TDialog<TMessageDialogContentControl>
 	{
-		/// <summary>Initializes a new instance of the <see cref="TMessageDialog"/> class.</summary>
+		/// <summary>Prevents a default instance of the <see cref="TMessageDialog"/> class from being created.</summary>
 		private TMessageDialog() { }
 
 		private static DialogResult Show(

@@ -38,7 +38,11 @@ namespace TC.WinForms.Controls
 		[Category("Behavior"), Description("The command that is executed when this menu item is clicked."), DefaultValue(null)]
 		public ICommand Command
 		{
-			get { return _commandBinding.Command; }
+			get
+			{
+				return _commandBinding.Command;
+			}
+
 			set
 			{
 				if (_commandBinding.Command != value)

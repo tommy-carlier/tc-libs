@@ -20,13 +20,17 @@ namespace TC.WinForms.Controls
 
 		private SystemFont _systemFont;
 
-		/// <summary>Gets the <see cref="T:SystemFont"/> of the control.</summary>
+		/// <summary>Gets or sets the <see cref="T:SystemFont"/> of the control.</summary>
 		/// <value>The <see cref="T:SystemFont"/> of the control.</value>
 		[DefaultValue(typeof(SystemFont), "Default"), Category("Appearance")]
 		[Description("The font that is used to display the text.")]
 		public SystemFont SystemFont
 		{
-			get { return _systemFont; }
+			get
+			{
+				return _systemFont;
+			}
+
 			set
 			{
 				if (_systemFont != value)

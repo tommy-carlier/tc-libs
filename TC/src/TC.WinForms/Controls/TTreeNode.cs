@@ -21,13 +21,13 @@ namespace TC.WinForms.Controls
 		/// <param name="hasChildNodes">if set to <c>true</c>, the node has child nodes.</param>
 		protected TTreeNode(string label, string imageKey, string selectedImageKey, bool hasChildNodes)
 		{
-			if (label.IsNotEmpty())
+			if (label.IsNotNullOrEmpty())
 				Text = label;
 			
-			if (imageKey.IsNotEmpty())
+			if (imageKey.IsNotNullOrEmpty())
 				ImageKey = imageKey;
 
-			if (selectedImageKey.IsNotEmpty()) 
+			if (selectedImageKey.IsNotNullOrEmpty()) 
 				SelectedImageKey = selectedImageKey;
 
 			if (hasChildNodes)
@@ -39,6 +39,7 @@ namespace TC.WinForms.Controls
 		}
 
 		private readonly bool _hasChildNodes;
+
 		internal bool HasChildNodes
 		{
 			get { return _hasChildNodes; }

@@ -24,7 +24,11 @@ namespace TC.WinForms.Commands
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ICommand Implementation
 		{
-			get { return _implementation; }
+			get
+			{
+				return _implementation;
+			}
+
 			set
 			{
 				if (_implementation != value)

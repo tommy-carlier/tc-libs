@@ -87,7 +87,11 @@ namespace TC.WinForms.Commands
 		[Description("The implementation of the edit-commands.")]
 		public IProxyCommandsImplementation<EditCommand> Implementation
 		{
-			get { return _implementation; }
+			get
+			{
+				return _implementation;
+			}
+
 			set
 			{
 				if (_implementation != value)

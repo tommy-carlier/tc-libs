@@ -17,9 +17,9 @@ namespace TC.WinForms.Animation
 	{
 		#region initialization
 
-		private static readonly Dictionary<Type, Delegate> _defaultInterpolators = InitializeInterpolators();
+		private static readonly IDictionary<Type, Delegate> _defaultInterpolators = InitializeInterpolators();
 
-		private static Dictionary<Type, Delegate> InitializeInterpolators()
+		private static IDictionary<Type, Delegate> InitializeInterpolators()
 		{
 			var interpolators = new Dictionary<Type, Delegate>(20);
 

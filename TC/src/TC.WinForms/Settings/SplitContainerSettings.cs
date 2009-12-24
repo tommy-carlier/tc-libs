@@ -37,8 +37,12 @@ namespace TC.WinForms.Settings
 		{
 			switch (CollapsedPanel)
 			{
-				case FixedPanel.Panel1: writer.WriteAttributeString("collapsed-panel", "Panel1"); break;
-				case FixedPanel.Panel2: writer.WriteAttributeString("collapsed-panel", "Panel2"); break;
+				case FixedPanel.Panel1:
+					writer.WriteAttributeString("collapsed-panel", "Panel1");
+					break;
+				case FixedPanel.Panel2: 
+					writer.WriteAttributeString("collapsed-panel", "Panel2"); 
+					break;
 			}
 
 			if (SplitterDistance > 0)

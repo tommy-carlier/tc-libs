@@ -44,7 +44,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToBytes(this string value, out byte[] result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				try
 				{
 					result = Convert.FromBase64String(value.Trim());

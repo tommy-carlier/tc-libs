@@ -39,7 +39,11 @@ namespace TC.WinForms.Controls
 		[Description("The command that is executed when this button is clicked.")]
 		public ICommand Command
 		{
-			get { return _commandBinding.Command; }
+			get
+			{
+				return _commandBinding.Command;
+			}
+
 			set
 			{
 				if (_commandBinding.Command != value)

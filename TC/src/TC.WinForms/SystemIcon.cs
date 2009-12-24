@@ -12,7 +12,7 @@ namespace TC.WinForms
 	/// <summary>Represents one of the system icons.</summary>
 	public enum SystemIcon
 	{
-		/// <summary>No icon.</summary>
+		/// <summary>No icon (empty icon).</summary>
 		None = 0,
 
 		/// <summary>A custom image.</summary>

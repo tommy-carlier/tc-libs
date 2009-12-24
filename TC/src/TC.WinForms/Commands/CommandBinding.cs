@@ -33,7 +33,11 @@ namespace TC.WinForms.Commands
 		/// of this <see cref="T:CommandBinding"/>.</value>
 		public ICommand Command
 		{
-			get { return _command; }
+			get
+			{
+				return _command;
+			}
+
 			set
 			{
 				if (_command != value)

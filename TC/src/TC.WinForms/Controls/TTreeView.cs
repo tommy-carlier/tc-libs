@@ -39,11 +39,11 @@ namespace TC.WinForms.Controls
 
 		#region icon-related members
 
-		/// <summary>When overriden in a derived class, gets the icon for the 'Loading…'-node.</summary>
+		/// <summary>Gets the icon for the 'Loading…'-node, when overriden in a derived class.</summary>
 		/// <value>The icon for the 'Loading…'-node.</value>
 		protected abstract Image LoadingTreeNodeIcon { get; }
 
-		/// <summary>When overriden in a derived class, initializes the icons.</summary>
+		/// <summary>Initializes the icons, when overriden in a derived class.</summary>
 		/// <param name="icons">The <see cref="T:ImageList"/> to add icons to.</param>
 		protected virtual void InitializeIcons(ImageList icons) { }
 
@@ -62,7 +62,7 @@ namespace TC.WinForms.Controls
 			set { base.ShowLines = value; }
 		}
 
-		/// <summary>Gets or sets a value indicating ToolTips are shown when the mouse pointer
+		/// <summary>Gets or sets a value indicating whether ToolTips are shown when the mouse pointer
 		/// hovers over a <see cref="T:TreeNode"/>.</summary>
 		/// <returns>true if ToolTips are shown when the mouse pointer hovers over a <see cref="T:TreeNode"/>;
 		/// otherwise, false. The default is true.</returns>
@@ -168,7 +168,10 @@ namespace TC.WinForms.Controls
 				nodeCollection.Clear();
 				nodeCollection.AddRange(nodes);
 			}
-			finally { EndUpdate(); }
+			finally
+			{
+				EndUpdate();
+			}
 		}
 
 		private readonly ICommand _reloadSelectedNodeCommand;

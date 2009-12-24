@@ -41,7 +41,7 @@ namespace TC
 		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
 		public static bool TryToChar(this string value, out char result)
 		{
-			if (value.IsNotEmpty())
+			if (value.IsNotNullOrEmpty())
 				return Char.TryParse(value, out result);
 
 			result = '\0';

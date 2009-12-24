@@ -390,9 +390,9 @@ namespace TC.WinForms.Animation
 				Update(endValue, totalTicks, endTimeTicks, pulsationCount, callback);
 			}
 
-			private PropertySetter<TTarget, TValue> _propertySetter;
-			private TTarget _target;
-			private Interpolator<TValue> _interpolator;
+			private readonly PropertySetter<TTarget, TValue> _propertySetter;
+			private readonly TTarget _target;
+			private readonly Interpolator<TValue> _interpolator;
 			private TValue _startValue, _endValue;
 			private long _totalTicks, _endTimeTicks;
 			private int _pulsationCount;
