@@ -1,5 +1,5 @@
 ﻿// TC Data Library
-// Copyright © 2009 Tommy Carlier
+// Copyright © 2009-2010 Tommy Carlier
 // http://tc.codeplex.com
 // License: Microsoft Public License (Ms-PL): http://tc.codeplex.com/license
 
