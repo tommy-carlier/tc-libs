@@ -5,19 +5,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}</ProjectGuid>
+    <ProjectGuid>{3552605E-8FE1-4F22-9B9C-8630A242A6AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TC</RootNamespace>
-    <AssemblyName>TC.Core</AssemblyName>
+    <RootNamespace>TC.Data</RootNamespace>
+    <AssemblyName>TC.Data.AdoNet</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>TC.snk</AssemblyOriginatorKeyFile>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>TC.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Debug\TC.Core.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\TC.Data.AdoNet.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -36,7 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\TC.Core.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\TC.Data.AdoNet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,33 +47,41 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Action.cs" />
-    <Compile Include="ApplicationWebsiteAttribute.cs" />
-    <Compile Include="CollectionUtilities.cs" />
-    <Compile Include="ConvertBoolean.cs" />
-    <Compile Include="ConvertByte.cs" />
-    <Compile Include="ConvertBytes.cs" />
-    <Compile Include="ConvertChar.cs" />
-    <Compile Include="ConvertDateTime.cs" />
-    <Compile Include="ConvertDecimal.cs" />
-    <Compile Include="ConvertDouble.cs" />
-    <Compile Include="ConvertGuid.cs" />
-    <Compile Include="ConvertInt16.cs" />
-    <Compile Include="ConvertInt32.cs" />
-    <Compile Include="ConvertInt64.cs" />
-    <Compile Include="ConvertSingle.cs" />
-    <Compile Include="ConvertTimeSpan.cs" />
-    <Compile Include="ExtensionAttribute.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="AdoNetUtilities.cs" />
+    <Compile Include="Internal\ValueGetters\BooleanValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\BytesValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\ByteValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\CharValueGetter.cs" />
+    <Compile Include="Internal\DataReaderRecordReader.cs" />
+    <Compile Include="Internal\ValueGetters\DateTimeValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\DecimalValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\DoubleValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\GuidValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int16ValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int32ValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int64ValueGetter.cs" />
+    <Compile Include="Internal\DataRecordDescriptor.cs" />
+    <Compile Include="Internal\ValueGetters\SingleValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\StringValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\StructValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\ObjectValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\IValueGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionUtilities.cs" />
-    <Compile Include="Settings\BaseApplicationSettings.cs" />
-    <Compile Include="Settings\BaseSettings.cs" />
-    <Compile Include="Settings\StringListSettings.cs" />
-    <Compile Include="StringUtilities.cs" />
-    <Compile Include="SystemUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TC.Core\TC.Core.csproj">
+      <Project>{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}</Project>
+      <Name>TC.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\TC.Data\TC.Data.csproj">
+      <Project>{BB512D13-B524-4CAE-9569-08CB20C5140A}</Project>
+      <Name>TC.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Internal\ValueGetters\ValueGetters.cd" />
     <None Include="Settings.StyleCop" />
     <None Include="TC.snk" />
   </ItemGroup>

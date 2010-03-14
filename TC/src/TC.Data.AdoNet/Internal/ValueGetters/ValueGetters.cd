@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="TC.Data.Internal.ValueGetters.BooleanValueGetter" Collapsed="true">
+    <Position X="3.25" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\BooleanValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.StructValueGetter&lt;TValue&gt;" Collapsed="true">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\StructValueGetter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.BytesValueGetter" Collapsed="true">
+    <Position X="3.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Internal\ValueGetters\BytesValueGetter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.ByteValueGetter" Collapsed="true">
+    <Position X="3.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\ByteValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.CharValueGetter" Collapsed="true">
+    <Position X="3.25" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\CharValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.DateTimeValueGetter" Collapsed="true">
+    <Position X="3.25" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\DateTimeValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.DecimalValueGetter" Collapsed="true">
+    <Position X="3.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\DecimalValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.DoubleValueGetter" Collapsed="true">
+    <Position X="3.25" Y="8.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\DoubleValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.GuidValueGetter" Collapsed="true">
+    <Position X="3.25" Y="11.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\GuidValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.Int16ValueGetter" Collapsed="true">
+    <Position X="3.25" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\Int16ValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.Int32ValueGetter" Collapsed="true">
+    <Position X="3.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\Int32ValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.Int64ValueGetter" Collapsed="true">
+    <Position X="3.25" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\Int64ValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.ObjectValueGetter" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAgAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Internal\ValueGetters\ObjectValueGetter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.SingleValueGetter" Collapsed="true">
+    <Position X="3.25" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\SingleValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TC.Data.Internal.ValueGetters.StringValueGetter" Collapsed="true">
+    <Position X="3.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\StringValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TC.Data.Internal.ValueGetters.IValueGetter&lt;TValue&gt;">
+    <Position X="0.5" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\ValueGetters\IValueGetter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

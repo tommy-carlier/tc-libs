@@ -40,12 +40,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Animation\AnimationThread.cs" />
     <Compile Include="Animation\Animator.cs" />
     <Compile Include="Animation\Interpolator.cs" />
@@ -214,6 +216,7 @@
     <ProjectReference Include="..\TC.Core\TC.Core.csproj">
       <Project>{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}</Project>
       <Name>TC.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

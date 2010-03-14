@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Interface Name="TC.Data.IRecord">
+    <Position X="1.5" Y="3" Width="3.5" />
+    <AssociationLine Name="Descriptor" Type="TC.Data.IRecordDescriptor">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.079" Y="0.237" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Metadata" Type="TC.Data.IRecordMetadata">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.081" Y="0.256" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>IRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Descriptor" />
+      <Property Name="Metadata" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="TC.Data.IRecordDescriptor">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>IRecordDescriptor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TC.Data.IRecordReader">
+    <Position X="1.5" Y="4.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRecordReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TC.Data.IRecordWriter">
+    <Position X="5.5" Y="4.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>IRecordWriter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TC.Data.IWritableRecord">
+    <Position X="5.5" Y="3" Width="3.5" />
+    <InheritanceLine Type="TC.Data.IRecord" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="3.688" />
+        <Point X="5.5" Y="3.688" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>IWritableRecord.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TC.Data.IRecordMetadata">
+    <Position X="3.25" Y="0.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>IRecordMetadata.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

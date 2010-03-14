@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>Field + Property + Changed event</Title>
+    <Author>Tommy Carlier</Author>
+    <Shortcut>fpropc</Shortcut>
+    <Description>Adds a field, property and property changed event.</Description>
+    <SnippetTypes>
+      <SnippetType>SurroundsWith</SnippetType>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Imports>
+      <Import>
+        <Namespace>System.ComponentModel</Namespace>
+      </Import>
+    </Imports>
+    <Declarations>
+      <Literal>
+        <ID>fieldName</ID>
+        <Default>name</Default>
+      </Literal>
+      <Literal>
+        <ID>propName</ID>
+        <Default>Name</Default>
+      </Literal>
+      <Literal>
+        <ID>type</ID>
+        <Default>string</Default>
+      </Literal>
+      <Literal>
+        <ID>category</ID>
+        <Default>Behavior</Default>
+      </Literal>
+      <Literal>
+        <ID>description</ID>
+        <Default></Default>
+      </Literal>
+      <Literal>
+        <ID>default</ID>
+        <Default>null</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="CSharp">
+      <![CDATA[#region $propName$ members
+
+    private $type$ _$fieldName$;
+    
+    /// <summary>Gets or sets the $fieldName$.</summary>
+    /// <value>The $fieldName$.</value>
+    [Category("$category$"), DefaultValue($default$)]
+    [Description("$description$")]
+    public $type$ $propName$
+    {
+      get { return _$fieldName$; }
+      set
+      {
+        if (_$fieldName$ != value)
+        {
+          _$fieldName$ = value;
+          On$propName$Changed(EventArgs.Empty);
+        }
+      }
+    }
+
+    private static readonly object _$fieldName$Changed = new object();
+    
+    /// <summary>Occurs when the value of the <see cref="P:$propName$"/> property has changed.</summary>
+    public event EventHandler $propName$Changed
+    {
+	    add { Events.AddHandler(_$fieldName$Changed, value); }
+	    remove { Events.RemoveHandler(_$fieldName$Changed, value); }
+    }
+
+    /// <summary>Raises the <see cref="E:$propName$Changed"/> event.</summary>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    protected virtual void On$propName$Changed(EventArgs e)
+    {
+      EventHandler handler = Events[_$fieldName$Changed] as EventHandler;
+      if (handler != null)
+        handler(this, e);
+    }
+
+    #endregion
+$end$]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>

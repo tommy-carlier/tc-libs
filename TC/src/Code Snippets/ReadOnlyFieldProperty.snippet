@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>Read-only Field + Property</Title>
+    <Author>Tommy Carlier</Author>
+    <Shortcut>rfprop</Shortcut>
+    <Description>Add a read-only field and property.</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>fieldName</ID>
+        <Default>name</Default>
+      </Literal>
+      <Literal>
+        <ID>propName</ID>
+        <Default>Name</Default>
+      </Literal>
+      <Literal>
+        <ID>type</ID>
+        <Default>string</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="CSharp">
+      <![CDATA[private readonly $type$ _$fieldName$;
+
+    /// <summary>Gets the $fieldName$.</summary>
+    /// <value>The $fieldName$.</value>
+    public $type$ $propName$ { get { return _$fieldName$; } }
+$end$]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>
