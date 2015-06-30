@@ -1,0 +1,39 @@
+﻿// TC Data Library
+// Copyright © 2009-2010 Tommy Carlier
+// http://tc.codeplex.com
+// License: Microsoft Public License (Ms-PL): http://tc.codeplex.com/license
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+
+namespace TC.Data
+{
+	/// <summary>Contains the values of a record.</summary>
+	public interface IRecord
+	{
+		/// <summary>Gets the <see cref="T:IRecordDescriptor"/> that describes the fields.</summary>
+		/// <value>The <see cref="T:IRecordDescriptor"/> that describes the fields.</value>
+		IRecordDescriptor Descriptor { get; }
+
+		/// <summary>Gets the <see cref="T:IRecordMetadata"/> that contains extra information.</summary>
+		/// <value>The <see cref="T:IRecordMetadata"/> that contains extra information.</value>
+		IRecordMetadata Metadata { get; }
+
+		/// <summary>Gets the value of the field at the specified index.</summary>
+		/// <typeparam name="TValue">The type of the value to get.</typeparam>
+		/// <param name="ordinal">The zero-based index of the field.</param>
+		/// <returns>The value of the field at the specified index.</returns>
+		[SuppressMessage(
+			"Microsoft.Design", 
+			"CA1004:GenericMethodsShouldProvideTypeParameter",
+			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
+		TValue GetValue<TValue>(int ordinal);
+
+		/// <summary>Determines whether the value of the field at the specified index is null.</summary>
+		/// <param name="ordinal">The zero-based index of the field.</param>
+		/// <returns>If the value of the specified field is null, <c>true</c>; otherwise, <c>false</c>.</returns>
+		bool IsNull(int ordinal);
+	}
+}

@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5A33D06F-B3E4-451E-97A1-D1E9F9E985A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TC.WinForms</RootNamespace>
+    <AssemblyName>TC.WinForms</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>TC.snk</AssemblyOriginatorKeyFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Debug\TC.WinForms.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Release\TC.WinForms.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Animation\AnimationThread.cs" />
+    <Compile Include="Animation\Animator.cs" />
+    <Compile Include="Animation\Interpolator.cs" />
+    <Compile Include="Animation\Interpolators.cs" />
+    <Compile Include="Animation\PropertySetter.cs" />
+    <Compile Include="Animation\PropertySetters.cs" />
+    <Compile Include="Commands\ApplicationCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Commands\BaseCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Commands\CommandBinding.cs" />
+    <Compile Include="Commands\EditCommand.cs" />
+    <Compile Include="Commands\EditCommandsProxy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Commands\EmptyProxyCommandsImplementation.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandControl.cs" />
+    <Compile Include="Commands\IProxyCommandsImplementation.cs" />
+    <Compile Include="Commands\ProxyCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Commands\SimpleActionCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TListBox.Generic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TCodeEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TComboBox.Generic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\THorizontalRule.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TCommandHyperlink.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TDocumentUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TPlainTextEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TSplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TTextControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TTextEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TTreeNode.cs" />
+    <Compile Include="Controls\TTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TAboutDialogContentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TAboutDialogContentControl.Designer.cs">
+      <DependentUpon>TAboutDialogContentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TMessageDialogContentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TMessageDialogContentControl.Designer.cs">
+      <DependentUpon>TMessageDialogContentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\TMessageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DrawingUtilities.cs" />
+    <Compile Include="Forms\TDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IDocumentContainer.cs" />
+    <Compile Include="IHasSystemFont.cs" />
+    <Compile Include="ListControlUtilities.cs" />
+    <Compile Include="ListItemRenderer.cs" />
+    <Compile Include="ListItemRenderer.Generic.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="ScreenUtilities.cs" />
+    <Compile Include="Settings\BaseFormSettings.cs" />
+    <Compile Include="Settings\DocumentFormSettings.cs" />
+    <Compile Include="Settings\SplitContainerSettings.cs" />
+    <Compile Include="SystemFont.cs" />
+    <Compile Include="Controls\TCommandButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TToolStripCommandButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TToolStripCommandMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ControlUtilities.cs" />
+    <Compile Include="SystemIcon.cs" />
+    <Compile Include="Controls\TSystemIconBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DialogValidationException.cs" />
+    <Compile Include="Dispatcher.cs" />
+    <Compile Include="Dialogs\DialogResultButton.cs" />
+    <Compile Include="FontUtilities.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dialogs\TDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TDialogContentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TApplication.cs" />
+    <Compile Include="Controls\TUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TToolStripRenderer.cs">
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Commands\Commands.cd" />
+    <None Include="Settings.StyleCop" />
+    <None Include="TC.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dialogs\TAboutDialogContentControl.resx">
+      <DependentUpon>TAboutDialogContentControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TMessageDialogContentControl.resx">
+      <DependentUpon>TMessageDialogContentControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\THorizontalRule.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TC.Core\TC.Core.csproj">
+      <Project>{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}</Project>
+      <Name>TC.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

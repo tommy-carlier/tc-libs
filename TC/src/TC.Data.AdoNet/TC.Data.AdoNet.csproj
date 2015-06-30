@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3552605E-8FE1-4F22-9B9C-8630A242A6AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TC.Data</RootNamespace>
+    <AssemblyName>TC.Data.AdoNet</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>TC.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Debug\TC.Data.AdoNet.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Release\TC.Data.AdoNet.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="AdoNetUtilities.cs" />
+    <Compile Include="Internal\ValueGetters\BooleanValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\BytesValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\ByteValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\CharValueGetter.cs" />
+    <Compile Include="Internal\DataReaderRecordReader.cs" />
+    <Compile Include="Internal\ValueGetters\DateTimeValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\DecimalValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\DoubleValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\GuidValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int16ValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int32ValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\Int64ValueGetter.cs" />
+    <Compile Include="Internal\DataRecordDescriptor.cs" />
+    <Compile Include="Internal\ValueGetters\SingleValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\StringValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\StructValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\ObjectValueGetter.cs" />
+    <Compile Include="Internal\ValueGetters\IValueGetter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TC.Core\TC.Core.csproj">
+      <Project>{4D7F9C65-C792-4BE8-B9C2-7CD5BDA1469E}</Project>
+      <Name>TC.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\TC.Data\TC.Data.csproj">
+      <Project>{BB512D13-B524-4CAE-9569-08CB20C5140A}</Project>
+      <Name>TC.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Internal\ValueGetters\ValueGetters.cd" />
+    <None Include="Settings.StyleCop" />
+    <None Include="TC.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
