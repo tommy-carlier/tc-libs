@@ -1,7 +1,7 @@
 ﻿// TC Core Library
-// Copyright © 2008-2010 Tommy Carlier
-// http://tc.codeplex.com
-// License: Microsoft Public License (Ms-PL): http://tc.codeplex.com/license
+// Copyright © 2008-2015 Tommy Carlier
+// https://github.com/tommy-carlier/tc-libs/
+// License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
