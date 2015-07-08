@@ -4,9 +4,7 @@
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace TC

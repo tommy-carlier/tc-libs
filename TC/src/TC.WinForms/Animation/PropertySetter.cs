@@ -3,10 +3,6 @@
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TC.WinForms.Animation
 {
 	/// <summary>Represents a method that sets the value of a property.</summary>

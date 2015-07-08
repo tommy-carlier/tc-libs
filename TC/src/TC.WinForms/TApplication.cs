@@ -4,11 +4,9 @@
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.Win32;

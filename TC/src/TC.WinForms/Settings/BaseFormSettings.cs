@@ -4,9 +4,7 @@
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 using TC.Settings;

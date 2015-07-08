@@ -3,10 +3,6 @@
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TC
 {
 	/// <summary>Encapsulates a method that takes no arguments and does not return a value.</summary>

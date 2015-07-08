@@ -4,17 +4,13 @@
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Forms;
 
-using TC.WinForms;
 using TC.WinForms.Controls;
-using TC.WinForms.Forms;
 
 namespace TC.WinForms.Dialogs
 {

@@ -3,13 +3,6 @@
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
 namespace TC.WinForms.Controls
 {
 	/// <summary>Represents a (strongly typed) combo box control.</summary>

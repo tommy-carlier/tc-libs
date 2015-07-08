@@ -3,10 +3,7 @@
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace TC.WinForms
 {

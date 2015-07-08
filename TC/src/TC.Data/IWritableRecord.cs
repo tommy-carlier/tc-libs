@@ -3,10 +3,6 @@
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TC.Data
 {
 	/// <summary>Represents a <see cref="T:IRecord"/> that can be written to.</summary>
