@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -14,8 +14,7 @@ namespace TC.WinForms.Commands
 		/// <param name="action">The action to invoke when this command is executed.</param>
 		public SimpleActionCommand(Action action)
 		{
-			if (action == null) throw new ArgumentNullException("action");
-			_action = action;
+            _action = action ?? throw new ArgumentNullException("action");
 		}
 
 		private readonly Action _action;

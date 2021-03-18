@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -107,10 +107,8 @@ namespace TC.WinForms.Forms
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnDocumentContainerChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_documentContainerChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _documentContainerChanged, e);
+        }
 
 		#endregion
 
@@ -143,10 +141,8 @@ namespace TC.WinForms.Forms
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnDocumentTitleChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_documentTitleChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _documentTitleChanged, e);
+        }
 
 		private void RaiseDocumentTitleChanged(object sender, EventArgs e)
 		{

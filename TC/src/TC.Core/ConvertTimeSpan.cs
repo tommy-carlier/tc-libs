@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -63,18 +63,16 @@ namespace TC
 		/// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
 		public static TimeSpan ToTimeSpan(this string value, TimeSpan defaultValue)
 		{
-			TimeSpan result;
-			return TryToTimeSpan(value, out result) ? result : defaultValue;
-		}
+            return TryToTimeSpan(value, out TimeSpan result) ? result : defaultValue;
+        }
 
 		/// <summary>Converts the specified value to a nullable <see cref="T:TimeSpan"/>.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The converted value; or null, if the conversion fails.</returns>
 		public static TimeSpan? ToTimeSpanOrNull(this string value)
 		{
-			TimeSpan result;
-			return TryToTimeSpan(value, out result) ? new TimeSpan?(result) : null;
-		}
+            return TryToTimeSpan(value, out TimeSpan result) ? new TimeSpan?(result) : null;
+        }
 
 		#endregion
 	}

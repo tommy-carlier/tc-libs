@@ -18,15 +18,11 @@ namespace TC.Data
 		/// <value>The <see cref="T:IRecordMetadata"/> that contains extra information.</value>
 		IRecordMetadata Metadata { get; }
 
-		/// <summary>Gets the value of the field at the specified index.</summary>
-		/// <typeparam name="TValue">The type of the value to get.</typeparam>
-		/// <param name="ordinal">The zero-based index of the field.</param>
-		/// <returns>The value of the field at the specified index.</returns>
-		[SuppressMessage(
-			"Microsoft.Design", 
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		TValue GetValue<TValue>(int ordinal);
+        /// <summary>Gets the value of the field at the specified index.</summary>
+        /// <typeparam name="TValue">The type of the value to get.</typeparam>
+        /// <param name="ordinal">The zero-based index of the field.</param>
+        /// <returns>The value of the field at the specified index.</returns>
+        TValue GetValue<TValue>(int ordinal);
 
 		/// <summary>Determines whether the value of the field at the specified index is null.</summary>
 		/// <param name="ordinal">The zero-based index of the field.</param>

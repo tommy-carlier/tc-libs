@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -52,10 +52,8 @@ namespace TC.WinForms.Commands
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCanExecuteChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_canExecuteChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _canExecuteChanged, e);
+        }
 
 		#endregion
 	}

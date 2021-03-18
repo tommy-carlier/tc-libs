@@ -86,15 +86,13 @@ namespace TC.Data.Internal
 
 		private IValueGetter<TValue> GetValueGetter<TValue>(int ordinal)
 		{
-			var getter = _valueGetters[ordinal] as IValueGetter<TValue>;
-			if (getter != null)
-				return getter;
+            return _valueGetters[ordinal] is IValueGetter<TValue> getter
+                ? getter
+                : throw new ArgumentException(
+                "The value of the specified field cannot be converted to type " + typeof(TValue).Name);
+        }
 
-			throw new ArgumentException(
-				"The valud of the specified field cannot be converted to type " + typeof(TValue).Name);
-		}
-
-		private static object[] InitializeValueGetters(IDataRecord dataRecord)
+        private static object[] InitializeValueGetters(IDataRecord dataRecord)
 		{
 			object[] getters = new object[dataRecord.FieldCount];
 
@@ -115,23 +113,22 @@ namespace TC.Data.Internal
 
 		private static IDictionary<Type, object> InitializeTypeValueGetters()
 		{
-			var getters = new Dictionary<Type, object>(15);
-
-			getters.Add(typeof(string), new StringValueGetter());
-			getters.Add(typeof(bool), new BooleanValueGetter());
-			getters.Add(typeof(byte), new ByteValueGetter());
-			getters.Add(typeof(char), new CharValueGetter());
-			getters.Add(typeof(short), new Int16ValueGetter());
-			getters.Add(typeof(int), new Int32ValueGetter());
-			getters.Add(typeof(long), new Int64ValueGetter());
-			getters.Add(typeof(float), new SingleValueGetter());
-			getters.Add(typeof(double), new DoubleValueGetter());
-			getters.Add(typeof(decimal), new DecimalValueGetter());
-			getters.Add(typeof(DateTime), new DateTimeValueGetter());
-			getters.Add(typeof(Guid), new GuidValueGetter());
-			getters.Add(typeof(byte[]), new BytesValueGetter());
-
-			return getters;
+            return new Dictionary<Type, object>(15)
+            {
+                { typeof(string), new StringValueGetter() },
+                { typeof(bool), new BooleanValueGetter() },
+                { typeof(byte), new ByteValueGetter() },
+                { typeof(char), new CharValueGetter() },
+                { typeof(short), new Int16ValueGetter() },
+                { typeof(int), new Int32ValueGetter() },
+                { typeof(long), new Int64ValueGetter() },
+                { typeof(float), new SingleValueGetter() },
+                { typeof(double), new DoubleValueGetter() },
+                { typeof(decimal), new DecimalValueGetter() },
+                { typeof(DateTime), new DateTimeValueGetter() },
+                { typeof(Guid), new GuidValueGetter() },
+                { typeof(byte[]), new BytesValueGetter() }
+            };
 		}
 
 		#endregion

@@ -44,21 +44,15 @@ namespace TC.Data
 			return this;
 		}
 
-		/// <summary>Builds an <see cref="T:IRecordDescriptor"/> instance.</summary>
-		/// <returns>The created instance.</returns>
-		public IRecordDescriptor Build()
-		{
-			return new Descriptor(_fields);
-		}
+        /// <summary>Builds an <see cref="T:IRecordDescriptor"/> instance.</summary>
+        /// <returns>The created instance.</returns>
+        public IRecordDescriptor Build() => new Descriptor(_fields);
 
-		internal static IRecordDescriptor Copy(IRecordDescriptor metadata)
-		{
-			return new Descriptor(metadata);
-		}
+        internal static IRecordDescriptor Copy(IRecordDescriptor metadata) => new Descriptor(metadata);
 
-		#region inner type Field
+        #region inner type Field
 
-		private struct Field
+        private struct Field
 		{
 			public string Name;
 			public Type Type;
@@ -107,14 +101,11 @@ namespace TC.Data
 				}
 			}
 
-			#region IRecordDescriptor Members
+            #region IRecordDescriptor Members
 
-			int IRecordDescriptor.FieldCount
-			{
-				get { return _names.Length; }
-			}
+            int IRecordDescriptor.FieldCount => _names.Length;
 
-			string IRecordDescriptor.GetFieldName(int ordinal)
+            string IRecordDescriptor.GetFieldName(int ordinal)
 			{
 				VerifyOrdinal(ordinal);
 				return _names[ordinal];

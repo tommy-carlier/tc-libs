@@ -1,5 +1,5 @@
 // TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -18,20 +18,15 @@ namespace TC.WinForms.Animation
 		private static Control _invokeControl;
 		private static readonly AnimationThread _animationThread = new AnimationThread();
 
-		/// <summary>Initializes the <see cref="T:Animator"/> class.</summary>
-		/// <remarks>This method should be called on the UI-thread.</remarks>
-		[SuppressMessage(
-			"Microsoft.Performance",
-			"CA1804:RemoveUnusedLocals",
-			MessageId = "handle",
-			Justification = "The handle of _invokeControl has to be created, so the getter of the Handle property has to be called.")]
-		internal static void Initialize()
+        /// <summary>Initializes the <see cref="T:Animator"/> class.</summary>
+        /// <remarks>This method should be called on the UI-thread.</remarks>
+        internal static void Initialize()
 		{
 			if (_invokeControl == null)
 			{
 				_invokeControl = new Control();
-				IntPtr handle = _invokeControl.Handle;
-			}
+                _ = _invokeControl.Handle;
+            }
 		}
 
 		internal static void Perform(Action action)
@@ -442,10 +437,8 @@ namespace TC.WinForms.Animation
 					else
 					{
 						_runningAnimations.Remove(new RunningAnimationKey(_target, _propertySetter));
-
-						if (_callback != null)
-							_callback();
-					}
+                        _callback?.Invoke();
+                    }
 				}
 			}
 
@@ -522,26 +515,25 @@ namespace TC.WinForms.Animation
 					}
 
 					RunningAnimationKey key = new RunningAnimationKey(target, propertySetter);
-					Animation<TTarget, TValue> animation;
-					if (_runningAnimations.TryGetValue(key, out animation))
-						animation.Update(endValue, totalTicks, endTimeTicks, pulsationCount, callback);
-					else
-					{
-						animation
-							= new Animation<TTarget, TValue>(
-								propertySetter,
-								target,
-								interpolator,
-								startValue,
-								endValue,
-								totalTicks,
-								endTimeTicks,
-								pulsationCount,
-								callback);
-						_runningAnimations[key] = animation;
-						animation.PerformStep();
-					}
-				});
+                    if (_runningAnimations.TryGetValue(key, out Animation<TTarget, TValue> animation))
+                        animation.Update(endValue, totalTicks, endTimeTicks, pulsationCount, callback);
+                    else
+                    {
+                        animation
+                            = new Animation<TTarget, TValue>(
+                                propertySetter,
+                                target,
+                                interpolator,
+                                startValue,
+                                endValue,
+                                totalTicks,
+                                endTimeTicks,
+                                pulsationCount,
+                                callback);
+                        _runningAnimations[key] = animation;
+                        animation.PerformStep();
+                    }
+                });
 			}
 
 			#endregion

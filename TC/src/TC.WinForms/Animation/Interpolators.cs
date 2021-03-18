@@ -1,5 +1,5 @@
 // TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -47,16 +47,12 @@ namespace TC.WinForms.Animation
 			interpolators[typeof(T)] = interpolator;
 		}
 
-		#endregion
+        #endregion
 
-		/// <summary>Gets the default interpolator for the specified type T.</summary>
-		/// <typeparam name="T">The type of the values to interpolate.</typeparam>
-		/// <returns>The default interpolator for the specified type T, or null if no default interpolator exists for T.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type T is an important parameter and knowledge of generics is essential for using this function.")]
-		public static Interpolator<T> GetInterpolator<T>()
+        /// <summary>Gets the default interpolator for the specified type T.</summary>
+        /// <typeparam name="T">The type of the values to interpolate.</typeparam>
+        /// <returns>The default interpolator for the specified type T, or null if no default interpolator exists for T.</returns>
+        public static Interpolator<T> GetInterpolator<T>()
 		{
 			return _defaultInterpolators.GetValue(typeof(T)) as Interpolator<T>;
 		}

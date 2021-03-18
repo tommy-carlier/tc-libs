@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -12,13 +12,8 @@ using System.Windows.Forms;
 
 namespace TC.WinForms.Controls
 {
-	/// <summary>Represents a control for editing multi-line text.</summary>
-	[SuppressMessage(
-		"Microsoft.Naming",
-		"CA1702:CompoundWordsShouldBeCasedCorrectly",
-		MessageId = "PlainText",
-		Justification = "In this case, I mean 'plain text' and not 'plaintext' (which is a cryptographic term)")]
-	public class TPlainTextEditor : TTextEditor, IHasSystemFont
+    /// <summary>Represents a control for editing multi-line text.</summary>
+    public class TPlainTextEditor : TTextEditor, IHasSystemFont
 	{
 		/// <summary>Initializes a new instance of the <see cref="TPlainTextEditor"/> class.</summary>
 		public TPlainTextEditor()

@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -11,36 +11,31 @@ namespace TC
 	/// Base64 string values and back.</summary>
 	public static class ConvertBytes
 	{
-		#region ToDataString
+        #region ToDataString
 
-		/// <summary>Converts the specified array to a Base64 string.</summary>
-		/// <param name="value">The array to convert.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this byte[] value)
-		{
-			return ToDataString(value, Base64FormattingOptions.None);
-		}
+        /// <summary>Converts the specified array to a Base64 string.</summary>
+        /// <param name="value">The array to convert.</param>
+        /// <returns>The converted string.</returns>
+        public static string ToDataString(this byte[] value) => ToDataString(value, Base64FormattingOptions.None);
 
-		/// <summary>Converts the specified array to a Base64 string.</summary>
-		/// <param name="value">The array to convert.</param>
-		/// <param name="options">The <see cref="T:Base64FormattingOptions"/> to use.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this byte[] value, Base64FormattingOptions options)
-		{
-			return value.HasItems()
-				? Convert.ToBase64String(value, options)
-				: String.Empty;
-		}
+        /// <summary>Converts the specified array to a Base64 string.</summary>
+        /// <param name="value">The array to convert.</param>
+        /// <param name="options">The <see cref="T:Base64FormattingOptions"/> to use.</param>
+        /// <returns>The converted string.</returns>
+        public static string ToDataString(this byte[] value, Base64FormattingOptions options)
+			=> value.HasItems()
+                ? Convert.ToBase64String(value, options)
+                : String.Empty;
 
-		#endregion
+        #endregion
 
-		#region TryToBytes and ToBytes
+        #region TryToBytes and ToBytes
 
-		/// <summary>Converts the specified value to a <see cref="T:Byte"/> array.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <param name="result">A reference to the variable that receives the converted value, if the conversion succeeds.</param>
-		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
-		public static bool TryToBytes(this string value, out byte[] result)
+        /// <summary>Converts the specified value to a <see cref="T:Byte"/> array.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <param name="result">A reference to the variable that receives the converted value, if the conversion succeeds.</param>
+        /// <returns>If the conversion succeeds, true; otherwise, false.</returns>
+        public static bool TryToBytes(this string value, out byte[] result)
 		{
 			if (value.IsNotNullOrEmpty())
 				try
@@ -57,15 +52,11 @@ namespace TC
 			return false;
 		}
 
-		/// <summary>Converts the specified value to a <see cref="T:Byte"/> array.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <returns>The converted value; or null, if the conversion fails.</returns>
-		public static byte[] ToBytes(this string value)
-		{
-			byte[] result;
-			return TryToBytes(value, out result) ? result : null;
-		}
+        /// <summary>Converts the specified value to a <see cref="T:Byte"/> array.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted value; or null, if the conversion fails.</returns>
+        public static byte[] ToBytes(this string value) => TryToBytes(value, out byte[] result) ? result : null;
 
-		#endregion
-	}
+        #endregion
+    }
 }

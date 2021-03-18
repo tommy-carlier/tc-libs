@@ -35,10 +35,7 @@ namespace TC.Data.Internal.ValueGetters
 
 		protected virtual string GetStringValue(IDataRecord dataRecord, int ordinal)
 		{
-			object value = dataRecord.GetValue(ordinal);
-			return value != null
-				? value.ToString()
-				: null;
+			return dataRecord.GetValue(ordinal)?.ToString();
 		}
 	}
 }

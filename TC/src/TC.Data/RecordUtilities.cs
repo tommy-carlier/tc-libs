@@ -112,20 +112,16 @@ namespace TC.Data
 			return RecordMetadataBuilder.Copy(metadata);
 		}
 
-		#endregion
+        #endregion
 
-		#region IRecord extensions
+        #region IRecord extensions
 
-		/// <summary>Gets the value of the field with the specified name.</summary>
-		/// <typeparam name="TValue">The type of the value to get.</typeparam>
-		/// <param name="record">The <see cref="T:IRecord"/> to get a value of.</param>
-		/// <param name="name">The name of the field.</param>
-		/// <returns>The value of the field with the specified name.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		public static TValue GetValue<TValue>(this IRecord record, string name)
+        /// <summary>Gets the value of the field with the specified name.</summary>
+        /// <typeparam name="TValue">The type of the value to get.</typeparam>
+        /// <param name="record">The <see cref="T:IRecord"/> to get a value of.</param>
+        /// <param name="name">The name of the field.</param>
+        /// <returns>The value of the field with the specified name.</returns>
+        public static TValue GetValue<TValue>(this IRecord record, string name)
 		{
 			if (record == null) throw new ArgumentNullException("record");
 			return record.GetValue<TValue>(record.Descriptor.GetFieldOrdinal(name));
@@ -187,22 +183,18 @@ namespace TC.Data
 				record.SetNull(i);
 		}
 
-		#endregion
+        #endregion
 
-		#region IRecordReader extensions
+        #region IRecordReader extensions
 
-		#region ReadColumn
+        #region ReadColumn
 
-		/// <summary>Reads the values of the specified column.</summary>
-		/// <typeparam name="TValue">The type of the values to read.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <param name="columnOrdinal">The zero-based index of the column to read the values of.</param>
-		/// <returns>A collection with all the values of the specified column.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader, int columnOrdinal)
+        /// <summary>Reads the values of the specified column.</summary>
+        /// <typeparam name="TValue">The type of the values to read.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <param name="columnOrdinal">The zero-based index of the column to read the values of.</param>
+        /// <returns>A collection with all the values of the specified column.</returns>
+        public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader, int columnOrdinal)
 		{
 			if (reader == null) throw new ArgumentNullException("reader");
 			VerifyFieldOrdinal(reader, columnOrdinal, "columnOrdinal");
@@ -210,16 +202,12 @@ namespace TC.Data
 			return ReadColumnCore<TValue>(reader, columnOrdinal);
 		}
 
-		/// <summary>Reads the values of the specified column.</summary>
-		/// <typeparam name="TValue">The type of the values to read.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <param name="columnName">The name of the column to read the values of.</param>
-		/// <returns>A collection with all the values of the specified column.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader, string columnName)
+        /// <summary>Reads the values of the specified column.</summary>
+        /// <typeparam name="TValue">The type of the values to read.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <param name="columnName">The name of the column to read the values of.</param>
+        /// <returns>A collection with all the values of the specified column.</returns>
+        public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader, string columnName)
 		{
 			if (reader == null) throw new ArgumentNullException("reader");
 
@@ -228,15 +216,11 @@ namespace TC.Data
 				VerifyFieldNameAndGetOrdinal(reader, columnName, "columnName"));
 		}
 
-		/// <summary>Reads the values of the first column.</summary>
-		/// <typeparam name="TValue">The type of the values to read.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <returns>A collection with all the values of the first column.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader)
+        /// <summary>Reads the values of the first column.</summary>
+        /// <typeparam name="TValue">The type of the values to read.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <returns>A collection with all the values of the first column.</returns>
+        public static IEnumerable<TValue> ReadColumn<TValue>(this IRecordReader reader)
 		{
 			if (reader == null) throw new ArgumentNullException("reader");
 
@@ -252,26 +236,18 @@ namespace TC.Data
 				yield return reader.GetValue<TValue>(columnOrdinal);
 		}
 
-		#endregion
+        #endregion
 
-		#region ReadColumns
+        #region ReadColumns
 
-		/// <summary>Reads the values of the 2 specified columns.</summary>
-		/// <typeparam name="TKey">The type of the values of the key column.</typeparam>
-		/// <typeparam name="TValue">The type of the values of the value column.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <param name="keyColumnOrdinal">The zero-based index of the key column.</param>
-		/// <param name="valueColumnOrdinal">The zero-based index of the value column.</param>
-		/// <returns>A collection of pairs with all the values of the specified columns.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The types TKey and TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1006:DoNotNestGenericTypesInMemberSignatures",
-			Justification = "There is no other general way of returning a collection of pairs.")]
-		public static IEnumerable<KeyValuePair<TKey, TValue>>
+        /// <summary>Reads the values of the 2 specified columns.</summary>
+        /// <typeparam name="TKey">The type of the values of the key column.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the value column.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <param name="keyColumnOrdinal">The zero-based index of the key column.</param>
+        /// <param name="valueColumnOrdinal">The zero-based index of the value column.</param>
+        /// <returns>A collection of pairs with all the values of the specified columns.</returns>
+        public static IEnumerable<KeyValuePair<TKey, TValue>>
 			ReadColumns<TKey, TValue>(
 				this IRecordReader reader,
 				int keyColumnOrdinal,
@@ -284,22 +260,14 @@ namespace TC.Data
 			return ReadColumnsCore<TKey, TValue>(reader, keyColumnOrdinal, valueColumnOrdinal);
 		}
 
-		/// <summary>Reads the values of the 2 specified columns.</summary>
-		/// <typeparam name="TKey">The type of the values of the key column.</typeparam>
-		/// <typeparam name="TValue">The type of the values of the value column.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <param name="keyColumnName">The name of the key column.</param>
-		/// <param name="valueColumnName">The name of the value column.</param>
-		/// <returns>A collection of pairs with all the values of the specified columns.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The types TKey and TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1006:DoNotNestGenericTypesInMemberSignatures",
-			Justification = "There is no other general way of returning a collection of pairs.")]
-		public static IEnumerable<KeyValuePair<TKey, TValue>>
+        /// <summary>Reads the values of the 2 specified columns.</summary>
+        /// <typeparam name="TKey">The type of the values of the key column.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the value column.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <param name="keyColumnName">The name of the key column.</param>
+        /// <param name="valueColumnName">The name of the value column.</param>
+        /// <returns>A collection of pairs with all the values of the specified columns.</returns>
+        public static IEnumerable<KeyValuePair<TKey, TValue>>
 			ReadColumns<TKey, TValue>(
 				this IRecordReader reader,
 				string keyColumnName,
@@ -313,20 +281,12 @@ namespace TC.Data
 				VerifyFieldNameAndGetOrdinal(reader, valueColumnName, "valueColumnName"));
 		}
 
-		/// <summary>Reads the values of the first 2 columns.</summary>
-		/// <typeparam name="TKey">The type of the values of the first column.</typeparam>
-		/// <typeparam name="TValue">The type of the values of the second column.</typeparam>
-		/// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
-		/// <returns>A collection of pairs with all the values of the first 2 columns.</returns>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The types TKey and TValue is an important parameter and knowledge of generics is essential for using this function.")]
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1006:DoNotNestGenericTypesInMemberSignatures",
-			Justification = "There is no other general way of returning a collection of pairs.")]
-		public static IEnumerable<KeyValuePair<TKey, TValue>>
+        /// <summary>Reads the values of the first 2 columns.</summary>
+        /// <typeparam name="TKey">The type of the values of the first column.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the second column.</typeparam>
+        /// <param name="reader">The <see cref="T:IRecordReader"/> to read values of.</param>
+        /// <returns>A collection of pairs with all the values of the first 2 columns.</returns>
+        public static IEnumerable<KeyValuePair<TKey, TValue>>
 			ReadColumns<TKey, TValue>(
 				this IRecordReader reader)
 		{

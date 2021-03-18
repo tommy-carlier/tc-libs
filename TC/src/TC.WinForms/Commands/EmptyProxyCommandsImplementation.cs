@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -13,16 +13,8 @@ namespace TC.WinForms.Commands
 	{
 		private EmptyProxyCommandsImplementation() { }
 
-		/// <summary>Gets the instance of the <see cref="T:EmptyProxyCommandsImplementation{TCommandIdentifier}"/>.</summary>
-		[SuppressMessage(
-			"Microsoft.Security",
-			"CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
-			Justification = "This class is an immutable singleton.")]
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1000:DoNotDeclareStaticMembersOnGenericTypes",
-			Justification = "I can't really see an obvious alternative design for this.")]
-		public static readonly EmptyProxyCommandsImplementation<TCommandIdentifier>
+        /// <summary>Gets the instance of the <see cref="T:EmptyProxyCommandsImplementation{TCommandIdentifier}"/>.</summary>
+        public static readonly EmptyProxyCommandsImplementation<TCommandIdentifier>
 			Instance = new EmptyProxyCommandsImplementation<TCommandIdentifier>();
 
 		#region IProxyCommandsImplementation<TCommandIdentifier> Members

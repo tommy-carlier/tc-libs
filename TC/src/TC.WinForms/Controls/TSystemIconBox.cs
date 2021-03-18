@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -159,8 +159,7 @@ namespace TC.WinForms.Controls
 
 		private Image CreateFormIconBitmap()
 		{
-			Form form = FindForm();
-			return form != null ? form.Icon.ToBitmap() : null;
+			return FindForm()?.Icon.ToBitmap();
 		}
 
 		/// <summary>Retrieves the size of a rectangular area into which a control can be fitted.</summary>

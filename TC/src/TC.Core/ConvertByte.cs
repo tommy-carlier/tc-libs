@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -12,33 +12,27 @@ namespace TC
 	/// culture-independent string values and back.</summary>
 	public static class ConvertByte
 	{
-		#region ToDataString
+        #region ToDataString
 
-		/// <summary>Converts the specified value to a culture-independent string.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this byte value)
-		{
-			return value.ToString(CultureInfo.InvariantCulture);
-		}
+        /// <summary>Converts the specified value to a culture-independent string.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted string.</returns>
+        public static string ToDataString(this byte value) => value.ToString(CultureInfo.InvariantCulture);
 
-		/// <summary>Converts the specified value to a culture-independent string.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <returns>The converted string.</returns>
-		public static string ToDataString(this byte? value)
-		{
-			return value.HasValue ? ToDataString(value.Value) : String.Empty;
-		}
+        /// <summary>Converts the specified value to a culture-independent string.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted string.</returns>
+        public static string ToDataString(this byte? value) => value.HasValue ? ToDataString(value.Value) : String.Empty;
 
-		#endregion
+        #endregion
 
-		#region TryToByte, ToByte and ToByteOrNull
+        #region TryToByte, ToByte and ToByteOrNull
 
-		/// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <param name="result">A reference to the variable that receives the converted value, if the conversion succeeds.</param>
-		/// <returns>If the conversion succeeds, true; otherwise, false.</returns>
-		public static bool TryToByte(this string value, out byte result)
+        /// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <param name="result">A reference to the variable that receives the converted value, if the conversion succeeds.</param>
+        /// <returns>If the conversion succeeds, true; otherwise, false.</returns>
+        public static bool TryToByte(this string value, out byte result)
 		{
 			if (value.IsNotNullOrEmpty())
 				return 
@@ -52,33 +46,24 @@ namespace TC
 			return false;
 		}
 
-		/// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <returns>The converted value; or 0, if the conversion fails.</returns>
-		public static byte ToByte(this string value)
-		{
-			return ToByte(value, 0);
-		}
+        /// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted value; or 0, if the conversion fails.</returns>
+        public static byte ToByte(this string value) => ToByte(value, 0);
 
-		/// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <param name="defaultValue">The default value to return if the conversion fails.</param>
-		/// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
-		public static byte ToByte(this string value, byte defaultValue)
-		{
-			byte result;
-			return TryToByte(value, out result) ? result : defaultValue;
-		}
+        /// <summary>Converts the specified value to a <see cref="T:Byte"/> value.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <param name="defaultValue">The default value to return if the conversion fails.</param>
+        /// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
+        public static byte ToByte(this string value, byte defaultValue)
+            => TryToByte(value, out byte result) ? result : defaultValue;
 
-		/// <summary>Converts the specified value to a nullable <see cref="T:Byte"/>.</summary>
-		/// <param name="value">The value to convert.</param>
-		/// <returns>The converted value; or null, if the conversion fails.</returns>
-		public static byte? ToByteOrNull(this string value)
-		{
-			byte result;
-			return TryToByte(value, out result) ? new byte?(result) : null;
-		}
+        /// <summary>Converts the specified value to a nullable <see cref="T:Byte"/>.</summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>The converted value; or null, if the conversion fails.</returns>
+        public static byte? ToByteOrNull(this string value)
+            => TryToByte(value, out byte result) ? new byte?(result) : null;
 
-		#endregion
-	}
+        #endregion
+    }
 }

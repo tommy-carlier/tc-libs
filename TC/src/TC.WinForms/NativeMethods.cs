@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -101,12 +101,10 @@ namespace TC.WinForms
 			public IntPtr lpPos;
 		}
 
-		internal static T PtrToStruct<T>(IntPtr ptr) where T : struct
-		{
-			return (T)Marshal.PtrToStructure(ptr, typeof(T));
-		}
+        internal static T PtrToStruct<T>(IntPtr ptr) where T : struct
+			=> (T)Marshal.PtrToStructure(ptr, typeof(T));
 
-		internal sealed class DeviceContext : IDisposable, IDeviceContext
+        internal sealed class DeviceContext : IDisposable, IDeviceContext
 		{
 			private readonly IntPtr _hWnd;
 			private Hdc _dc;
@@ -137,14 +135,9 @@ namespace TC.WinForms
 				}
 			}
 
-			#region IDeviceContext Members
+            #region IDeviceContext Members
 
-			[SuppressMessage(
-				"Microsoft.Reliability", 
-				"CA2001:AvoidCallingProblematicMethods", 
-				MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle",
-				Justification = "The IDeviceContext requires the HDC to be returned.")]
-			public IntPtr GetHdc()
+            public IntPtr GetHdc()
 			{
 				if (_dc == null)
 					_dc = new Hdc(_hWnd);
@@ -182,11 +175,8 @@ namespace TC.WinForms
 
 				private readonly IntPtr _hWnd;
 
-				protected override bool ReleaseHandle()
-				{
-					return ReleaseDC(_hWnd, handle) != 0;
-				}
-			}
+                protected override bool ReleaseHandle() => ReleaseDC(_hWnd, handle) != 0;
+            }
 
 			#endregion
 		}

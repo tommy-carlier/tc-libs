@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -66,18 +66,16 @@ namespace TC
 		/// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
 		public static int ToInt32(this string value, int defaultValue)
 		{
-			int result;
-			return TryToInt32(value, out result) ? result : defaultValue;
-		}
+            return TryToInt32(value, out int result) ? result : defaultValue;
+        }
 
 		/// <summary>Converts the specified value to a nullable <see cref="T:Int32"/>.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The converted value; or null, if the conversion fails.</returns>
 		public static int? ToInt32OrNull(this string value)
 		{
-			int result;
-			return TryToInt32(value, out result) ? new int?(result) : null;
-		}
+            return TryToInt32(value, out int result) ? new int?(result) : null;
+        }
 
 		#endregion
 	}

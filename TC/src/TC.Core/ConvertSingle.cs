@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -66,18 +66,16 @@ namespace TC
 		/// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
 		public static float ToSingle(this string value, float defaultValue)
 		{
-			float result;
-			return TryToSingle(value, out result) ? result : defaultValue;
-		}
+            return TryToSingle(value, out float result) ? result : defaultValue;
+        }
 
 		/// <summary>Converts the specified value to a nullable <see cref="T:Single"/>.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The converted value; or null, if the conversion fails.</returns>
 		public static float? ToSingleOrNull(this string value)
 		{
-			float result;
-			return TryToSingle(value, out result) ? new float?(result) : null;
-		}
+            return TryToSingle(value, out float result) ? new float?(result) : null;
+        }
 
 		#endregion
 	}

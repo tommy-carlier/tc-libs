@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -77,14 +77,9 @@ namespace TC.WinForms.Dialogs
 			}
 		}
 
-		/// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.OK"/>.</summary>
-		/// <value>The created <see cref="T:DialogResultButton"/>.</value>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1709:IdentifiersShouldBeCasedCorrectly",
-			MessageId = "OK",
-			Justification = "OK is not an acceptable term and should not be changed to 'Ok'.")]
-		public static DialogResultButton OK
+        /// <summary>Gets a <see cref="T:DialogResultButton"/> that represents <see cref="F:DialogResult.OK"/>.</summary>
+        /// <value>The created <see cref="T:DialogResultButton"/>.</value>
+        public static DialogResultButton OK
 		{
 			get { return new DialogResultButton(DialogResult.OK, "OK"); }
 		}

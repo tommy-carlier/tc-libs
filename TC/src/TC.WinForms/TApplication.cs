@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -24,17 +24,13 @@ namespace TC.WinForms
 		/// <summary>Initializes a new instance of the <see cref="TApplication"/> class.</summary>
 		public TApplication()
 		{
-			_aboutCommand = new SimpleActionCommand(ShowAboutDialog);
+			AboutCommand = new SimpleActionCommand(ShowAboutDialog);
 		}
 
-		/// <summary>Runs the current application.</summary>
-		/// <typeparam name="TApp">The type of the application.</typeparam>
-		/// <typeparam name="TMainForm">The type of the main form.</typeparam>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The types TApp and TMainForm are important parameters and knowledge of generics is essential for using this function.")]
-		public static void Run<TApp, TMainForm>()
+        /// <summary>Runs the current application.</summary>
+        /// <typeparam name="TApp">The type of the application.</typeparam>
+        /// <typeparam name="TMainForm">The type of the main form.</typeparam>
+        public static void Run<TApp, TMainForm>()
 			where TApp : TApplication, new()
 			where TMainForm : TForm, new()
 		{
@@ -45,10 +41,10 @@ namespace TC.WinForms
 			SetToolStripRenderer();
 			SystemEvents.UserPreferenceChanged += delegate { SetToolStripRenderer(); };
 
-			_current = new TApp();
+			Current = new TApp();
 			TMainForm form = new TMainForm();
 			form.Show();
-			Application.Run(_current);
+			Application.Run(Current);
 		}
 
 		private static void SetToolStripRenderer()
@@ -59,100 +55,53 @@ namespace TC.WinForms
 					: new TToolStripRenderer() as ToolStripRenderer;
 		}
 
-		/// <summary>Runs the current application.</summary>
-		/// <typeparam name="TMainForm">The type of the main form.</typeparam>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1004:GenericMethodsShouldProvideTypeParameter",
-			Justification = "The type TMainForm is an important parameter and knowledge of generics is essential for using this function.")]
-		public static void Run<TMainForm>() where TMainForm : TForm, new()
-		{
-			Run<TApplication, TMainForm>();
-		}
+        /// <summary>Runs the current application.</summary>
+        /// <typeparam name="TMainForm">The type of the main form.</typeparam>
+        public static void Run<TMainForm>() where TMainForm : TForm, new()
+            => Run<TApplication, TMainForm>();
 
-		private static TApplication _current = new TApplication();
+        /// <summary>Gets the current application.</summary>
+        /// <value>The current application.</value>
+        public static TApplication Current { get; private set; } = new TApplication();
 
-		/// <summary>Gets the current application.</summary>
-		/// <value>The current application.</value>
-		public static TApplication Current { get { return _current; } }
+        #region application information
 
-		#region application information
 
-		private static readonly Icon
-			_icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+        /// <summary>Gets the icon of the current application.</summary>
+        /// <value>The icon of the current application.</value>
+        public static Icon Icon { get; } = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
-		/// <summary>Gets the icon of the current application.</summary>
-		/// <value>The icon of the current application.</value>
-		public static Icon Icon { get { return _icon; } }
+        /// <summary>Gets the title of the application.</summary>
+        /// <value>The title of the application.</value>
+        public static string Title => GetEntryAssemblyFirstAttribute<AssemblyTitleAttribute>(false)?.Title ?? String.Empty;
 
-		/// <summary>Gets the title of the application.</summary>
-		/// <value>The title of the application.</value>
-		public static string Title
-		{
-			get
-			{
-				var attribute = GetEntryAssemblyFirstAttribute<AssemblyTitleAttribute>(false);
-				return attribute != null ? attribute.Title : String.Empty;
-			}
-		}
+        /// <summary>Gets the version of the application.</summary>
+        /// <value>The version of the application.</value>
+        public static Version Version => Assembly.GetEntryAssembly().GetName().Version;
 
-		/// <summary>Gets the version of the application.</summary>
-		/// <value>The version of the application.</value>
-		public static Version Version
-		{
-			get { return Assembly.GetEntryAssembly().GetName().Version; }
-		}
+        /// <summary>Gets the copyright information of the application.</summary>
+        /// <value>The copyright information of the application.</value>
+        public static string Copyright => GetEntryAssemblyFirstAttribute<AssemblyCopyrightAttribute>(false)?.Copyright ?? String.Empty;
 
-		/// <summary>Gets the copyright information of the application.</summary>
-		/// <value>The copyright information of the application.</value>
-		public static string Copyright
-		{
-			get
-			{
-				var attribute = GetEntryAssemblyFirstAttribute<AssemblyCopyrightAttribute>(false);
-				return attribute != null ? attribute.Copyright : String.Empty;
-			}
-		}
+        /// <summary>Gets the <see cref="T:Uri"/> of the official website of the application.</summary>
+        /// <value>The <see cref="T:Uri"/> of the official website of the application.</value>
+        public static Uri WebsiteUri => GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false)?.Uri;
 
-		/// <summary>Gets the <see cref="T:Uri"/> of the official website of the application.</summary>
-		/// <value>The <see cref="T:Uri"/> of the official website of the application.</value>
-		public static Uri WebsiteUri
-		{
-			get
-			{
-				var attribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
-				return attribute != null ? attribute.Uri : null;
-			}
-		}
+        /// <summary>Gets the title of address of the official website of the application.</summary>
+        /// <value>The title of address of the official website of the application.</value>
+        public static string WebsiteDisplayString => GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false)?.Title ?? String.Empty;
 
-		/// <summary>Gets the title of address of the official website of the application.</summary>
-		/// <value>The title of address of the official website of the application.</value>
-		public static string WebsiteDisplayString
-		{
-			get
-			{
-				var attribute = GetEntryAssemblyFirstAttribute<ApplicationWebsiteAttribute>(false);
-				return attribute != null ? attribute.Title : String.Empty;
-			}
-		}
+        private static TAttribute GetEntryAssemblyFirstAttribute<TAttribute>(bool inherit)
+            where TAttribute : Attribute
+			=> Assembly.GetEntryAssembly().GetFirstAttribute<TAttribute>(inherit);
 
-		private static TAttribute GetEntryAssemblyFirstAttribute<TAttribute>(bool inherit)
-			where TAttribute : Attribute
-		{
-			return Assembly
-				.GetEntryAssembly()
-				.GetFirstAttribute<TAttribute>(inherit);
-		}
+        #endregion
 
-		#endregion
+        /// <summary>Gets the command to show information about the current application.</summary>
+        /// <value>The command to show information about the current application.</value>
+        public ICommand AboutCommand { get; }
 
-		private readonly ICommand _aboutCommand;
-
-		/// <summary>Gets the command to show information about the current application.</summary>
-		/// <value>The command to show information about the current application.</value>
-		public ICommand AboutCommand { get { return _aboutCommand; } }
-
-		private void ShowAboutDialog()
+        private void ShowAboutDialog()
 		{
 			using (var dialog = new TDialog<TAboutDialogContentControl>())
 				dialog.ShowDialog(Form.ActiveForm);

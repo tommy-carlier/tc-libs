@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -16,11 +16,7 @@ namespace TC.WinForms
 	/// <summary>Provides utilities that deal with fonts.</summary>
 	public static class FontUtilities
 	{
-		[SuppressMessage(
-			"Microsoft.Performance",
-			"CA1810:InitializeReferenceTypeStaticFieldsInline",
-			Justification = "There is additional logic beyond simple static field initialization.")]
-		static FontUtilities()
+        static FontUtilities()
 		{
 			InitializeFontFamiliesByFontName();
 			InitializeSystemFonts();
@@ -53,32 +49,28 @@ namespace TC.WinForms
 				_fontFamiliesByFontName[fontFamily.Name] = fontFamily;
 		}
 
-		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with the specified name.</summary>
-		/// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name,
-		/// or null if the specified font cannot be found.</returns>
-		public static FontFamily GetFontFamily(string fontName)
-		{
-			return fontName.IsNotNullOrEmpty()
-				? _fontFamiliesByFontName.GetValue(fontName)
-				: null;
-		}
+        /// <summary>Gets the <see cref="T:FontFamily"/> of the font with the specified name.</summary>
+        /// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
+        /// <returns>The <see cref="T:FontFamily"/> of the font with the specified name,
+        /// or null if the specified font cannot be found.</returns>
+        public static FontFamily GetFontFamily(string fontName)
+			=> fontName.IsNotNullOrEmpty()
+                ? _fontFamiliesByFontName.GetValue(fontName)
+                : null;
 
-		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
-		/// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
-		/// <param name="alternativeFontName">The name of the alternative font to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or the alternative font,
-		/// or null if none of the specified fonts can be found.</returns>
-		public static FontFamily GetFontFamily(string fontName, string alternativeFontName)
-		{
-			return GetFontFamily(fontName) ?? GetFontFamily(alternativeFontName);
-		}
+        /// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
+        /// <param name="fontName">The name of the font to get the <see cref="T:FontFamily"/> of.</param>
+        /// <param name="alternativeFontName">The name of the alternative font to get the <see cref="T:FontFamily"/> of.</param>
+        /// <returns>The <see cref="T:FontFamily"/> of the font with the specified name, or the alternative font,
+        /// or null if none of the specified fonts can be found.</returns>
+        public static FontFamily GetFontFamily(string fontName, string alternativeFontName)
+			=> GetFontFamily(fontName) ?? GetFontFamily(alternativeFontName);
 
-		/// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
-		/// <param name="fontNames">The names of the possible fonts to get the <see cref="T:FontFamily"/> of.</param>
-		/// <returns>The <see cref="T:FontFamily"/> of the first font with one of the specified names,
-		/// or null if none of the specified fonts can be found.</returns>
-		public static FontFamily GetFontFamily(params string[] fontNames)
+        /// <summary>Gets the <see cref="T:FontFamily"/> of the font with one of the specified names.</summary>
+        /// <param name="fontNames">The names of the possible fonts to get the <see cref="T:FontFamily"/> of.</param>
+        /// <returns>The <see cref="T:FontFamily"/> of the first font with one of the specified names,
+        /// or null if none of the specified fonts can be found.</returns>
+        public static FontFamily GetFontFamily(params string[] fontNames)
 		{
 			FontFamily fontFamily;
 			foreach (string fontName in fontNames)
@@ -141,14 +133,11 @@ namespace TC.WinForms
 						FontStyle.Regular);
 		}
 
-		/// <summary>Converts the specified <see cref="T:SystemFont"/> to a <see cref="T:Font"/>.</summary>
-		/// <param name="systemFont">The <see cref="T:SystemFont"/> to convert.</param>
-		/// <returns>The <see cref="T:Font"/> that represents the specified <see cref="T:SystemFont"/>.</returns>
-		public static Font ToFont(this SystemFont systemFont)
-		{
-			return _systemFonts.GetValue(systemFont, SystemFonts.DefaultFont);
-		}
+        /// <summary>Converts the specified <see cref="T:SystemFont"/> to a <see cref="T:Font"/>.</summary>
+        /// <param name="systemFont">The <see cref="T:SystemFont"/> to convert.</param>
+        /// <returns>The <see cref="T:Font"/> that represents the specified <see cref="T:SystemFont"/>.</returns>
+        public static Font ToFont(this SystemFont systemFont) => _systemFonts.GetValue(systemFont, SystemFonts.DefaultFont);
 
-		#endregion
-	}
+        #endregion
+    }
 }

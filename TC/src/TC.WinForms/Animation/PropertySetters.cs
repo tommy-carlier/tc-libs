@@ -1,5 +1,5 @@
 // TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -34,8 +34,7 @@ namespace TC.WinForms.Animation
 		private static PropertySetter<TTarget, TValue> CreatePropertySetter(string propertyName)
 		{
 			Type type = typeof(TTarget);
-			PropertyInfo property = type.GetProperty(propertyName);
-			MethodInfo setMethod = property != null ? property.GetSetMethod(true) : null;
+			MethodInfo setMethod = type.GetProperty(propertyName)?.GetSetMethod(true);
 
 			return setMethod != null
 				? Delegate.CreateDelegate(

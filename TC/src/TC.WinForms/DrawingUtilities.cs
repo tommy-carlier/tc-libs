@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -57,10 +57,11 @@ namespace TC.WinForms
 
 		private static Blend CreateShinyVerticalGradientBrushBlend()
 		{
-			Blend blend = new Blend();
-			blend.Factors = new float[] { 0, 0.4F, 0.8F, 1 };
-			blend.Positions = new float[] { 0, 0.4F, 0.5F, 1 };
-			return blend;
+            return new Blend
+            {
+                Factors = new float[] { 0, 0.4F, 0.8F, 1 },
+                Positions = new float[] { 0, 0.4F, 0.5F, 1 }
+            };
 		}
 
 		#endregion
@@ -100,9 +101,11 @@ namespace TC.WinForms
 			Color centerColor,
 			LinearGradientMode mode)
 		{
-			LinearGradientBrush brush = new LinearGradientBrush(bounds, edgeColor, centerColor, mode);
-			brush.WrapMode = WrapMode.TileFlipXY;
-			brush.SetSigmaBellShape(0.5F, 1F);
+            LinearGradientBrush brush = new LinearGradientBrush(bounds, edgeColor, centerColor, mode)
+            {
+                WrapMode = WrapMode.TileFlipXY
+            };
+            brush.SetSigmaBellShape(0.5F, 1F);
 			return brush;
 		}
 
@@ -124,18 +127,14 @@ namespace TC.WinForms
 				radius);
 		}
 
-		/// <summary>Creates a <see cref="T:GraphicsPath"/> that represents a rounded rectangle.</summary>
-		/// <param name="x">The X-coordinate of the upper-left corner of the rectangle.</param>
-		/// <param name="y">The y-coordinate of the upper-left corner of the rectangle.</param>
-		/// <param name="width">The width of the rectangle.</param>
-		/// <param name="height">The height of the rectangle.</param>
-		/// <param name="radius">The radius of the corners.</param>
-		/// <returns>The created <see cref="T:GraphicsPath"/>.</returns>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1704:IdentifiersShouldBeSpelledCorrectly",
-			Justification = "x and y are valid identifiers in this context.")]
-		public static GraphicsPath CreateRoundedRectanglePath(int x, int y, int width, int height, int radius)
+        /// <summary>Creates a <see cref="T:GraphicsPath"/> that represents a rounded rectangle.</summary>
+        /// <param name="x">The X-coordinate of the upper-left corner of the rectangle.</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the rectangle.</param>
+        /// <param name="width">The width of the rectangle.</param>
+        /// <param name="height">The height of the rectangle.</param>
+        /// <param name="radius">The radius of the corners.</param>
+        /// <returns>The created <see cref="T:GraphicsPath"/>.</returns>
+        public static GraphicsPath CreateRoundedRectanglePath(int x, int y, int width, int height, int radius)
 		{
 			if (radius < 0)
 				throw new ArgumentOutOfRangeException("radius", "radius cannot be negative");
@@ -230,25 +229,23 @@ namespace TC.WinForms
 				attributes);
 		}
 
-		/// <summary>Gets the average of 2 colors.</summary>
-		/// <param name="color1">The first color.</param>
-		/// <param name="color2">The second color.</param>
-		/// <returns>The average of the 2 specified colors.</returns>
-		public static Color GetAverageColor(Color color1, Color color2)
-		{
-			return Color.FromArgb(
-				(color1.A + color2.A) / 2,
-				(color1.R + color2.R) / 2,
-				(color1.G + color2.G) / 2,
-				(color1.B + color2.B) / 2);
-		}
+        /// <summary>Gets the average of 2 colors.</summary>
+        /// <param name="color1">The first color.</param>
+        /// <param name="color2">The second color.</param>
+        /// <returns>The average of the 2 specified colors.</returns>
+        public static Color GetAverageColor(Color color1, Color color2)
+			=> Color.FromArgb(
+                (color1.A + color2.A) / 2,
+                (color1.R + color2.R) / 2,
+                (color1.G + color2.G) / 2,
+                (color1.B + color2.B) / 2);
 
-		/// <summary>Mixes the specified colors.</summary>
-		/// <param name="color1">The first color.</param>
-		/// <param name="color2">The second color.</param>
-		/// <param name="color1Percentage">The percentage of the first color to use (between 0.0 and 1.0).</param>
-		/// <returns>The mixed color.</returns>
-		public static Color MixColors(Color color1, Color color2, double color1Percentage)
+        /// <summary>Mixes the specified colors.</summary>
+        /// <param name="color1">The first color.</param>
+        /// <param name="color2">The second color.</param>
+        /// <param name="color1Percentage">The percentage of the first color to use (between 0.0 and 1.0).</param>
+        /// <returns>The mixed color.</returns>
+        public static Color MixColors(Color color1, Color color2, double color1Percentage)
 		{
 			if (color1Percentage <= 0.0) return color2;
 			if (color1Percentage >= 1.0) return color1;
@@ -262,9 +259,6 @@ namespace TC.WinForms
 				RoundColorComponent((color1.B * color1Percentage) + (color2.B * color2Percentage)));
 		}
 
-		private static int RoundColorComponent(double value)
-		{
-			return (int)Math.Round(value, MidpointRounding.AwayFromZero);
-		}
-	}
+        private static int RoundColorComponent(double value) => (int)Math.Round(value, MidpointRounding.AwayFromZero);
+    }
 }

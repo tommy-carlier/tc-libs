@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -11,12 +11,8 @@ using TC.WinForms.Commands;
 
 namespace TC.WinForms.Controls
 {
-	/// <summary>Represents a <see cref="T:Button"/> control that can execute a <see cref="T:ICommand"/>.</summary>
-	[SuppressMessage(
-		"Microsoft.Design",
-		"CA1063:ImplementIDisposableCorrectly",
-		Justification = "IDisposable is already implemented.")]
-	[DefaultProperty("Command")]
+    /// <summary>Represents a <see cref="T:Button"/> control that can execute a <see cref="T:ICommand"/>.</summary>
+    [DefaultProperty("Command")]
 	public class TCommandButton : TButton, ICommandControl
 	{
 		/// <summary>Initializes a new instance of the <see cref="TCommandButton"/> class.</summary>
@@ -63,33 +59,23 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCommandChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_commandChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _commandChanged, e);
+        }
 
-		#endregion
+        #endregion
 
-		#region ICommandControl Members
+        #region ICommandControl Members
 
-		/// <summary>Notifies the control that the bound command is enabled or disabled.</summary>
-		/// <param name="enabled">if set to <c>true</c> the control should be enabled, otherwise disabled.</param>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
-			Justification = "This method is called by CommandBinding and should never be called by derived classes.")]
-		void ICommandControl.SetCommandEnabled(bool enabled)
+        /// <summary>Notifies the control that the bound command is enabled or disabled.</summary>
+        /// <param name="enabled">if set to <c>true</c> the control should be enabled, otherwise disabled.</param>
+        void ICommandControl.SetCommandEnabled(bool enabled)
 		{
 			Enabled = enabled;
 		}
 
-		/// <summary>Occurs when the control is activated.</summary>
-		/// <remarks>When this event occurs, the bound command will be executed.</remarks>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1033:InterfaceMethodsShouldBeCallableByChildTypes",
-			Justification = "This event is used by CommandBinding and is a synonym of the Click-event.")]
-		event EventHandler ICommandControl.Activated
+        /// <summary>Occurs when the control is activated.</summary>
+        /// <remarks>When this event occurs, the bound command will be executed.</remarks>
+        event EventHandler ICommandControl.Activated
 		{
 			add { Click += value; }
 			remove { Click -= value; }

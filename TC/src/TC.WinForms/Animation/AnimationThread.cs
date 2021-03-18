@@ -1,8 +1,9 @@
 // TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -14,10 +15,12 @@ namespace TC.WinForms.Animation
 		{
 			_queue = new Queue<Action>();
 
-			_thread = new Thread(Run);
-			_thread.Name = "Animation Thread";
-			_thread.IsBackground = true;
-			_thread.Start();
+            _thread = new Thread(Run)
+            {
+                Name = "Animation Thread",
+                IsBackground = true
+            };
+            _thread.Start();
 		}
 
 		private readonly Thread _thread;

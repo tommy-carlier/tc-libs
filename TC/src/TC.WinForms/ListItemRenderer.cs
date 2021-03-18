@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -10,22 +10,15 @@ using System.Windows.Forms;
 
 namespace TC.WinForms
 {
-	/// <summary>Represents an object that can render items in list controls.</summary>
-	[SuppressMessage(
-		"Microsoft.Naming",
-		"CA1704:IdentifiersShouldBeSpelledCorrectly",
-		MessageId = "Renderer",
-		Justification = "Renderer is a term that describes an object that handles visual rendering.")]
-	public class ListItemRenderer
+    /// <summary>Represents an object that can render items in list controls.</summary>
+    public class ListItemRenderer
 	{
 		/// <summary>Initializes a new instance of the <see cref="ListItemRenderer"/> class.</summary>
 		/// <param name="control">The control that owns this renderer.</param>
 		/// <param name="defaultImage">The default image for each item.</param>
 		public ListItemRenderer(ListControl control, Image defaultImage)
 		{
-			if (control == null) throw new ArgumentNullException("control");
-
-			_control = control;
+            _control = control ?? throw new ArgumentNullException("control");
 			_defaultImage = defaultImage;
 		}
 
@@ -146,12 +139,10 @@ namespace TC.WinForms
 			else DrawSolidItemBackground(context);
 		}
 
-		private static bool IsSelected(DrawItemEventArgs context)
-		{
-			return (context.State & DrawItemState.Selected) == DrawItemState.Selected;
-		}
+        private static bool IsSelected(DrawItemEventArgs context)
+			=> (context.State & DrawItemState.Selected) == DrawItemState.Selected;
 
-		private static void DrawShinySelectedItemBackground(DrawItemEventArgs context)
+        private static void DrawShinySelectedItemBackground(DrawItemEventArgs context)
 		{
 			context.Graphics.DrawShinyVerticalGradient(
 				context.Bounds,
@@ -160,35 +151,23 @@ namespace TC.WinForms
 				SystemColors.Highlight);
 		}
 
-		private static Color CalculateShinySelectedItemLightColor()
-		{
-			return
-				DrawingUtilities.MixColors(
-					SystemColors.Highlight,
-					SystemColors.Window,
-					0.7);
-		}
+        private static Color CalculateShinySelectedItemLightColor()
+			=> DrawingUtilities.MixColors(SystemColors.Highlight, SystemColors.Window, 0.7);
 
-		private static void DrawSolidItemBackground(DrawItemEventArgs context)
+        private static void DrawSolidItemBackground(DrawItemEventArgs context)
 		{
 			using (SolidBrush brush = new SolidBrush(context.BackColor))
 				context.Graphics.FillRectangle(brush, context.Bounds);
 		}
 
-		/// <summary>Gets the text to display for the specified item.</summary>
-		/// <param name="item">The item to get the text representation of.</param>
-		/// <returns>The text to display for the specified item.</returns>
-		protected virtual string GetItemText(object item)
-		{
-			return _control.GetItemText(item);
-		}
+        /// <summary>Gets the text to display for the specified item.</summary>
+        /// <param name="item">The item to get the text representation of.</param>
+        /// <returns>The text to display for the specified item.</returns>
+        protected virtual string GetItemText(object item) => _control.GetItemText(item);
 
-		/// <summary>Gets the image to display for the specified item.</summary>
-		/// <param name="item">The item to get the display image of.</param>
-		/// <returns>The image to display for the specified item.</returns>
-		protected virtual Image GetItemImage(object item)
-		{
-			return null;
-		}
-	}
+        /// <summary>Gets the image to display for the specified item.</summary>
+        /// <param name="item">The item to get the display image of.</param>
+        /// <returns>The image to display for the specified item.</returns>
+        protected virtual Image GetItemImage(object item) => null;
+    }
 }

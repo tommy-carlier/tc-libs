@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -10,13 +10,8 @@ using System.Windows.Forms;
 
 namespace TC.WinForms
 {
-	/// <summary>Handles the painting of toolstrips.</summary>
-	[SuppressMessage(
-		"Microsoft.Naming",
-		"CA1704:IdentifiersShouldBeSpelledCorrectly",
-		MessageId = "Renderer",
-		Justification = "Renderer is a term that describes an object that handles visual rendering.")]
-	public class TToolStripRenderer : ToolStripProfessionalRenderer
+    /// <summary>Handles the painting of toolstrips.</summary>
+    public class TToolStripRenderer : ToolStripProfessionalRenderer
 	{
 		/// <summary>Initializes a new instance of the <see cref="TToolStripRenderer"/> class.</summary>
 		public TToolStripRenderer()
@@ -29,22 +24,23 @@ namespace TC.WinForms
 		/// <param name="e">A <see cref="T:ToolStripRenderEventArgs"/> that contains the event data.</param>
 		protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
 		{
-			if (e.ToolStrip is ToolStripDropDownMenu
-				|| e.ToolStrip is MenuStrip)
-			{
-				// Drop-down menus and menu strips are rendered by the base class
-				base.OnRenderToolStripBackground(e);
-			}
-			else
-			{
-				// ToolStrips are rendered as a shiny vertical gradient
-				e.Graphics.DrawShinyVerticalGradient(
-					new Rectangle(Point.Empty, e.ToolStrip.Size),
-					e.AffectedBounds,
-					ColorTable.ToolStripGradientBegin,
-					ColorTable.ToolStripGradientEnd);
-			}
-		}
+            switch (e.ToolStrip)
+            {
+                case ToolStripDropDownMenu _:
+                case MenuStrip _:
+                    // Drop-down menus and menu strips are rendered by the base class
+                    base.OnRenderToolStripBackground(e);
+                    break;
+                default:
+                    // ToolStrips are rendered as a shiny vertical gradient
+                    e.Graphics.DrawShinyVerticalGradient(
+                        new Rectangle(Point.Empty, e.ToolStrip.Size),
+                        e.AffectedBounds,
+                        ColorTable.ToolStripGradientBegin,
+                        ColorTable.ToolStripGradientEnd);
+                    break;
+            }
+        }
 
 		/// <summary>Renders the ToolStrip border.</summary>
 		/// <param name="e">A <see cref="T:ToolStripRenderEventArgs"/> that contains the event data.</param>
@@ -68,8 +64,8 @@ namespace TC.WinForms
 		{
 			// render a background only when the button is pressed or highlighted
 			ToolStripItemState state = GetState(e.Item);
-			if (state == ToolStripItemState.HighlightedButton
-				|| state == ToolStripItemState.PressedButton)
+			if (state == ToolStripItemState.HighlightedButton ||
+				state == ToolStripItemState.PressedButton)
 			{
 				Rectangle bounds = new Rectangle(Point.Empty, e.Item.Size);
 				bounds.Width -= 1;
@@ -110,15 +106,13 @@ namespace TC.WinForms
 			}
 		}
 
-		private static Brush CreateButtonBackgroundBrush(Rectangle bounds, Color color, int lightAlpha)
-		{
-			return DrawingUtilities.CreateShinyVerticalGradientBrush(
-				bounds, Color.FromArgb(lightAlpha, color), color);
-		}
+        private static Brush CreateButtonBackgroundBrush(Rectangle bounds, Color color, int lightAlpha)
+			=> DrawingUtilities.CreateShinyVerticalGradientBrush(
+                bounds, Color.FromArgb(lightAlpha, color), color);
 
-		/// <summary>Renders a menu-item background.</summary>
-		/// <param name="e">A <see cref="T:ToolStripItemRenderEventArgs"/> that contains the event data.</param>
-		protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+        /// <summary>Renders a menu-item background.</summary>
+        /// <param name="e">A <see cref="T:ToolStripItemRenderEventArgs"/> that contains the event data.</param>
+        protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
 		{
 			switch (GetState(e.Item))
 			{
@@ -184,47 +178,37 @@ namespace TC.WinForms
 		}
 
 		private static ToolStripItemState GetState(ToolStripItem item)
-		{
-			return item is ToolStripMenuItem
+			=> item is ToolStripMenuItem
 				? GetMenuItemState(item)
 				: GetButtonState(item);
-		}
 
 		private static ToolStripItemState GetMenuItemState(ToolStripItem item)
-		{
-			return item.Enabled
+			=> item.Enabled
 				? GetEnabledMenuItemState(item)
 				: ToolStripItemState.DisabledMenuItem;
-		}
 
-		private static ToolStripItemState GetEnabledMenuItemState(ToolStripItem item)
-		{
-			return item.Selected && !(item.Pressed && item.OwnerItem == null)
-				? ToolStripItemState.HighlightedMenuItem
-				: ToolStripItemState.NormalMenuItem;
-		}
+        private static ToolStripItemState GetEnabledMenuItemState(ToolStripItem item)
+			=> item.Selected && !(item.Pressed && item.OwnerItem == null)
+                ? ToolStripItemState.HighlightedMenuItem
+                : ToolStripItemState.NormalMenuItem;
 
-		private static ToolStripItemState GetButtonState(ToolStripItem item)
-		{
-			return item.Enabled
-				? GetEnabledButtonState(item)
-				: ToolStripItemState.DisabledButton;
-		}
+        private static ToolStripItemState GetButtonState(ToolStripItem item)
+			=> item.Enabled
+                ? GetEnabledButtonState(item)
+                : ToolStripItemState.DisabledButton;
 
-		private static ToolStripItemState GetEnabledButtonState(ToolStripItem item)
-		{
-			return item.Pressed
-				? ToolStripItemState.PressedButton
-				: item.Selected
-					? ToolStripItemState.HighlightedButton
-					: ToolStripItemState.NormalButton;
-		}
+        private static ToolStripItemState GetEnabledButtonState(ToolStripItem item)
+			=> item.Pressed
+                ? ToolStripItemState.PressedButton
+                : item.Selected
+                    ? ToolStripItemState.HighlightedButton
+                    : ToolStripItemState.NormalButton;
 
-		#endregion
+        #endregion
 
-		/// <summary>Renders an item image.</summary>
-		/// <param name="e">A <see cref="T:ToolStripItemImageRenderEventArgs"/> that contains the event data.</param>
-		protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
+        /// <summary>Renders an item image.</summary>
+        /// <param name="e">A <see cref="T:ToolStripItemImageRenderEventArgs"/> that contains the event data.</param>
+        protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
 		{
 			if (e.Image != null)
 			{

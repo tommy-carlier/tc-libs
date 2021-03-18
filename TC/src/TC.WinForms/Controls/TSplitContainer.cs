@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -24,9 +24,8 @@ namespace TC.WinForms.Controls
 
 		private void HandlerSplitterMoved(object sender, SplitterEventArgs e)
 		{
-			TForm form = FindForm() as TForm;
-			if (form != null) form.SaveSettings();
-		}
+            if (FindForm() is TForm form) form.SaveSettings();
+        }
 
 		/// <summary>Loads the settings of this control.</summary>
 		/// <param name="settings">The <see cref="T:SplitContainerSettings"/> to load from.</param>

@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -14,9 +14,7 @@ namespace TC.WinForms.Commands
 		/// <param name="control">The <see cref="T:ICommandControl"/> that can be bound to a <see cref="T:ICommand"/>.</param>
 		public CommandBinding(ICommandControl control)
 		{
-			if (control == null) throw new ArgumentNullException("control");
-
-			_control = control;
+            _control = control ?? throw new ArgumentNullException("control");
 			control.Activated += HandlerControlActivated;
 			control.Disposed += HandlerControlDisposed;
 			control.SetCommandEnabled(false);

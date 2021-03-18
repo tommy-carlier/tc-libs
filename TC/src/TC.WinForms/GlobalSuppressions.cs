@@ -1,5 +1,5 @@
 // TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -19,19 +19,19 @@ using System.Diagnostics.CodeAnalysis;
 	"Microsoft.Design",
 	"CA1020:AvoidNamespacesWithFewTypes",
 	Scope = "namespace",
-	Target = "TC.WinForms.Animation",
+	Target = "~N:TC.WinForms.Animation",
 	Justification = "TC.WinForms.Animation has few types but is considered a separate category.")]
 
 [assembly: SuppressMessage(
 	"Microsoft.Design",
 	"CA1020:AvoidNamespacesWithFewTypes",
 	Scope = "namespace",
-	Target = "TC.WinForms.Forms",
+	Target = "~N:TC.WinForms.Forms",
 	Justification = "TC.WinForms.Forms has few types but is considered a separate category.")]
 
 [assembly: SuppressMessage(
 	"Microsoft.Design",
 	"CA1020:AvoidNamespacesWithFewTypes",
 	Scope = "namespace",
-	Target = "TC.WinForms.Settings",
+	Target = "~N:TC.WinForms.Settings",
 	Justification = "TC.WinForms.Settings has few types but is considered a separate category.")]

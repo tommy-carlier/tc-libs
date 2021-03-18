@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -105,11 +105,9 @@ namespace TC.WinForms.Controls
 
 		private void CalculateNonClientSize(ref Message m)
 		{
-			NativeMethods.NCCALCSIZE_PARAMS parameters;
-			NativeMethods.RECT windowRect;
 
-			ExtractParamsAndWindowRect(ref m, out parameters, out windowRect);
-			var renderer = new VisualStyleRenderer(VisualStyleElement.TextBox.TextEdit.Normal);
+            ExtractParamsAndWindowRect(ref m, out NativeMethods.NCCALCSIZE_PARAMS parameters, out NativeMethods.RECT windowRect);
+            var renderer = new VisualStyleRenderer(VisualStyleElement.TextBox.TextEdit.Normal);
 
 			using (var deviceContext = new NativeMethods.DeviceContext(Handle))
 			{
@@ -156,9 +154,8 @@ namespace TC.WinForms.Controls
 		{
 			IntPtr handle = Handle;
 
-			NativeMethods.RECT windowRect;
-			NativeMethods.GetWindowRect(handle, out windowRect);
-			windowRect = new NativeMethods.RECT(
+            NativeMethods.GetWindowRect(handle, out NativeMethods.RECT windowRect);
+            windowRect = new NativeMethods.RECT(
 				0,
 				0,
 				windowRect.Right - windowRect.Left,
@@ -320,10 +317,8 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCurrentLineNumberChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_currentLineNumberChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _currentLineNumber, e);
+        }
 
 		#endregion
 
@@ -364,9 +359,7 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnCurrentColumnNumberChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_currentColumnNumberChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
+			this.TriggerEvent(Events, _currentColumnNumber, e);
 		}
 
 		#endregion

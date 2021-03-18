@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -24,10 +24,12 @@ namespace TC.WinForms.Controls
 		{
 			_reloadSelectedNodeCommand = new SimpleActionCommand(ReloadSelectedNode);
 
-			ImageList icons = new ImageList();
-			icons.ImageSize = new Size(16, 16);
-			icons.ColorDepth = ColorDepth.Depth32Bit;
-			icons.Images.Add("_LoadingTreeNode", LoadingTreeNodeIcon);
+            ImageList icons = new ImageList
+            {
+                ImageSize = new Size(16, 16),
+                ColorDepth = ColorDepth.Depth32Bit
+            };
+            icons.Images.Add("_LoadingTreeNode", LoadingTreeNodeIcon);
 			InitializeIcons(icons);
 			ImageList = icons;
 
@@ -182,18 +184,17 @@ namespace TC.WinForms.Controls
 		/// <summary>Reloads the child nodes of the selected node.</summary>
 		public void ReloadSelectedNode()
 		{
-			TTreeNode node = SelectedNode as TTreeNode;
-			if (node != null && node.HasChildNodes)
-			{
-				bool expand = node.IsExpanded;
-				BeginUpdate();
-				node.Nodes.Clear();
-				node.Nodes.Add(new LoadingTreeNode());
-				node.Collapse();
-				EndUpdate();
-				if (expand) node.Expand();
-			}
-		}
+            if (SelectedNode is TTreeNode node && node.HasChildNodes)
+            {
+                bool expand = node.IsExpanded;
+                BeginUpdate();
+                node.Nodes.Clear();
+                node.Nodes.Add(new LoadingTreeNode());
+                node.Collapse();
+                EndUpdate();
+                if (expand) node.Expand();
+            }
+        }
 
 		#endregion
 
@@ -204,50 +205,47 @@ namespace TC.WinForms.Controls
 		protected override void OnAfterExpand(TreeViewEventArgs e)
 		{
 			base.OnAfterExpand(e);
-			TTreeNode node = e.Node as TTreeNode;
-			if (node != null && node.Nodes.Count == 1 && node.Nodes[0] is LoadingTreeNode)
-				ThreadPool.QueueUserWorkItem(delegate
-				{
-					try
-					{
-						TTreeNode[] childNodes = node.LoadChildNodesInternal();
-						if (IsHandleCreated)
-							this.InvokeAsync(nodes => LoadNodes(node.Nodes, nodes), childNodes);
-					}
-					catch (Exception exception)
-					{
-						if (exception.IsCritical()) throw;
-						else if (IsHandleCreated)
-						{
-							this.InvokeAsync(node.Collapse);
-							this.InvokeAsync(TMessageDialog.ShowError, this, exception);
-						}
-					}
-				});
-		}
+            if (e.Node is TTreeNode node && node.Nodes.Count == 1 && node.Nodes[0] is LoadingTreeNode)
+                ThreadPool.QueueUserWorkItem(delegate
+                {
+                    try
+                    {
+                        TTreeNode[] childNodes = node.LoadChildNodesInternal();
+                        if (IsHandleCreated)
+                            this.InvokeAsync(nodes => LoadNodes(node.Nodes, nodes), childNodes);
+                    }
+                    catch (Exception exception)
+                    {
+                        if (exception.IsCritical()) throw;
+                        else if (IsHandleCreated)
+                        {
+                            this.InvokeAsync(node.Collapse);
+                            this.InvokeAsync(TMessageDialog.ShowError, this, exception);
+                        }
+                    }
+                });
+        }
 
 		/// <summary>Raises the <see cref="E:ItemDrag"/> event.</summary>
 		/// <param name="e">An <see cref="T:ItemDragEventArgs"/> that contains the event data.</param>
 		protected override void OnItemDrag(ItemDragEventArgs e)
 		{
 			base.OnItemDrag(e);
-			TTreeNode node = e.Item as TTreeNode;
-			if (node != null)
-			{
-				SelectedNode = node;
-				node.RaiseDrag(e);
-			}
-		}
+            if (e.Item is TTreeNode node)
+            {
+                SelectedNode = node;
+                node.RaiseDrag(e);
+            }
+        }
 
 		/// <summary>Raises the <see cref="E:NodeMouseDoubleClick"/> event.</summary>
 		/// <param name="e">A <see cref="T:TreeNodeMouseClickEventArgs"/> that contains the event data.</param>
 		protected override void OnNodeMouseDoubleClick(TreeNodeMouseClickEventArgs e)
 		{
 			base.OnNodeMouseDoubleClick(e);
-			TTreeNode node = e.Node as TTreeNode;
-			if (node != null && e.Button == MouseButtons.Left)
-				node.RaiseDoubleClick(e);
-		}
+            if (e.Node is TTreeNode node && e.Button == MouseButtons.Left)
+                node.RaiseDoubleClick(e);
+        }
 
 		/// <summary>Raises the <see cref="E:NodeMouseClick"/> event.</summary>
 		/// <param name="e">A <see cref="T:TreeNodeMouseClickEventArgs"/> that contains the event data.</param>
@@ -256,20 +254,19 @@ namespace TC.WinForms.Controls
 			base.OnNodeMouseClick(e);
 			if (e.Button == MouseButtons.Right)
 			{
-				TTreeNode node = e.Node as TTreeNode;
-				if (node != null)
-				{
-					SelectedNode = node;
-					ContextMenuStrip contextMenu = new ContextMenuStrip();
-					node.InitializeContextMenuInternal(contextMenu);
-					if (contextMenu.Items.HasItems())
-					{
-						contextMenu.Closed += delegate { this.InvokeAsync(contextMenu.Dispose); };
-						contextMenu.Show(this, e.Location);
-					}
-					else contextMenu.Dispose();
-				}
-			}
+                if (e.Node is TTreeNode node)
+                {
+                    SelectedNode = node;
+                    ContextMenuStrip contextMenu = new ContextMenuStrip();
+                    node.InitializeContextMenuInternal(contextMenu);
+                    if (contextMenu.Items.HasItems())
+                    {
+                        contextMenu.Closed += delegate { this.InvokeAsync(contextMenu.Dispose); };
+                        contextMenu.Show(this, e.Location);
+                    }
+                    else contextMenu.Dispose();
+                }
+            }
 		}
 
 		#endregion

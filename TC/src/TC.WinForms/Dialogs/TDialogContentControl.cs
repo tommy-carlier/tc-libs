@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -172,8 +172,7 @@ namespace TC.WinForms.Dialogs
 		/// <param name="callback">The callback function that has to be called when the action is performed.</param>
 		public virtual void PerformDialogResultAction(DialogResult dialogResult, Action<DialogResult> callback)
 		{
-			if (callback != null)
-				callback(dialogResult);
-		}
+            callback?.Invoke(dialogResult);
+        }
 	}
 }

@@ -20,13 +20,9 @@ namespace TC.Data
 		/// <value>A collection with all the keys.</value>
 		IEnumerable<string> Keys { get; }
 
-		/// <summary>Gets the properties.</summary>
-		/// <value>A collection with all the properties.</value>
-		[SuppressMessage(
-			"Microsoft.Design",
-			"CA1006:DoNotNestGenericTypesInMemberSignatures",
-			Justification = "There is no other general way of returning a collection of properties.")]
-		IEnumerable<KeyValuePair<string, string>> Properties { get; }
+        /// <summary>Gets the properties.</summary>
+        /// <value>A collection with all the properties.</value>
+        IEnumerable<KeyValuePair<string, string>> Properties { get; }
 
 		/// <summary>Gets the number of properties.</summary>
 		/// <value>The number of properties.</value>

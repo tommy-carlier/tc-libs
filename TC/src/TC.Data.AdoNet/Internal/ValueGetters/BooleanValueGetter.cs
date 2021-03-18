@@ -1,5 +1,5 @@
 ﻿// TC Data ADO.NET Bridge
-// Copyright © 2009-2015 Tommy Carlier
+// Copyright © 2009-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 

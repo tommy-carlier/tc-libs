@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -30,13 +30,9 @@ namespace TC.WinForms.Controls
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Collection<ApplicationCommand> Commands { get { return _commands; } }
 
-		/// <summary>Gets the command to display information about the current application.</summary>
-		/// <value>The command to display information about the current application.</value>
-		[SuppressMessage(
-			"Microsoft.Performance",
-			"CA1822:MarkMembersAsStatic",
-			Justification = "This property is only used to make the TApplication.Current.AboutCommand available in the visual designer.")]
-		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+        /// <summary>Gets the command to display information about the current application.</summary>
+        /// <value>The command to display information about the current application.</value>
+        [EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ICommand ApplicationAboutCommand { get { return TApplication.Current.AboutCommand; } }
 

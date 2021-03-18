@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -60,26 +60,16 @@ namespace TC.WinForms.Controls
 
 		private ListItemRenderer _itemRenderer;
 
-		/// <summary>Gets the <see cref="T:ListItemRenderer"/> that renders the items of this control.</summary>
-		/// <value>The <see cref="T:ListItemRenderer"/> that renders the items of this control.</value>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1704:IdentifiersShouldBeSpelledCorrectly",
-			MessageId = "Renderer",
-			Justification = "Renderer is a term that describes an object that handles visual rendering.")]
-		protected ListItemRenderer ItemRenderer
+        /// <summary>Gets the <see cref="T:ListItemRenderer"/> that renders the items of this control.</summary>
+        /// <value>The <see cref="T:ListItemRenderer"/> that renders the items of this control.</value>
+        protected ListItemRenderer ItemRenderer
 		{
 			get { return _itemRenderer ?? (_itemRenderer = CreateItemRenderer()); }
 		}
 
-		/// <summary>Creates a <see cref="T:ListItemRenderer"/> that will render the items of this control.</summary>
-		/// <returns>The created <see cref="T:ListItemRenderer"/>.</returns>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1704:IdentifiersShouldBeSpelledCorrectly",
-			MessageId = "Renderer",
-			Justification = "Renderer is a term that describes an object that handles visual rendering.")]
-		protected virtual ListItemRenderer CreateItemRenderer()
+        /// <summary>Creates a <see cref="T:ListItemRenderer"/> that will render the items of this control.</summary>
+        /// <returns>The created <see cref="T:ListItemRenderer"/>.</returns>
+        protected virtual ListItemRenderer CreateItemRenderer()
 		{
 			return new ListItemRenderer(this, null);
 		}

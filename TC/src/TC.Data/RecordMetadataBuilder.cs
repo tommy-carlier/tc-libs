@@ -26,47 +26,35 @@ namespace TC.Data
 		/// <param name="key">The key of the property to get or set the value of.</param>
 		/// <value>The value of the specified property, or null if no property exists with the specified key.</value>
 		public string this[string key]
-		{
-			get
-			{
-				if (key == null) throw new ArgumentNullException("key");
-				return _properties.GetValue(key);
-			}
+        {
+            get => key == null ? throw new ArgumentNullException("key") : _properties.GetValue(key);
+            set
+            {
+                if (key == null) throw new ArgumentNullException("key");
+                if (value != null)
+                    _properties[key] = value;
+                else _properties.Remove(key);
+            }
+        }
 
-			set
-			{
-				if (key == null) throw new ArgumentNullException("key");
-				if (value != null)
-					_properties[key] = value;
-				else _properties.Remove(key);
-			}
-		}
+        /// <summary>Removes the property with the specified key.</summary>
+        /// <param name="key">The key of the property to remove.</param>
+        /// <returns>If the property was successfully removed, true; otherwise, false.</returns>
+        /// <remarks>Also returns false if no property exists with the specified key.</remarks>
+        public bool Remove(string key)
+			=> key == null 
+				? throw new ArgumentNullException("key") 
+				: _properties.Remove(key);
 
-		/// <summary>Removes the property with the specified key.</summary>
-		/// <param name="key">The key of the property to remove.</param>
-		/// <returns>If the property was successfully removed, true; otherwise, false.</returns>
-		/// <remarks>Also returns false if no property exists with the specified key.</remarks>
-		public bool Remove(string key)
-		{
-			if (key == null) throw new ArgumentNullException("key");
-			return _properties.Remove(key);
-		}
+        /// <summary>Builds an <see cref="T:IRecordMetadata"/> instance.</summary>
+        /// <returns>The created instance.</returns>
+        public IRecordMetadata Build() => new Metadata(_properties);
 
-		/// <summary>Builds an <see cref="T:IRecordMetadata"/> instance.</summary>
-		/// <returns>The created instance.</returns>
-		public IRecordMetadata Build()
-		{
-			return new Metadata(_properties);
-		}
+        internal static IRecordMetadata Copy(IRecordMetadata metadata) => new Metadata(metadata);
 
-		internal static IRecordMetadata Copy(IRecordMetadata metadata)
-		{
-			return new Metadata(metadata);
-		}
+        #region inner type Metadata
 
-		#region inner type Metadata
-
-		private sealed class Metadata : IRecordMetadata
+        private sealed class Metadata : IRecordMetadata
 		{
 			private readonly IDictionary<string, string> _properties;
 
@@ -82,34 +70,21 @@ namespace TC.Data
 					_properties[property.Key] = property.Value;
 			}
 
-			#region IRecordMetadata Members
+            #region IRecordMetadata Members
 
-			string IRecordMetadata.this[string key]
-			{
-				get
-				{
-					if (key == null) throw new ArgumentNullException("key");
-					return _properties.GetValue(key);
-				}
-			}
+            string IRecordMetadata.this[string key]
+				=> key == null 
+					? throw new ArgumentNullException("key") 
+					: _properties.GetValue(key);
 
-			IEnumerable<string> IRecordMetadata.Keys
-			{
-				get { return _properties.Keys; }
-			}
+            IEnumerable<string> IRecordMetadata.Keys => _properties.Keys;
 
-			IEnumerable<KVP> IRecordMetadata.Properties
-			{
-				get { return _properties; }
-			}
+            IEnumerable<KVP> IRecordMetadata.Properties => _properties;
 
-			int IRecordMetadata.Count
-			{
-				get { return _properties.Count; }
-			}
+            int IRecordMetadata.Count => _properties.Count;
 
-			#endregion
-		}
+            #endregion
+        }
 
 		#endregion
 	}

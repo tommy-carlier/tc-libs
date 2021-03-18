@@ -1,5 +1,5 @@
 ﻿// TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -66,18 +66,16 @@ namespace TC
 		/// <returns>The converted value; or <paramref name="defaultValue"/>, if the conversion fails.</returns>
 		public static double ToDouble(this string value, double defaultValue)
 		{
-			double result;
-			return TryToDouble(value, out result) ? result : defaultValue;
-		}
+            return TryToDouble(value, out double result) ? result : defaultValue;
+        }
 
 		/// <summary>Converts the specified value to a nullable <see cref="T:Double"/>.</summary>
 		/// <param name="value">The value to convert.</param>
 		/// <returns>The converted value; or null, if the conversion fails.</returns>
 		public static double? ToDoubleOrNull(this string value)
 		{
-			double result;
-			return TryToDouble(value, out result) ? new double?(result) : null;
-		}
+            return TryToDouble(value, out double result) ? new double?(result) : null;
+        }
 
 		#endregion
 	}

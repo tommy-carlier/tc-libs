@@ -1,5 +1,5 @@
 ﻿// TC Data ADO.NET Bridge
-// Copyright © 2009-2015 Tommy Carlier
+// Copyright © 2009-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -25,10 +25,9 @@ namespace TC.Data.Internal.ValueGetters
 
 		protected override string GetStringValue(IDataRecord dataRecord, int ordinal)
 		{
-			byte[] value = dataRecord.GetValue(ordinal) as byte[];
-			return value != null
-				? Convert.ToBase64String(value, Base64FormattingOptions.None)
-				: null;
-		}
+            return dataRecord.GetValue(ordinal) is byte[] value
+                ? Convert.ToBase64String(value, Base64FormattingOptions.None)
+                : null;
+        }
 	}
 }

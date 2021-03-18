@@ -16,12 +16,8 @@ namespace TC.Data
 	{
 		private EmptyRecordMetadata() { }
 
-		/// <summary>Gets the single instance of <see cref="T:EmptyRecordMetadata"/>.</summary>
-		[SuppressMessage(
-			"Microsoft.Security",
-			"CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
-			Justification = "EmptyRecordMetadata is immutable.")]
-		public static readonly EmptyRecordMetadata Instance = new EmptyRecordMetadata();
+        /// <summary>Gets the single instance of <see cref="T:EmptyRecordMetadata"/>.</summary>
+        public static readonly EmptyRecordMetadata Instance = new EmptyRecordMetadata();
 
 		#region IRecordMetadata Members
 
@@ -37,27 +33,18 @@ namespace TC.Data
 			}
 		}
 
-		/// <summary>Gets the keys of all the properties.</summary>
-		/// <value>A collection with all the keys.</value>
-		public IEnumerable<string> Keys
-		{
-			get { return CollectionUtilities.CreateEmptyCollection<string>(); }
-		}
+        /// <summary>Gets the keys of all the properties.</summary>
+        /// <value>A collection with all the keys.</value>
+        public IEnumerable<string> Keys => CollectionUtilities.CreateEmptyCollection<string>();
 
-		/// <summary>Gets the properties.</summary>
-		/// <value>A collection with all the properties.</value>
-		public IEnumerable<KVP> Properties
-		{
-			get { return CollectionUtilities.CreateEmptyCollection<KVP>(); }
-		}
+        /// <summary>Gets the properties.</summary>
+        /// <value>A collection with all the properties.</value>
+        public IEnumerable<KVP> Properties => CollectionUtilities.CreateEmptyCollection<KVP>();
 
-		/// <summary>Gets the number of properties.</summary>
-		/// <value>The number of properties.</value>
-		public int Count
-		{
-			get { return 0; }
-		}
+        /// <summary>Gets the number of properties.</summary>
+        /// <value>The number of properties.</value>
+        public int Count => 0;
 
-		#endregion
-	}
+        #endregion
+    }
 }

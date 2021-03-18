@@ -9,59 +9,36 @@ namespace TC.Data.Internal
 {
 	internal abstract class WrappedRecordReader : IRecordReader
 	{
-		private readonly IRecordReader _reader;
+        protected WrappedRecordReader(IRecordReader reader) => Reader = reader;
 
-		protected WrappedRecordReader(IRecordReader reader)
-		{
-			_reader = reader;
-		}
-
-		~WrappedRecordReader()
+        ~WrappedRecordReader()
 		{
 			Dispose(false);
 		}
 
-		protected IRecordReader Reader
-		{
-			get { return _reader; }
-		}
+        protected IRecordReader Reader { get; }
 
-		#region IRecordReader Members
+        #region IRecordReader Members
 
-		public virtual bool Read()
-		{
-			return _reader.Read();
-		}
+        public virtual bool Read() => Reader.Read();
 
-		#endregion
+        #endregion
 
-		#region IRecord Members
+        #region IRecord Members
 
-		public virtual IRecordDescriptor Descriptor
-		{
-			get { return _reader.Descriptor; }
-		}
+        public virtual IRecordDescriptor Descriptor => Reader.Descriptor;
 
-		public virtual IRecordMetadata Metadata
-		{
-			get { return _reader.Metadata; }
-		}
+        public virtual IRecordMetadata Metadata => Reader.Metadata;
 
-		public virtual TValue GetValue<TValue>(int ordinal)
-		{
-			return _reader.GetValue<TValue>(ordinal);
-		}
+        public virtual TValue GetValue<TValue>(int ordinal) => Reader.GetValue<TValue>(ordinal);
 
-		public virtual bool IsNull(int ordinal)
-		{
-			return _reader.IsNull(ordinal);
-		}
+        public virtual bool IsNull(int ordinal) => Reader.IsNull(ordinal);
 
-		#endregion
+        #endregion
 
-		#region IDisposable Members
+        #region IDisposable Members
 
-		void IDisposable.Dispose()
+        void IDisposable.Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
@@ -70,7 +47,7 @@ namespace TC.Data.Internal
 		protected virtual void Dispose(bool disposing)
 		{
 			if (disposing)
-				_reader.Dispose();
+				Reader.Dispose();
 		}
 
 		#endregion

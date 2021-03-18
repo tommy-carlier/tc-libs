@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -77,10 +77,8 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFilePathChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_filePathChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
-		}
+			this.TriggerEvent(Events, _filePathChanged, e);
+        }
 
 		#endregion
 
@@ -121,9 +119,7 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFileNameChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_fileNameChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
+			this.TriggerEvent(Events, _fileNameChanged, e);
 		}
 
 		#endregion
@@ -165,9 +161,7 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnIsModifiedChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_isModifiedChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
+			this.TriggerEvent(Events, _isModifiedChanged, e);
 		}
 
 		#endregion
@@ -225,9 +219,7 @@ namespace TC.WinForms.Controls
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnFileDialogFilterChanged(EventArgs e)
 		{
-			EventHandler handler = Events[_fileDialogFilterChanged] as EventHandler;
-			if (handler != null)
-				handler(this, e);
+			this.TriggerEvent(Events, _fileDialogFilterChanged, e);
 		}
 
 		#endregion

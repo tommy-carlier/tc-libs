@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Tommy Carlier")]
 [assembly: AssemblyProduct("TC Libraries")]
-[assembly: AssemblyCopyright("Copyright © 2008-2015 Tommy Carlier")]
+[assembly: AssemblyCopyright("Copyright © 2008-2021 Tommy Carlier")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

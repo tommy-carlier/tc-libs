@@ -1,5 +1,5 @@
 // TC Core Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -19,19 +19,12 @@ using System.Diagnostics.CodeAnalysis;
 	"Microsoft.Design",
 	"CA1020:AvoidNamespacesWithFewTypes",
 	Scope = "namespace",
-	Target = "System.Runtime.CompilerServices",
-	Justification = "System.Runtime.CompilerServices.ExtensionAttribute is used to enable extension methods in .NET 2.0.")]
-
-[assembly: SuppressMessage(
-	"Microsoft.Design",
-	"CA1020:AvoidNamespacesWithFewTypes",
-	Scope = "namespace",
-	Target = "TC.Settings",
+	Target = "~N:TC.Settings",
 	Justification = "TC.Settings has few types but is considered a separate category.")]
 
 [assembly: SuppressMessage(
 	"Microsoft.Performance",
 	"CA1805:DoNotInitializeUnnecessarily",
 	Scope = "member",
-	Target = "TC.SystemUtilities.#.cctor()",
+	Target = "~M:TC.SystemUtilities.#cctor",
 	Justification = "IsWindows7OrLater, IsWindowsVistaOrLater and IsWindowsXPOrLater are NOT automatically initialized by the runtime (bug in Code Analysis?)")]

@@ -1,5 +1,5 @@
 ﻿// TC Data ADO.NET Bridge
-// Copyright © 2009-2015 Tommy Carlier
+// Copyright © 2009-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -71,9 +71,8 @@ namespace TC.Data
 
 		private static DataTable CreateDataTableCore(IRecordDescriptor descriptor)
 		{
-			DataTable table = new DataTable();
-			table.Locale = CultureInfo.CurrentCulture;
-			table.ExtendedProperties.Add(typeof(IRecordDescriptor), descriptor.Copy());
+            var table = new DataTable { Locale = CultureInfo.CurrentCulture };
+            table.ExtendedProperties.Add(typeof(IRecordDescriptor), descriptor.Copy());
 
 			int fieldCount = descriptor.FieldCount;
 

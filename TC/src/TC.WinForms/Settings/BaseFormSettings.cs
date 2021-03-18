@@ -1,5 +1,5 @@
 ﻿// TC WinForms Library
-// Copyright © 2008-2015 Tommy Carlier
+// Copyright © 2008-2021 Tommy Carlier
 // https://github.com/tommy-carlier/tc-libs/
 // License: MIT License (MIT): https://github.com/tommy-carlier/tc-libs/blob/master/LICENSE
 
@@ -47,23 +47,13 @@ namespace TC.WinForms.Settings
 			if (IsMaximized) writer.WriteAttributeString("maximized", true.ToDataString());
 		}
 
-		/// <summary>Gets or sets the X-coordinate of the location of the form.</summary>
-		/// <value>The X-coordinate of the location of the form.</value>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1704:IdentifiersShouldBeSpelledCorrectly",
-			MessageId = "X",
-			Justification = "X is a meaningful name: it represents the X-coordinate.")]
-		public int X { get; set; }
+        /// <summary>Gets or sets the X-coordinate of the location of the form.</summary>
+        /// <value>The X-coordinate of the location of the form.</value>
+        public int X { get; set; }
 
-		/// <summary>Gets or sets the Y-coordinate of the location of the form.</summary>
-		/// <value>The Y-coordinate of the location of the form.</value>
-		[SuppressMessage(
-			"Microsoft.Naming",
-			"CA1704:IdentifiersShouldBeSpelledCorrectly",
-			MessageId = "Y",
-			Justification = "Y is a meaningful name: it represents the Y-coordinate.")]
-		public int Y { get; set; }
+        /// <summary>Gets or sets the Y-coordinate of the location of the form.</summary>
+        /// <value>The Y-coordinate of the location of the form.</value>
+        public int Y { get; set; }
 
 		/// <summary>Gets or sets the width of the form.</summary>
 		/// <value>The width of the form.</value>
