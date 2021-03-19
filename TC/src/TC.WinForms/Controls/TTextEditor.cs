@@ -179,9 +179,13 @@ namespace TC.WinForms.Controls
 						return true;
 
 					case Keys.Delete:
-						// Delete => delete selected text
-						_deleteCommand.Execute();
-						return true;
+						// Delete => delete selected text (if text is selected)
+						if (SelectionLength > 0)
+						{
+							_deleteCommand.Execute();
+							return true;
+						}
+						else break;
 				}
 
 			return base.HandleKey(keyData, inReadOnlyMode);
